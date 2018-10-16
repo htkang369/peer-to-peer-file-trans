@@ -3,7 +3,7 @@ package com.whz.msgtype;
 import com.whz.msg.ActualMsg;
 
 public class Request extends ActualMsg{
-	private final Byte msg_type = 6;
+	private static byte msg_type = 6;
 
 	/**
 	 * ‘request’messages  have  a  payload  which  consists  of  a  4-byte  piece  index  field.
@@ -14,7 +14,7 @@ public class Request extends ActualMsg{
 	 * @param message_type
 	 * @param message_payload
 	 */
-	public Request(int message_length, Byte message_type, char[] message_payload) {
+	public Request(byte[] message_length, byte message_type, byte[] message_payload) {
 		super(message_length, message_type, message_payload);
 		// TODO Auto-generated constructor stub
 	}

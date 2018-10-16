@@ -1,15 +1,41 @@
 package com.whz.msg;
 
-public class HandShakeMsg {
-	private final String handshak_header = "P2PFILESHARINGPROJ";
-	private final int zero_bits = 0;
-	private int peer_ID;
+import java.io.Serializable;
+
+public class HandShakeMsg implements Serializable {
 	
-	public HandShakeMsg(int peer_ID) {
-		this.peer_ID = peer_ID;
-	}
+	
+	/** The 18 bytes handshake header. */
+    private byte[] handShakeHeader = new byte[18];
+    /** The 10 bytes zero bits. */
+    private byte[] zeroBits = new byte[10];
+    /** The 4bytes peer id. */
+    private byte[] peerID = new byte [4];
+    
+    public HandShakeMsg(byte[] peerID){
+
+        this.handShakeHeader = new byte[18];
+        this.handShakeHeader = "P2PFILESHARINGPROJ".getBytes();
+        this.zeroBits = new byte[10];
+        this.zeroBits = zeroBits;
+        this.peerID = new byte[4];
+        this.peerID = peerID;
+    }
 	
 	public int getPeerID() {
-		return peer_ID;
+		/** 
+		 * get peerID as int type
+		 */
+		String peerID = new String(this.peerID);
+		return Integer.valueOf(peerID).intValue();
 	}
+	
+	public String getHandShakeHeader(){
+        /***
+         * get header field of handshakeMsg as string type
+         */
+        String handShakeHeader = new String(this.handShakeHeader);
+        return handShakeHeader;
+    }
+	
 }

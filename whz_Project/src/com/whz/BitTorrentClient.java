@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.*;
 import java.nio.channels.*;
 import java.util.*;
+import com.whz.msg.*;
 
 public class BitTorrentClient {
 	Socket requestSocket;           //socket connect to the server
@@ -11,6 +12,17 @@ public class BitTorrentClient {
  	ObjectInputStream in;          //stream read from the socket
 	String message;                //message send to the server
 	String MESSAGE;                //capitalized message read from the server
+
+    private byte [] clientPeerID;  // client peer id
+    private byte [] serverPeerID;  // server peer id
+	
+	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
+    private HandShakeMsg receivedHandShakeMsg = new HandShakeMsg(serverPeerID); // HandShake Msg received from the server
+    
+//    private ActualMsg haveMag = new HaveMsg();
+//    private ActualMsg sentActualMsg; //Actual Msg send to the server
+//    private ActualMsg receivedActualMsg; //Actual Msg received from the server
+	
 
 	public BitTorrentClient() {}
 
@@ -38,8 +50,8 @@ public class BitTorrentClient {
 				//Receive the upperCase sentence from the server
 				MESSAGE = (String)in.readObject();
 				//show the message to the user
-				System.out.println("Receive message: " + MESSAGE);
-				*/
+				System.out.println("Receive message: " + MESSAGE);*/
+				
 				System.out.print("TCP connection established!");
 				sendHandshakeMessage();//A(Client) sends a handshake to B(Server)
 				receiveHandshakeMessage();
@@ -60,7 +72,11 @@ public class BitTorrentClient {
 		}
 		catch(IOException ioException){
 			ioException.printStackTrace();
-		}
+		} 
+//		catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		finally{
 			//Close connections
 			try{
@@ -90,6 +106,7 @@ public class BitTorrentClient {
 	 * A(Client) sends a handshake to B(Server)
 	 */
 	void sendHandshakeMessage() {
+		
 		
 	}
 	

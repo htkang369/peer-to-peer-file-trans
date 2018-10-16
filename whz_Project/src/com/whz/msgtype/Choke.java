@@ -13,10 +13,10 @@ import com.whz.msg.ActualMsg;
  *
  */
 public class Choke extends ActualMsg{
-	private final Byte msg_type = 0;
-	private final char[] message_payload = null;//Choke have no payload
+	private static byte msg_type = (byte)0;
+	private static byte[] message_payload;//Choke have no payload
 	
-	public Choke(int message_length, Byte message_type, char[] message_payload) {
+	public Choke(byte[] message_length, byte message_type, byte[] message_payload) {
 		super(message_length, message_type, message_payload);
 		// TODO Auto-generated constructor stub
 	}
