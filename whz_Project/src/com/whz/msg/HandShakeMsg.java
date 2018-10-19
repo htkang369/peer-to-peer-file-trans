@@ -17,7 +17,6 @@ public class HandShakeMsg implements Serializable {
         this.handShakeHeader = new byte[18];
         this.handShakeHeader = "P2PFILESHARINGPROJ".getBytes();
         this.zeroBits = new byte[10];
-        this.zeroBits = zeroBits;
         this.peerID = new byte[4];
         this.peerID = peerID;
     }

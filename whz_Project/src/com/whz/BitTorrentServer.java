@@ -2,9 +2,9 @@ package com.whz;
 
 import java.net.*;
 import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.util.*;
+
+import com.whz.msg.ActualMsg;
+import com.whz.msgtype.Piece;
 
 
 public class BitTorrentServer {
@@ -35,7 +35,7 @@ public class BitTorrentServer {
         private String message;    //message received from the client
         private String MESSAGE;    //uppercase message send to the client
         private Socket connection;
-        private ObjectInputStream in;	//stream read from the socket
+        private DataInputStream in;	//stream read from the socket
         private ObjectOutputStream out;    //stream write to the socket
         private int no;		//The index number of the client
 
@@ -47,24 +47,34 @@ public class BitTorrentServer {
         public void run() {
  		try{
 			//initialize Input and Output streams
+ 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 			out = new ObjectOutputStream(connection.getOutputStream());
 			out.flush();
-			in = new ObjectInputStream(connection.getInputStream());
-			try{
+			in = new DataInputStream(new BufferedInputStream(connection.getInputStream()));
 				while(true)
-				{
+				{	
 					//receive the message sent from the client
-					message = (String)in.readObject();
+					//piece = (Piece)in.readObject();
+					//byte[] b = (byte[]) in.readObject();
+					byte[] length = new byte[4];
+					in.read(length);
+					int msgLength = ActualMsg.parseLength(length);
+					byte[] actualmsg = new byte[msgLength];
+					in.read(actualmsg);
+		//should parse type
+					Piece pieceMsg = new Piece();
+					int n = ActualMsg.parseMsgContent(actualmsg, length, pieceMsg);
 					//show the message to the user
-					System.out.println("Receive message: " + message + " from client " + no);
+					System.out.println("Receive message: " + "" + " from client " + no);
+					System.out.write(pieceMsg.getPayLoad(), 0, 100);
+					System.out.println();
+					//System.out.write(b, 0, 100);
 					//Capitalize all letters in the message
-					MESSAGE = message.toUpperCase();
+					//MESSAGE = bufferedReader.readLine();
+					//MESSAGE = message.toUpperCase();
 					//send MESSAGE back to the client
-					sendMessage(MESSAGE);
-				}
-			}
-			catch(ClassNotFoundException classnot){
-					System.err.println("Data received in unknown format");
+					//sendMessage(MESSAGE);
+					sendMessage("ack");
 				}
 		}
 		catch(IOException ioException){
