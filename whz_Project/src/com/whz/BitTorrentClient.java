@@ -148,7 +148,6 @@ public class BitTorrentClient {
 		InputStream in = null;
 		String MESSAGE;
 		try {
-			System.out.println("以字节为单位读取文件内容，一次读多个字节：");
 			byte[] tempbytes = new byte[100];
 			int byteread = 0;
 			in = new FileInputStream("test/testfile");
