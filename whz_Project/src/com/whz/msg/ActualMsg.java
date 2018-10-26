@@ -2,6 +2,8 @@ package com.whz.msg;
 
 import java.io.Serializable;
 
+import com.whz.util.MyUtil;
+
 @SuppressWarnings("serial")
 public abstract class ActualMsg implements Serializable{
 	protected byte[] msg_length = new byte[4];
@@ -48,7 +50,7 @@ public abstract class ActualMsg implements Serializable{
 	
 	public static int parseLength(byte[] msg) {
 		int length;
-		length = byteArrayToInt(msg);
+		length = MyUtil.byteArrayToInt(msg);
 		
 		return length;
 	}
@@ -74,7 +76,7 @@ public abstract class ActualMsg implements Serializable{
 	}
 	
 	public static int parseMsgContent(byte[] msg, byte[] contentLength, ActualMsg actual) {
-		int length = ActualMsg.byteArrayToInt(contentLength);
+		int length = MyUtil.byteArrayToInt(contentLength);
 		byte temptype;
 		byte[] tempMsgPayLoad = new byte[length-1];
 
@@ -94,8 +96,8 @@ public abstract class ActualMsg implements Serializable{
 		byte[] tempMsgLength = actual.getMsgLength();
 		byte temptype = actual.getMsgType();
 		byte[] tempMsgPayLoad = actual.getPayLoad();
-		length = 1 + byteArrayToInt(tempMsgLength);
-		byte[] lengthcontent = intToByteArray(length);
+		length = 1 + MyUtil.byteArrayToInt(tempMsgLength);
+		byte[] lengthcontent = MyUtil.intToByteArray(length);
 		
 		byte[] dataGram = new byte[4 + length];
 		for(int i=0;i<4;i++) {
@@ -108,20 +110,4 @@ public abstract class ActualMsg implements Serializable{
 		return dataGram;
 	}
 	
-	//byte array to int 
-	public static int byteArrayToInt(byte[] b) {
-		return   b[3] & 0xFF |
-		         (b[2] & 0xFF) << 8 |
-		         (b[1] & 0xFF) << 16 |
-		         (b[0] & 0xFF) << 24;
-	}
-	 
-	public static byte[] intToByteArray(int a) {
-		return new byte[] {
-		        (byte) ((a >> 24) & 0xFF),
-		        (byte) ((a >> 16) & 0xFF),   
-		        (byte) ((a >> 8) & 0xFF),   
-		        (byte) (a & 0xFF)
-		};
-	}
 }

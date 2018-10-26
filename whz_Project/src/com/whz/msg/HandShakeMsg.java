@@ -2,6 +2,7 @@ package com.whz.msg;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class HandShakeMsg implements Serializable {
 	
 	

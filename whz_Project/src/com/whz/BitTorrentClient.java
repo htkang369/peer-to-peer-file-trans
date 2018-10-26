@@ -6,6 +6,7 @@ import java.nio.channels.*;
 import java.util.*;
 import com.whz.msg.*;
 import com.whz.msgtype.Piece;
+import com.whz.util.MyUtil;
 
 public class BitTorrentClient {
 	Socket requestSocket;           //socket connect to the server
@@ -153,7 +154,7 @@ public class BitTorrentClient {
 			in = new FileInputStream("test/testfile");
 			BitTorrentClient.showAvailableBytes(in);
 		
-			byte[] a = ActualMsg.intToByteArray(100);;
+			byte[] a = MyUtil.intToByteArray(100);;
 			byte[] b = new byte[105];
 			while((byteread = in.read(tempbytes)) != -1) {
 				System.out.write(tempbytes, 0, byteread);
@@ -194,7 +195,7 @@ public class BitTorrentClient {
 	
 	private static void showAvailableBytes(InputStream in) {
 		try {
-			System.out.println("当前字节输入流中的字节数为:"+ in.available());
+			System.out.println("å½“å‰�å­—èŠ‚è¾“å…¥æµ�ä¸­çš„å­—èŠ‚æ•°ä¸º:"+ in.available());
 			double c = (double)in.available()/ 13.0;
 			System.out.println("c:"+ c);
 			System.out.println("# of pieces:"+ Math.ceil(c));
