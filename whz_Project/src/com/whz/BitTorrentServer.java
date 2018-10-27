@@ -4,6 +4,7 @@ import java.net.*;
 import java.io.*;
 
 import com.whz.msg.ActualMsg;
+import com.whz.msg.HandShakeMsg;
 import com.whz.msgtype.Piece;
 
 
@@ -24,7 +25,6 @@ public class BitTorrentServer {
         	} finally {
             	listener.close();
         	} 
- 
     	}
 
 	/**
@@ -36,7 +36,7 @@ public class BitTorrentServer {
         private String MESSAGE;    //uppercase message send to the client
         private Socket connection;
         private DataInputStream in;	//stream read from the socket
-        private ObjectOutputStream out;    //stream write to the socket
+        private DataOutputStream out;    //stream write to the socket
         private int no;		//The index number of the client
 
         public Handler(Socket connection, int no) {
@@ -48,14 +48,16 @@ public class BitTorrentServer {
  		try{
 			//initialize Input and Output streams
  			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-			out = new ObjectOutputStream(connection.getOutputStream());
+			out = new DataOutputStream(connection.getOutputStream());
 			out.flush();
 			in = new DataInputStream(new BufferedInputStream(connection.getInputStream()));
+			sendHandshakeMessage();
 				while(true)
 				{	
 					//receive the message sent from the client
 					//piece = (Piece)in.readObject();
 					//byte[] b = (byte[]) in.readObject();
+					
 					byte[] length = new byte[4];
 					in.read(length);
 					int msgLength = ActualMsg.parseLength(length);
@@ -74,7 +76,7 @@ public class BitTorrentServer {
 					//MESSAGE = message.toUpperCase();
 					//send MESSAGE back to the client
 					//sendMessage(MESSAGE);
-					sendMessage("ack");
+					//sendMessage("ack");			
 				}
 		}
 		catch(IOException ioException){
@@ -83,6 +85,7 @@ public class BitTorrentServer {
 		finally{
 			//Close connections
 			try{
+				System.out.println("close with Client " + no);
 				in.close();
 				out.close();
 				connection.close();
@@ -92,20 +95,38 @@ public class BitTorrentServer {
 			}
 		}
 	}
-
-		//send a message to the output stream
-		public void sendMessage(String msg)
+	    
+		void sendMessage(byte[] msg)
 		{
 			try{
-				out.writeObject(msg);
+				//stream write the message
+				out.write(msg);
 				out.flush();
-				System.out.println("Send message: " + msg + " to Client " + no);
 			}
 			catch(IOException ioException){
 				ioException.printStackTrace();
 			}
 		}
-
+	    
+		void sendHandshakeMessage() {
+			
+			HandShakeMsg handshakeMsg = new HandShakeMsg(1002);
+			sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
+			byte[] rawMsg = new byte[32];
+			try {
+				in.read(rawMsg, 0, 32);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			HandShakeMsg rcvhandshakeMsg = HandShakeMsg.parseHeaderMsg(rawMsg);
+			if(!HandShakeMsg.checkPeerID(1001, rcvhandshakeMsg)) {
+				System.out.println("error peerID:" + rcvhandshakeMsg.getPeerID());
+			}else {
+				System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
+			}
+		}
     }
+
 
 }

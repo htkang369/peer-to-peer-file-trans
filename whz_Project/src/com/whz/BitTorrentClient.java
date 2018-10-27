@@ -11,7 +11,7 @@ import com.whz.util.MyUtil;
 public class BitTorrentClient {
 	Socket requestSocket;           //socket connect to the server
 	DataOutputStream out;         //stream write to the socket
- 	ObjectInputStream in;          //stream read from the socket
+	DataInputStream in;          //stream read from the socket
 	String message;                //message send to the server
 	String MESSAGE;                //capitalized message read from the server
 
@@ -37,17 +37,17 @@ public class BitTorrentClient {
 			//initialize inputStream and outputStream
 			out = new DataOutputStream(requestSocket.getOutputStream());
 			out.flush();
-			in = new ObjectInputStream(requestSocket.getInputStream());
+			in = new DataInputStream(requestSocket.getInputStream());
 			
 			//get Input from standard input
 			//BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.print("TCP connection established!");
+			System.out.println("TCP connection established!");
 			sendHandshakeMessage();//A(Client) sends a handshake to B(Server)
 			receiveHandshakeMessage();
 			sendBitfield();
 			receiveBitfield();
 			if(findoutNotHave()) {
-				sendInterestedMessage(in);
+				sendInterestedMessage();
 			}else {
 				sendNotInterestedMessage();
 			}
@@ -108,7 +108,22 @@ public class BitTorrentClient {
 	 */
 	void sendHandshakeMessage() {
 		
-		
+		HandShakeMsg handshakeMsg = new HandShakeMsg(1001);
+		sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
+		byte[] rawMsg = new byte[32];
+		try {
+			in.read(rawMsg);
+			System.out.println("read handshakeMessage");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("read error");
+		}
+		HandShakeMsg rcvhandshakeMsg = HandShakeMsg.parseHeaderMsg(rawMsg);
+		if(!HandShakeMsg.checkPeerID(1002, rcvhandshakeMsg)) {
+			System.out.println("error peerID:" + rcvhandshakeMsg.getPeerID());
+		}else {
+			System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
+		}
 	}
 	
 	/**
@@ -144,19 +159,18 @@ public class BitTorrentClient {
 	/**
 	 * A sends interested message to B.
 	 */
-	void sendInterestedMessage(ObjectInputStream inO) {
+	void sendInterestedMessage() {
 //		File file = new File("test/testfile");
-		InputStream in = null;
-		String MESSAGE;
+		InputStream inFile = null;
 		try {
 			byte[] tempbytes = new byte[100];
 			int byteread = 0;
-			in = new FileInputStream("test/testfile");
-			BitTorrentClient.showAvailableBytes(in);
+			inFile = new FileInputStream("test/testfile");
+			BitTorrentClient.showAvailableBytes(inFile);
 		
 			byte[] a = MyUtil.intToByteArray(100);;
 			byte[] b = new byte[105];
-			while((byteread = in.read(tempbytes)) != -1) {
+			while((byteread = inFile.read(tempbytes)) != -1) {
 				System.out.write(tempbytes, 0, byteread);
 				System.out.println();
 				System.out.println("one piece!");
@@ -173,15 +187,15 @@ public class BitTorrentClient {
 				byte[] c = Piece.toDataGram(pieceMsg);
 				sendMessage(c);
 				//message = bufferedReader.readLine();
-				MESSAGE = (String)inO.readObject();
-				System.out.println("Receive message: " + MESSAGE);
+				//MESSAGE = (String)in.readObject();
+				//System.out.println("Receive message: " + MESSAGE);
 			}
 		}catch(Exception e1) {
 			e1.printStackTrace();
 		}finally {
-			if(in != null) {
+			if(inFile != null) {
 				try {
-					in.close();
+					inFile.close();
 				}catch(IOException e1) {
 					
 				}

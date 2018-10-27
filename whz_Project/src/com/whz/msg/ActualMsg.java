@@ -91,6 +91,15 @@ public abstract class ActualMsg implements Serializable{
 		return length;
 	}
 	
+	/**
+	 * encapsulate the actual messages to datagram
+	 * 
+	 * 		4-byte			1-byte			n-byte
+	 * | message length| message type| message payload|
+	 * 
+	 * @param actual
+	 * @return
+	 */
 	public static byte[] toDataGram(ActualMsg actual) {
 		int length;
 		byte[] tempMsgLength = actual.getMsgLength();
@@ -100,9 +109,11 @@ public abstract class ActualMsg implements Serializable{
 		byte[] lengthcontent = MyUtil.intToByteArray(length);
 		
 		byte[] dataGram = new byte[4 + length];
+		//Encapsulate messagelength
 		for(int i=0;i<4;i++) {
 			dataGram[i] = lengthcontent[i];
 		}
+		//Encapsulate header
 		dataGram[4] = temptype;
 		for(int i=5;i<length + 4;i++) {
 			dataGram[i] = tempMsgPayLoad[i-5];
