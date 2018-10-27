@@ -20,6 +20,11 @@ public class Request extends ActualMsg{
 
 	public Request(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
-		msg_type  = 6;
+		msg_type  = (byte)REQUEST;
+	}
+	
+	public Request(int message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type = (byte)REQUEST;
 	}
 }

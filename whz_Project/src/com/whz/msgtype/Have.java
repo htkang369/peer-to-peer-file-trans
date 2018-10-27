@@ -18,7 +18,11 @@ public class Have extends ActualMsg{
 	
 	public Have(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
-		msg_type = (byte)4;
+		msg_type = (byte)HAVE;
 	}
 
+	public Have(int message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type = (byte)HAVE;
+	}
 }

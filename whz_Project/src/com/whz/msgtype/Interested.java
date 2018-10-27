@@ -11,7 +11,11 @@ public class Interested extends ActualMsg{
 	
 	public Interested(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
-		msg_type = (byte)2;
+		msg_type = (byte)INTERESTED;
 	}
 
+	public Interested(int message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type = (byte)INTERESTED;
+	}
 }

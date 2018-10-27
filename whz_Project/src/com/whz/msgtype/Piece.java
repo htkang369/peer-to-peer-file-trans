@@ -14,8 +14,7 @@ public class Piece extends ActualMsg{
 	 */
 	public Piece(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
-		msg_type  = 7;
-		// TODO Auto-generated constructor stub
+		msg_type  = (byte)PIECE;
 	}
 	
 	public Piece(byte[] message_length , byte message_type, byte[] message_payload) {
@@ -23,7 +22,7 @@ public class Piece extends ActualMsg{
 	}
 	
 	public Piece() {
-		msg_type  = 7;
+		msg_type  = (byte)PIECE;
 	}
 
 }

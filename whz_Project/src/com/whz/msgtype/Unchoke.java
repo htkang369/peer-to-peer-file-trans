@@ -11,6 +11,11 @@ public class Unchoke extends ActualMsg{
 
 	public Unchoke(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
-		msg_type = 1;
+		msg_type = (byte)UNCHOKE;
+	}
+	
+	public Unchoke(int message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type = (byte)UNCHOKE;
 	}
 }
