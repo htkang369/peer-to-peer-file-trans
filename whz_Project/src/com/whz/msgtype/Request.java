@@ -2,8 +2,8 @@ package com.whz.msgtype;
 
 import com.whz.msg.ActualMsg;
 
+@SuppressWarnings("serial")
 public class Request extends ActualMsg{
-	private static byte msg_type = 6;
 
 	/**
 	 * ‘request’messages  have  a  payload  which  consists  of  a  4-byte  piece  index  field.
@@ -16,7 +16,10 @@ public class Request extends ActualMsg{
 	 */
 	public Request(byte[] message_length, byte message_type, byte[] message_payload) {
 		super(message_length, message_type, message_payload);
-		// TODO Auto-generated constructor stub
 	}
 
+	public Request(byte[] message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type  = 6;
+	}
 }

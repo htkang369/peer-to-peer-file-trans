@@ -12,13 +12,16 @@ import com.whz.msg.ActualMsg;
  * @author wangyuanming
  *
  */
+@SuppressWarnings("serial")
 public class Choke extends ActualMsg{
-	private static byte msg_type = (byte)0;
-	private static byte[] message_payload;//Choke have no payload
 	
 	public Choke(byte[] message_length, byte message_type, byte[] message_payload) {
 		super(message_length, message_type, message_payload);
-		// TODO Auto-generated constructor stub
+	}
+	
+	public Choke(byte[] message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type = (byte)0;
 	}
 
 }

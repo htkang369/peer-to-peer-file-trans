@@ -2,8 +2,8 @@ package com.whz.msgtype;
 
 import com.whz.msg.ActualMsg;
 
+@SuppressWarnings("serial")
 public class Bitfield extends ActualMsg{
-	private static byte msg_type = (byte)5;
 	
 	/**
 	 *  
@@ -13,7 +13,11 @@ public class Bitfield extends ActualMsg{
 	 */
 	public Bitfield(byte[] message_length, byte message_type, byte[] message_payload) {
 		super(message_length, message_type, message_payload);
-		// TODO Auto-generated constructor stub
+		
 	}
-
+	
+	public Bitfield(byte[] message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type = (byte)5;
+	}
 }
