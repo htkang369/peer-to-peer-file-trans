@@ -5,7 +5,7 @@ import java.nio.*;
 import java.nio.channels.*;
 import java.util.*;
 import com.whz.msg.*;
-import com.whz.msgtype.Piece;
+import com.whz.msgtype.*;
 import com.whz.util.MyUtil;
 
 public class BitTorrentClient {
@@ -17,6 +17,9 @@ public class BitTorrentClient {
 
     private byte [] clientPeerID;  // client peer id
     private byte [] serverPeerID;  // server peer id
+    private byte [] bitfield;
+    private byte [] peerBitfield;
+    private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
 	
 	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
     private HandShakeMsg receivedHandShakeMsg = new HandShakeMsg(serverPeerID); // HandShake Msg received from the server
@@ -44,25 +47,13 @@ public class BitTorrentClient {
 			System.out.println("TCP connection established!");
 			sendHandshakeMessage();//A(Client) sends a handshake to B(Server)
 			receiveHandshakeMessage();
+			initBitfield();
 			sendBitfield();
 			receiveBitfield();
 			if(findoutNotHave()) {
 				sendInterestedMessage();
 			}else {
 				sendNotInterestedMessage();
-			}
-			while(true)
-			{
-				/*
-				System.out.print("Hello, please input a sentence: ");
-				//read a sentence from the standard input
-				message = bufferedReader.readLine();
-				//Send the sentence to the server
-				sendMessage(message);
-				//Receive the upperCase sentence from the server
-				MESSAGE = (String)in.readObject();
-				//show the message to the user
-				System.out.println("Receive message: " + MESSAGE);*/
 			}
 		}
 		catch (ConnectException e) {
@@ -83,6 +74,7 @@ public class BitTorrentClient {
 			try{
 				in.close();
 				out.close();
+				System.out.println("close connection ");
 				requestSocket.close();
 			}
 			catch(IOException ioException){
@@ -110,6 +102,14 @@ public class BitTorrentClient {
 		
 		HandShakeMsg handshakeMsg = new HandShakeMsg(1001);
 		sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
+	}
+	
+	/**
+	 * A(Client) receives a handshake to B(Server),should have timer or not?
+	 * 
+	 * check whether the handshake header is right and the peer ID is the expected one
+	 */
+	void receiveHandshakeMessage() {
 		byte[] rawMsg = new byte[32];
 		try {
 			in.read(rawMsg);
@@ -127,25 +127,20 @@ public class BitTorrentClient {
 	}
 	
 	/**
-	 * A(Client) receives a handshake to B(Server),should have timer
-	 */
-	void receiveHandshakeMessage() {
-		//check whether the handshake header is right and the peer ID is the expected one
-		
-	}
-	
-	/**
 	 * A sends a bitfield message to let B know which file pieces it has
 	 */
 	void sendBitfield() {
-		
+		Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,bitfield);
+		byte[] datagram = Bitfield.toDataGram(bitfieldMsg);
+		sendMessage(datagram);
 	}
 	
 	/**
 	 * B will also send its bitfield message to A, unless it has no pieces
 	 */
 	void receiveBitfield() {
-		
+		Bitfield bitfieldMsg = (Bitfield) readActualMessage();
+		peerBitfield = bitfieldMsg.getPayLoad();
 	}
 	
 	/**
@@ -168,15 +163,13 @@ public class BitTorrentClient {
 			inFile = new FileInputStream("test/testfile");
 			BitTorrentClient.showAvailableBytes(inFile);
 		
-			byte[] a = MyUtil.intToByteArray(100);;
+			byte[] a = MyUtil.intToByteArray(101);;
 			byte[] b = new byte[105];
 			while((byteread = inFile.read(tempbytes)) != -1) {
 				System.out.write(tempbytes, 0, byteread);
 				System.out.println();
 				System.out.println("one piece!");
 				Piece pieceMsg = new Piece(a,tempbytes);
-				//System.out.println(pieceMsg.getMsgType());
-				//BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 				for(int j=0; j<5; j++) {
 					b[j] = 0;
 				}
@@ -186,9 +179,6 @@ public class BitTorrentClient {
 				out.flush();
 				byte[] c = Piece.toDataGram(pieceMsg);
 				sendMessage(c);
-				//message = bufferedReader.readLine();
-				//MESSAGE = (String)in.readObject();
-				//System.out.println("Receive message: " + MESSAGE);
 			}
 		}catch(Exception e1) {
 			e1.printStackTrace();
@@ -205,6 +195,63 @@ public class BitTorrentClient {
 	
 	void sendNotInterestedMessage(){
 		
+	}
+	
+	void initBitfield() {
+		bitfield = new byte[bitfieldLength];
+	}
+	
+	ActualMsg readActualMessage() {
+		byte[] length = new byte[4];
+		try {
+			in.read(length);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int msgLength = ActualMsg.parseLength(length);
+		byte[] rawMsg = new byte[msgLength];
+		try {
+			in.read(rawMsg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//should parse type
+		int msgType = ActualMsg.parseMsgType(rawMsg);
+		ActualMsg rcvMsg = null;
+		switch(msgType) {
+			case ActualMsg.CHOKE:
+				rcvMsg = new Choke();
+				break;
+			case ActualMsg.UNCHOKE:
+				rcvMsg = new Unchoke();
+				break;
+			case ActualMsg.INTERESTED:
+				rcvMsg = new Interested();
+				break;
+			case ActualMsg.NOTINTERESTED:
+				rcvMsg = new NotInterested();
+				break;
+			case ActualMsg.HAVE:
+				rcvMsg = new Have();
+				break;
+			case ActualMsg.BITFIELD:
+				System.out.println("receive Bitfield");
+				rcvMsg = new Bitfield();
+				break;
+			case ActualMsg.REQUEST:
+				rcvMsg = new Request();
+				break;
+			case ActualMsg.PIECE:
+				System.out.println("receive Piece");
+				rcvMsg = new Piece();
+				break;
+		}
+		if(rcvMsg == null) {
+			System.out.println("parse Type error");
+		}
+		int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+		return rcvMsg;
 	}
 	
 	private static void showAvailableBytes(InputStream in) {

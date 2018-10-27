@@ -1,7 +1,9 @@
 package com.whz.msg;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
+import com.whz.msgtype.Choke;
 import com.whz.util.MyUtil;
 
 @SuppressWarnings("serial")
@@ -9,6 +11,15 @@ public abstract class ActualMsg implements Serializable{
 	protected byte[] msg_length = new byte[4];
 	protected byte msg_type;
 	protected byte[] msg_payload;
+	
+	public static final int CHOKE = 0;
+	public static final int UNCHOKE = 1;
+	public static final int INTERESTED = 2;
+	public static final int NOTINTERESTED = 3;
+	public static final int HAVE = 4;
+	public static final int BITFIELD = 5;
+	public static final int REQUEST = 6;
+	public static final int PIECE = 7;
 	
 	public ActualMsg(byte[] message_length, byte message_type, byte[] message_payload) {
 		this.msg_length = message_length;
@@ -18,6 +29,11 @@ public abstract class ActualMsg implements Serializable{
 	
 	public ActualMsg(byte[] message_length, byte[] message_payload) {
 		this.msg_length = message_length;
+		this.msg_payload = message_payload;
+	}
+	
+	public ActualMsg(int message_length, byte[] message_payload) {
+		this.msg_length = MyUtil.intToByteArray(message_length);
 		this.msg_payload = message_payload;
 	}
 	
@@ -91,6 +107,12 @@ public abstract class ActualMsg implements Serializable{
 		return length;
 	}
 	
+	public static int parseMsgType(byte[] rawMsg) {
+		byte temptype;
+		temptype = rawMsg[0];
+		return (int)temptype;
+	}
+	
 	/**
 	 * encapsulate the actual messages to datagram
 	 * 
@@ -105,7 +127,7 @@ public abstract class ActualMsg implements Serializable{
 		byte[] tempMsgLength = actual.getMsgLength();
 		byte temptype = actual.getMsgType();
 		byte[] tempMsgPayLoad = actual.getPayLoad();
-		length = 1 + MyUtil.byteArrayToInt(tempMsgLength);
+		length = MyUtil.byteArrayToInt(tempMsgLength);
 		byte[] lengthcontent = MyUtil.intToByteArray(length);
 		
 		byte[] dataGram = new byte[4 + length];

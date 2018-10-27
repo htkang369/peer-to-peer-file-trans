@@ -2,6 +2,8 @@ package com.whz.util;
 
 public class MyUtil {
 	//byte array to int 
+	public static int pieceNum = 535;
+	
 	public static int byteArrayToInt(byte[] b) {
 		return   b[3] & 0xFF |
 		         (b[2] & 0xFF) << 8 |
