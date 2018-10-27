@@ -21,8 +21,8 @@ public class Bitfield extends ActualMsg{
 		msg_type = (byte)BITFIELD;
 	}
 	
-	public Bitfield(int message_length, byte[] message_payload) {
-		super(message_length, message_payload);
+	public Bitfield() {
+		super();
 		msg_type = (byte)BITFIELD;
 	}
 }
