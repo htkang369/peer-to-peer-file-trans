@@ -21,4 +21,9 @@ public class NotInterested extends ActualMsg{
 		super(message_length, message_payload);
 		msg_type = (byte)NOTINTERESTED;
 	}
+	
+	public NotInterested() {
+		super();
+		msg_type = (byte)NOTINTERESTED;
+	}
 }

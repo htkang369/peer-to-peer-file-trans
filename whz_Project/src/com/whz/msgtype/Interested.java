@@ -18,4 +18,9 @@ public class Interested extends ActualMsg{
 		super(message_length, message_payload);
 		msg_type = (byte)INTERESTED;
 	}
+	
+	public Interested() {
+		super();
+		msg_type = (byte)INTERESTED;
+	}
 }

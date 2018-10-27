@@ -27,4 +27,9 @@ public class Request extends ActualMsg{
 		super(message_length, message_payload);
 		msg_type = (byte)REQUEST;
 	}
+	
+	public Request() {
+		super();
+		msg_type = (byte)REQUEST;
+	}
 }

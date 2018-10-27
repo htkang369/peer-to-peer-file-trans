@@ -28,4 +28,9 @@ public class Choke extends ActualMsg{
 		super(message_length, message_payload);
 		msg_type = (byte)CHOKE;
 	}
+	
+	public Choke() {
+		super();
+		msg_type = (byte)CHOKE;
+	}
 }

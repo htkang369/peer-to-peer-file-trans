@@ -22,6 +22,7 @@ public class Piece extends ActualMsg{
 	}
 	
 	public Piece() {
+		super();
 		msg_type  = (byte)PIECE;
 	}
 
