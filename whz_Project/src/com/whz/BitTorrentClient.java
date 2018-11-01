@@ -170,7 +170,7 @@ public class BitTorrentClient {
 					int k = peerBitfield[i] << j;
 				}
 				//System.out.println("find out interested piece");
-				interestedPieceList.add();
+				//interestedPieceList.add();
 			}
 		}
 		return t;
