@@ -134,8 +134,10 @@ public abstract class ActualMsg implements Serializable{
 		}
 		//Encapsulate header
 		dataGram[4] = temptype;
-		for(int i=5;i<length + 4;i++) {
-			dataGram[i] = tempMsgPayLoad[i-5];
+		if(tempMsgPayLoad != null) {
+			for(int i=5;i<length + 4;i++) {
+				dataGram[i] = tempMsgPayLoad[i-5];
+			}
 		}
 		return dataGram;
 	}

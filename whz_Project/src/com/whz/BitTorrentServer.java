@@ -72,20 +72,7 @@ public class BitTorrentServer {
 					//receive the message sent from the client
 					//piece = (Piece)in.readObject();
 					//byte[] b = (byte[]) in.readObject();
-					
-					byte[] length = new byte[4];
-					in.read(length);
-					int msgLength = ActualMsg.parseLength(length);
-					byte[] actualmsg = new byte[msgLength];
-					in.read(actualmsg);
-		//should parse type
-					Piece pieceMsg = new Piece();
-					int n = ActualMsg.parseMsgContent(actualmsg, length, pieceMsg);
-					//show the message to the user
-					System.out.println("Receive message: " + "" + " from client " + no);
-					System.out.write(pieceMsg.getPayLoad(), 0, 100);
-					System.out.println();
-					
+					readActualMessage();
 					//Capitalize all letters in the message
 					//MESSAGE = bufferedReader.readLine();
 					//MESSAGE = message.toUpperCase();
@@ -208,15 +195,22 @@ public class BitTorrentServer {
 					rcvMsg = new Have();
 					break;
 				case ActualMsg.BITFIELD:
-					System.out.println("receive Bitfield");
+					System.out.println("receive Bitfield Msg");
 					rcvMsg = new Bitfield();
 					break;
 				case ActualMsg.REQUEST:
 					rcvMsg = new Request();
 					break;
 				case ActualMsg.PIECE:
-					System.out.println("receive Piece");
+					System.out.println("receive Piece Meg");
 					rcvMsg = new Piece();
+					//show the message to the user
+					int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+					System.out.println("Receive message: " + "" + " from client " + no);
+					if(rcvMsg.getPayLoad()!=null) {
+						System.out.write(rcvMsg.getPayLoad(), 0, 100);
+					}
+					System.out.println();
 					break;
 			}
 			if(rcvMsg == null) {

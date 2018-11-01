@@ -21,6 +21,7 @@ public class BitTorrentClient {
     private byte [] peerBitfield;
     private List<Integer> interestedPieceList = new ArrayList<>();
     private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
+    private boolean fileComplete = false;
 	
 	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
     private HandShakeMsg receivedHandShakeMsg = new HandShakeMsg(serverPeerID); // HandShake Msg received from the server
@@ -53,8 +54,13 @@ public class BitTorrentClient {
 			receiveBitfield();
 			if(findOutInterestedPiece()) {
 				sendInterestedMessage();
+				readFile();
 			}else {
 				sendNotInterestedMessage();
+			}
+			while(!fileComplete) {
+				sendRequestMsg();
+				readActualMessage();
 			}
 		}
 		catch (ConnectException e) {
@@ -66,10 +72,6 @@ public class BitTorrentClient {
 		catch(IOException ioException){
 			ioException.printStackTrace();
 		} 
-//		catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		finally{
 			//Close connections
 			try{
@@ -166,11 +168,14 @@ public class BitTorrentClient {
 			peerBitfield[i] = (byte) (peerBitfield[i]&((byte) ~loaclBitfield[i]));
 			if(peerBitfield[i] != 0) {
 				t = true;
-				for(int j = 0; j < 4;j++) {
-					int k = peerBitfield[i] << j;
+				for(int j = 0; j < 8;j++) {
+					int k = 1; 
+					k = (peerBitfield[i] >> j) & k;
+					if( k == 1) {
+						interestedPieceList.add(i*8+j);
+						System.out.println("find out interested piece, pieceNum = " + (i*8+j));
+					}
 				}
-				//System.out.println("find out interested piece");
-				//interestedPieceList.add();
 			}
 		}
 		return t;
@@ -192,8 +197,15 @@ public class BitTorrentClient {
 		}
 	}
 	
+	/**
+	 *  whenever a peer receives a piece completely, it checks the bitfields
+	 *  of its neighbors and decides whether it should send 'not interested'
+	 *  messages to some neighbors
+	 */
 	void sendNotInterestedMessage(){
-		
+		NotInterested notInterested = new NotInterested();
+		byte[] c = ActualMsg.toDataGram(notInterested);
+		sendMessage(c);
 	}
 	
 	void readFile() {
@@ -217,8 +229,7 @@ public class BitTorrentClient {
 				for(int j=0; j<100; j++) {
 					b[j+5] = (pieceMsg.getPayLoad())[j];
 				}
-				out.flush();
-				byte[] c = Piece.toDataGram(pieceMsg);
+				byte[] c = ActualMsg.toDataGram(pieceMsg);
 				sendMessage(c);
 			}
 		}catch(Exception e1) {
@@ -232,6 +243,10 @@ public class BitTorrentClient {
 				}
 			}
 		}
+	}
+	
+	void sendRequestMsg() {
+		
 	}
 
 	
