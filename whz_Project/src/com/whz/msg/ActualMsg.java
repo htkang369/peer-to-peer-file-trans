@@ -1,9 +1,6 @@
 package com.whz.msg;
 
 import java.io.Serializable;
-import java.util.HashMap;
-
-import com.whz.msgtype.Choke;
 import com.whz.util.MyUtil;
 
 @SuppressWarnings("serial")

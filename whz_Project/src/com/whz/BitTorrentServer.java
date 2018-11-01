@@ -137,12 +137,19 @@ public class BitTorrentServer {
 		void receiveBitfield() {
 			Bitfield bitfieldMsg = (Bitfield) readActualMessage();
 			peerBitfield = bitfieldMsg.getPayLoad();
+			int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
+			System.out.println("parse Bitfield Message");
+			for(int i = 0; i< payloadLength-4; i++) {
+				System.out.print(peerBitfield[i]);
+			}
+			System.out.println();
+			System.out.println("Bitfield payloadLeng = " + payloadLength);
 		}
 		
 		void initBitfield() {
 			bitfield = new byte[bitfieldLength];
 			for(int i=0;i<bitfieldLength;i++) {
-				bitfield[i] = 15;
+				bitfield[i] = (byte) 0x00;
 			}
 		}
 		

@@ -17,7 +17,7 @@ public class BitTorrentClient {
 
     private byte [] clientPeerID;  // client peer id
     private byte [] serverPeerID;  // server peer id
-    private byte [] bitfield;
+    private byte [] loaclBitfield;
     private byte [] peerBitfield;
     private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
 	
@@ -50,7 +50,7 @@ public class BitTorrentClient {
 			initBitfield();
 			sendBitfield();
 			receiveBitfield();
-			if(findoutNotHave()) {
+			if(findOutInterestedPiece()) {
 				sendInterestedMessage();
 			}else {
 				sendNotInterestedMessage();
@@ -113,7 +113,7 @@ public class BitTorrentClient {
 		byte[] rawMsg = new byte[32];
 		try {
 			in.read(rawMsg);
-			System.out.println("read handshakeMessage");
+			System.out.println("receive handshakeMessage");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("read error");
@@ -126,11 +126,16 @@ public class BitTorrentClient {
 		}
 	}
 	
+	
+	void initBitfield() {
+		loaclBitfield = new byte[bitfieldLength];
+	}
+	
 	/**
 	 * A sends a bitfield message to let B know which file pieces it has
 	 */
 	void sendBitfield() {
-		Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,bitfield);
+		Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,loaclBitfield);
 		byte[] datagram = Bitfield.toDataGram(bitfieldMsg);
 		sendMessage(datagram);
 	}
@@ -141,14 +146,29 @@ public class BitTorrentClient {
 	void receiveBitfield() {
 		Bitfield bitfieldMsg = (Bitfield) readActualMessage();
 		peerBitfield = bitfieldMsg.getPayLoad();
+		int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
+		System.out.println("parse Bitfield Message");
+		for(int i = 0; i< payloadLength-4; i++) {
+			System.out.print(peerBitfield[i]);
+		}
+		System.out.println();
+		System.out.println("Bitfield payloadLeng = " + payloadLength);
 	}
 	
 	/**
 	 * if A receives a bitfield message form B, finds out whether B has pieces that it doesn't have
 	 */
-	boolean findoutNotHave() {
-		return true;
-		
+	boolean findOutInterestedPiece() {
+		//compare localBitfield with peerBitfield
+		boolean t = false;
+		for(int i =0; i<bitfieldLength; i++) {
+			peerBitfield[i] = (byte) (peerBitfield[i]&((byte) ~loaclBitfield[i]));
+			if(peerBitfield[i] != 0) {
+				t = true;
+				System.out.print("have interested piece");
+			}
+		}
+		return t;
 	}
 	
 	/**
@@ -196,10 +216,7 @@ public class BitTorrentClient {
 	void sendNotInterestedMessage(){
 		
 	}
-	
-	void initBitfield() {
-		bitfield = new byte[bitfieldLength];
-	}
+
 	
 	ActualMsg readActualMessage() {
 		byte[] length = new byte[4];
@@ -236,14 +253,14 @@ public class BitTorrentClient {
 				rcvMsg = new Have();
 				break;
 			case ActualMsg.BITFIELD:
-				System.out.println("receive Bitfield");
+				System.out.println("receive Bitfield Message");
 				rcvMsg = new Bitfield();
 				break;
 			case ActualMsg.REQUEST:
 				rcvMsg = new Request();
 				break;
 			case ActualMsg.PIECE:
-				System.out.println("receive Piece");
+				System.out.println("receive Piece Message");
 				rcvMsg = new Piece();
 				break;
 		}
@@ -256,7 +273,7 @@ public class BitTorrentClient {
 	
 	private static void showAvailableBytes(InputStream in) {
 		try {
-			System.out.println("å½“å‰�å­—èŠ‚è¾“å…¥æµ�ä¸­çš„å­—èŠ‚æ•°ä¸º:"+ in.available());
+			System.out.println("number of bytes in file: " + in.available());
 			double c = (double)in.available()/ 13.0;
 			System.out.println("c:"+ c);
 			System.out.println("# of pieces:"+ Math.ceil(c));
