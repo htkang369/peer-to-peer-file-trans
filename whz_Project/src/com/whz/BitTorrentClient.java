@@ -22,6 +22,7 @@ public class BitTorrentClient {
     private List<Integer> interestedPieceList = new ArrayList<>();
     private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
     private boolean fileComplete = false;
+    private boolean unChoked = true;
 	
 	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
     private HandShakeMsg receivedHandShakeMsg = new HandShakeMsg(serverPeerID); // HandShake Msg received from the server
@@ -59,7 +60,9 @@ public class BitTorrentClient {
 				sendNotInterestedMessage();
 			}
 			while(!fileComplete) {
-				sendRequestMsg();
+				if(unChoked) {
+					sendRequestMsg();
+				}
 				readActualMessage();
 			}
 		}
@@ -192,9 +195,9 @@ public class BitTorrentClient {
 	 * parameters may be important
 	 */
 	void sendInterestedMessage() {
-		for(int i =0; i<bitfieldLength; i++) {
-			
-		}
+		Interested interestedMsg = new Interested();
+		byte[] c = ActualMsg.toDataGram(interestedMsg);
+		sendMessage(c);
 	}
 	
 	/**
@@ -294,6 +297,13 @@ public class BitTorrentClient {
 			case ActualMsg.PIECE:
 				System.out.println("receive Piece Message");
 				rcvMsg = new Piece();
+				
+				int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+				System.out.println("Receive message: " + "" + " from server");
+				if(rcvMsg.getPayLoad()!=null) {
+					System.out.write(rcvMsg.getPayLoad(), 0, 100);
+				}
+				System.out.println();
 				break;
 		}
 		if(rcvMsg == null) {

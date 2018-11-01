@@ -14,23 +14,9 @@ import com.whz.msg.ActualMsg;
  */
 @SuppressWarnings("serial")
 public class Choke extends ActualMsg{
-	
-	public Choke(byte[] message_length, byte message_type, byte[] message_payload) {
-		super(message_length, message_type, message_payload);
-	}
-	
-	public Choke(byte[] message_length, byte[] message_payload) {
-		super(message_length, message_payload);
-		msg_type = (byte)CHOKE;
-	}
-
-	public Choke(int message_length, byte[] message_payload) {
-		super(message_length, message_payload);
-		msg_type = (byte)CHOKE;
-	}
-	
 	public Choke() {
 		super();
 		msg_type = (byte)CHOKE;
+		msg_payload = null;
 	}
 }
