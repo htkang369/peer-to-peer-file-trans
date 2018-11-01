@@ -19,6 +19,7 @@ public class BitTorrentClient {
     private byte [] serverPeerID;  // server peer id
     private byte [] loaclBitfield;
     private byte [] peerBitfield;
+    private List<Integer> interestedPieceList = new ArrayList<>();
     private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
 	
 	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
@@ -165,7 +166,11 @@ public class BitTorrentClient {
 			peerBitfield[i] = (byte) (peerBitfield[i]&((byte) ~loaclBitfield[i]));
 			if(peerBitfield[i] != 0) {
 				t = true;
-				System.out.print("have interested piece");
+				for(int j = 0; j < 4;j++) {
+					int k = peerBitfield[i] << j;
+				}
+				//System.out.println("find out interested piece");
+				interestedPieceList.add(e);
 			}
 		}
 		return t;
@@ -173,9 +178,25 @@ public class BitTorrentClient {
 	
 	/**
 	 * A sends interested message to B.
+	 * 
+	 * For example, suppose that peer A makes a connection to peer B and receives
+	 * a 'bitfield' message to peer B. In another example, suppose that peer A receives
+	 * a 'have' message from peer C that contains the index of a piece not in peer A.
+	 * Then peer A sends an 'interested' message to peer C.
+	 * 
+	 * parameters may be important
 	 */
 	void sendInterestedMessage() {
-//		File file = new File("test/testfile");
+		for(int i =0; i<bitfieldLength; i++) {
+			
+		}
+	}
+	
+	void sendNotInterestedMessage(){
+		
+	}
+	
+	void readFile() {
 		InputStream inFile = null;
 		try {
 			byte[] tempbytes = new byte[100];
@@ -183,7 +204,7 @@ public class BitTorrentClient {
 			inFile = new FileInputStream("test/testfile");
 			BitTorrentClient.showAvailableBytes(inFile);
 		
-			byte[] a = MyUtil.intToByteArray(101);;
+			byte[] a = MyUtil.intToByteArray(101);
 			byte[] b = new byte[105];
 			while((byteread = inFile.read(tempbytes)) != -1) {
 				System.out.write(tempbytes, 0, byteread);
@@ -211,10 +232,6 @@ public class BitTorrentClient {
 				}
 			}
 		}
-	}
-	
-	void sendNotInterestedMessage(){
-		
 	}
 
 	

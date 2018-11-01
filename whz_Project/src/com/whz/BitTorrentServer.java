@@ -149,7 +149,7 @@ public class BitTorrentServer {
 		void initBitfield() {
 			bitfield = new byte[bitfieldLength];
 			for(int i=0;i<bitfieldLength;i++) {
-				bitfield[i] = (byte) 0x00;
+				bitfield[i] = (byte) 0xFF;
 			}
 		}
 		
