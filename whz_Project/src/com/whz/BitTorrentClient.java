@@ -56,8 +56,7 @@ public class BitTorrentClient {
 			sendBitfield();
 			receiveBitfield();
 			if(findOutInterestedPiece()) {
-				//sendInterestedMessage();
-				readFile();
+				sendInterestedMessage();
 			}else {
 				sendNotInterestedMessage();
 			}
@@ -65,7 +64,8 @@ public class BitTorrentClient {
 				if(unChoked) {
 					sendRequestMsg();
 				}
-				readActualMessage();
+				ActualMsg rcvMsg = readActualMessage();
+				replyMsg(rcvMsg);
 			}
 		}
 		catch (ConnectException e) {
@@ -213,29 +213,21 @@ public class BitTorrentClient {
 		sendMessage(c);
 	}
 	
-	void readFile() {
+	byte[] readFile(int pieceNum) {
 		InputStream inFile = null;
+		byte[] tempbytes = new byte[MyUtil.PieceSize];
 		try {
-			byte[] tempbytes = new byte[100];
+			
 			int byteread = 0;
 			inFile = new FileInputStream("test/testfile");
 			BitTorrentClient.showAvailableBytes(inFile);
 		
-			byte[] a = MyUtil.intToByteArray(101);
-			byte[] b = new byte[105];
-			while((byteread = inFile.read(tempbytes)) != -1) {
-				System.out.write(tempbytes, 0, byteread);
+			byte[] a = MyUtil.intToByteArray(MyUtil.PieceSize + 1);
+			inFile.skip(pieceNum * MyUtil.PieceSize);
+			if((byteread = inFile.read(tempbytes)) != -1) {
+				System.out.write(tempbytes, 0, MyUtil.PieceSize);
 				System.out.println();
 				System.out.println("one piece!");
-				Piece pieceMsg = new Piece(a,tempbytes);
-				for(int j = 0; j < 5; j++) {
-					b[j] = 0;
-				}
-				for(int j =0 ; j < MyUtil.PieceSize; j++) {
-					b[j+5] = (pieceMsg.getPayLoad())[j];
-				}
-				byte[] c = ActualMsg.toDataGram(pieceMsg);
-				sendMessage(c);
 			}
 		}catch(Exception e1) {
 			e1.printStackTrace();
@@ -248,6 +240,33 @@ public class BitTorrentClient {
 				}
 			}
 		}
+		return tempbytes;
+	}
+	
+	void replyMsg(ActualMsg rcvMsg) {
+		int msgType = rcvMsg.getMsgType();
+		switch(msgType) {
+		case ActualMsg.CHOKE:
+			break;
+		case ActualMsg.UNCHOKE:
+			break;
+		case ActualMsg.INTERESTED:
+			break;
+		case ActualMsg.NOTINTERESTED:
+			break;
+		case ActualMsg.HAVE:
+			break;
+		case ActualMsg.BITFIELD:
+			System.out.println("reply Bitfield Message");
+			break;
+		case ActualMsg.REQUEST:
+			System.out.println("reply Request Message");
+			sendPieceMsg(MyUtil.byteArrayToInt(rcvMsg.getPayLoad()));
+			break;
+		case ActualMsg.PIECE:
+			System.out.println("reply Piece Message");
+			break;
+	}
 	}
 	
 	void sendRequestMsg() {
@@ -262,6 +281,13 @@ public class BitTorrentClient {
 		
 	}
 	
+	void sendPieceMsg(int pieceNum) {
+		byte[] payLoad = readFile(pieceNum);
+		Piece pieceMsg = new Piece(MyUtil.PieceSize + 1,payLoad);
+		byte[] c = ActualMsg.toDataGram(pieceMsg);
+		sendMessage(c);
+	}
+
 	ActualMsg readActualMessage() {
 		byte[] length = new byte[4];
 		try {
@@ -302,17 +328,20 @@ public class BitTorrentClient {
 				break;
 			case ActualMsg.REQUEST:
 				rcvMsg = new Request();
+				ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+				System.out.println("receive Request Message");
 				break;
 			case ActualMsg.PIECE:
 				System.out.println("receive Piece Message");
 				rcvMsg = new Piece();
 				
-				int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+				ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 				System.out.println("Receive message: " + "" + " from server");
 				if(rcvMsg.getPayLoad()!=null) {
-					System.out.write(rcvMsg.getPayLoad(), 0, 100);
+					System.out.write(rcvMsg.getPayLoad(), 0, MyUtil.PieceSize);
 				}
 				System.out.println();
+				System.out.println("receive Piece finished!");
 				break;
 		}
 		if(rcvMsg == null) {

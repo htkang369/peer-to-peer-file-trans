@@ -17,6 +17,11 @@ public class Piece extends ActualMsg{
 		msg_type  = (byte)PIECE;
 	}
 	
+	public Piece(int message_length, byte[] message_payload) {
+		super(message_length, message_payload);
+		msg_type  = (byte)PIECE;
+	}
+	
 	public Piece(byte[] message_length , byte message_type, byte[] message_payload) {
 		super(message_length, message_payload);
 	}
