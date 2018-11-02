@@ -54,7 +54,7 @@ public class BitTorrentClient {
 			sendBitfield();
 			receiveBitfield();
 			if(findOutInterestedPiece()) {
-				sendInterestedMessage();
+				//sendInterestedMessage();
 				readFile();
 			}else {
 				sendNotInterestedMessage();
@@ -226,10 +226,10 @@ public class BitTorrentClient {
 				System.out.println();
 				System.out.println("one piece!");
 				Piece pieceMsg = new Piece(a,tempbytes);
-				for(int j=0; j<5; j++) {
+				for(int j = 0; j < 5; j++) {
 					b[j] = 0;
 				}
-				for(int j=0; j<100; j++) {
+				for(int j =0 ; j < MyUtil.PieceSize; j++) {
 					b[j+5] = (pieceMsg.getPayLoad())[j];
 				}
 				byte[] c = ActualMsg.toDataGram(pieceMsg);
