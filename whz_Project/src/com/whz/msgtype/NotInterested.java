@@ -1,6 +1,7 @@
 package com.whz.msgtype;
 
 import com.whz.msg.ActualMsg;
+import com.whz.util.MyUtil;
 
 @SuppressWarnings("serial")
 public class NotInterested extends ActualMsg{
@@ -12,5 +13,6 @@ public class NotInterested extends ActualMsg{
 		super();
 		msg_type = (byte)NOTINTERESTED;
 		msg_payload = null;
+		msg_length = MyUtil.intToByteArray(1);
 	}
 }

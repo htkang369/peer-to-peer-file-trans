@@ -107,7 +107,7 @@ public class BitTorrentClient {
 	 * A(Client) sends a handshake to B(Server)
 	 */
 	void sendHandshakeMessage() {
-		
+		System.out.println("send HandShake Message");
 		HandShakeMsg handshakeMsg = new HandShakeMsg(1001);
 		sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
 	}
@@ -143,6 +143,7 @@ public class BitTorrentClient {
 	 * A sends a bitfield message to let B know which file pieces it has
 	 */
 	void sendBitfield() {
+		System.out.println("send Bitfield Message");
 		Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,loaclBitfield);
 		byte[] datagram = Bitfield.toDataGram(bitfieldMsg);
 		sendMessage(datagram);
@@ -197,6 +198,7 @@ public class BitTorrentClient {
 	 * parameters may be important
 	 */
 	void sendInterestedMessage() {
+		System.out.println("send Interested Message");
 		Interested interestedMsg = new Interested();
 		byte[] c = ActualMsg.toDataGram(interestedMsg);
 		sendMessage(c);
@@ -208,6 +210,7 @@ public class BitTorrentClient {
 	 *  messages to some neighbors
 	 */
 	void sendNotInterestedMessage(){
+		System.out.println("send Not interested Message");
 		NotInterested notInterested = new NotInterested();
 		byte[] c = ActualMsg.toDataGram(notInterested);
 		sendMessage(c);
@@ -270,18 +273,20 @@ public class BitTorrentClient {
 	}
 	
 	void sendRequestMsg() {
-
+		System.out.println("send Request Message");
 		Request request_message = new Request();
 		int length_interest = interestedPieceList.size();
 		int index = rand.nextInt(length_interest);
 		byte[] a = MyUtil.intToByteArray(interestedPieceList.get(index));
 		request_message.setPayLoad(a);
+		request_message.setMsgLength(MyUtil.intToByteArray(1));
 		byte[] c = ActualMsg.toDataGram(request_message);
 		sendMessage(c);
 		
 	}
 	
 	void sendPieceMsg(int pieceNum) {
+		System.out.println("send Piece Message");
 		byte[] payLoad = readFile(pieceNum);
 		Piece pieceMsg = new Piece(MyUtil.PieceSize + 1,payLoad);
 		byte[] c = ActualMsg.toDataGram(pieceMsg);
