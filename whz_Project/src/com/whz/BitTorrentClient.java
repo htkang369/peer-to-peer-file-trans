@@ -14,6 +14,8 @@ public class BitTorrentClient {
 	DataInputStream in;          //stream read from the socket
 	String message;                //message send to the server
 	String MESSAGE;                //capitalized message read from the server
+	
+	Random rand = new Random();
 
     private byte [] clientPeerID;  // client peer id
     private byte [] serverPeerID;  // server peer id
@@ -249,9 +251,16 @@ public class BitTorrentClient {
 	}
 	
 	void sendRequestMsg() {
+
+		Request request_message = new Request();
+		int length_interest = interestedPieceList.size();
+		int index = rand.nextInt(length_interest);
+		byte[] a = MyUtil.intToByteArray(interestedPieceList.get(index));
+		request_message.setPayLoad(a);
+		byte[] c = ActualMsg.toDataGram(request_message);
+		sendMessage(c);
 		
 	}
-
 	
 	ActualMsg readActualMessage() {
 		byte[] length = new byte[4];
