@@ -2,7 +2,7 @@ package com.whz.util;
 
 public class MyUtil {
 	//byte array to int 
-	public static int pieceNum = 535;
+	public static int pieceNum = 70;
 	public static int FileSize = 100000232;
 	public static int PieceSize = 100;
 	

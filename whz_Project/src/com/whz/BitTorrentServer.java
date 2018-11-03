@@ -72,7 +72,8 @@ public class BitTorrentServer {
 					//receive the message sent from the client
 					//piece = (Piece)in.readObject();
 					//byte[] b = (byte[]) in.readObject();
-					readActualMessage();
+					ActualMsg rcvMsg = readActualMessage();
+					replyMsg(rcvMsg);
 					//Capitalize all letters in the message
 					//MESSAGE = bufferedReader.readLine();
 					//MESSAGE = message.toUpperCase();
@@ -195,22 +196,25 @@ public class BitTorrentServer {
 					rcvMsg = new Have();
 					break;
 				case ActualMsg.BITFIELD:
-					System.out.println("receive Bitfield Msg");
+					System.out.println("receive Bitfield Message");
 					rcvMsg = new Bitfield();
 					break;
 				case ActualMsg.REQUEST:
 					rcvMsg = new Request();
+					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+					System.out.println("receive Request Message");
 					break;
 				case ActualMsg.PIECE:
-					System.out.println("receive Piece Meg");
+					System.out.println("receive Piece Message");
 					rcvMsg = new Piece();
-					//show the message to the user
-					int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-					System.out.println("Receive message: " + "" + " from client " + no);
+					
+					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+					System.out.println("Receive message: " + "" + " from server");
 					if(rcvMsg.getPayLoad()!=null) {
-						System.out.write(rcvMsg.getPayLoad(), 0, 100);
+						System.out.write(rcvMsg.getPayLoad(), 0, MyUtil.PieceSize);
 					}
 					System.out.println();
+					System.out.println("receive Piece finished!");
 					break;
 			}
 			if(rcvMsg == null) {
@@ -219,6 +223,83 @@ public class BitTorrentServer {
 			int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 			return rcvMsg;
 		}
+		
+		void replyMsg(ActualMsg rcvMsg) {
+			int msgType = rcvMsg.getMsgType();
+			switch(msgType) {
+			case ActualMsg.CHOKE:
+				break;
+			case ActualMsg.UNCHOKE:
+				break;
+			case ActualMsg.INTERESTED:
+				break;
+			case ActualMsg.NOTINTERESTED:
+				break;
+			case ActualMsg.HAVE:
+				break;
+			case ActualMsg.BITFIELD:
+				System.out.println("reply Bitfield Message");
+				break;
+			case ActualMsg.REQUEST:
+				System.out.println("reply Request Message");
+				sendPieceMsg(MyUtil.byteArrayToInt(rcvMsg.getPayLoad()));
+				break;
+			case ActualMsg.PIECE:
+				System.out.println("reply Piece Message");
+				break;
+			}
+		}
+		
+		void sendPieceMsg(int pieceNum) {
+			System.out.println("send Piece Message num = " + pieceNum);
+			byte[] payLoad = readFile(pieceNum);
+			Piece pieceMsg = new Piece(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
+			byte[] c = ActualMsg.toDataGram(pieceMsg);
+			sendMessage(c);
+		}
+
+		
+		byte[] readFile(int pieceNum) {
+			InputStream inFile = null;
+			byte[] tempbytes = new byte[MyUtil.PieceSize];
+			try {
+				
+				int byteread = 0;
+				inFile = new FileInputStream("test/testfile");
+				showAvailableBytes(inFile);
+			
+				byte[] a = MyUtil.intToByteArray(MyUtil.PieceSize + 1);
+				inFile.skip(pieceNum * MyUtil.PieceSize);
+				if((byteread = inFile.read(tempbytes)) != -1) {
+					System.out.write(tempbytes, 0, MyUtil.PieceSize);
+					System.out.println();
+					System.out.println("one piece!");
+				}
+			}catch(Exception e1) {
+				e1.printStackTrace();
+			}finally {
+				if(inFile != null) {
+					try {
+						inFile.close();
+					}catch(IOException e1) {
+						
+					}
+				}
+			}
+			return tempbytes;
+		}
+		
+		private static void showAvailableBytes(InputStream in) {
+			try {
+				System.out.println("number of bytes in file: " + in.available());
+				double c = (double)in.available()/ MyUtil.PieceSize;
+				System.out.println("c:"+ c);
+				System.out.println("# of pieces:"+ Math.ceil(c));
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
     }
     
     
