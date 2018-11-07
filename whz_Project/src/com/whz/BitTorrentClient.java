@@ -1,8 +1,6 @@
 package com.whz;
 import java.net.*;
 import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
 import java.util.*;
 import com.whz.msg.*;
 import com.whz.msgtype.*;
@@ -17,17 +15,22 @@ public class BitTorrentClient {
 	
 	Random rand = new Random();
 
-    private byte [] clientPeerID;  // client peer id
-    private byte [] serverPeerID;  // server peer id
+    private int clientPeerID = 1000;  // client peer id
+    private int serverPeerID = 1001;  // server peer id
     private byte [] locallBitfield;
     private byte [] peerBitfield;
     private List<Integer> interestedPieceList = new ArrayList<>();
     private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
     private boolean fileComplete = false;
-    private boolean unChoked = true;
+    private boolean unChoked = false;
+    
+    private HashMap<Integer, LinkState> chokedMap = new HashMap<>();
+    private HashMap<Integer, LinkState> unChokedMap = new HashMap<>();
+    private LinkState optimisticNeighbor;
+    
 	
-	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
-    private HandShakeMsg receivedHandShakeMsg = new HandShakeMsg(serverPeerID); // HandShake Msg received from the server
+//	private HandShakeMsg sentHandShakeMsg = new HandShakeMsg(clientPeerID); // HandShake Msg send to the server
+//	private HandShakeMsg receivedHandShakeMsg = new HandShakeMsg(serverPeerID); // HandShake Msg received from the server
     
 //    private ActualMsg haveMag = new HaveMsg();
 //    private ActualMsg sentActualMsg; //Actual Msg send to the server
@@ -60,10 +63,23 @@ public class BitTorrentClient {
 			}else {
 				sendNotInterestedMessage();
 			}
-			while(!fileComplete) {
-				if(unChoked & !fileComplete) {
-					sendRequestMsg();
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				public void run(){
+					System.out.println("----set timer-----");
+					computeDownloadRate();
+					selectPreferredNeighbors();
 				}
+			}, MyUtil.unchoking_interval, MyUtil.unchoking_interval);
+			Timer timer2 = new Timer();
+			timer2.schedule(new TimerTask() {
+				public void run(){
+					System.out.println("----set Optimistic timer-----");
+					selectOptimisticallyUnchokedNeigbor();
+				}
+			}, MyUtil.optimistic_unchoking_interval, MyUtil.optimistic_unchoking_interval);
+			while(!fileComplete) {
+				
 				ActualMsg rcvMsg = readActualMessage();
 				replyMsg(rcvMsg);
 			}
@@ -109,7 +125,7 @@ public class BitTorrentClient {
 	 */
 	void sendHandshakeMessage() {
 		System.out.println("send HandShake Message");
-		HandShakeMsg handshakeMsg = new HandShakeMsg(1001);
+		HandShakeMsg handshakeMsg = new HandShakeMsg(clientPeerID);
 		sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
 	}
 	
@@ -220,15 +236,11 @@ public class BitTorrentClient {
 	byte[] readFile(int pieceNum) {
 		InputStream inFile = null;
 		byte[] tempbytes = new byte[MyUtil.PieceSize];
-		try {
-			
-			int byteread = 0;
+		try {		
 			inFile = new FileInputStream("test/testfile");
 			BitTorrentClient.showAvailableBytes(inFile);
-		
-			byte[] a = MyUtil.intToByteArray(MyUtil.PieceSize + 1);
 			inFile.skip(pieceNum * MyUtil.PieceSize);
-			if((byteread = inFile.read(tempbytes)) != -1) {
+			if(inFile.read(tempbytes) != -1) {
 				System.out.write(tempbytes, 0, MyUtil.PieceSize);
 				System.out.println();
 				System.out.println("one piece!");
@@ -253,10 +265,19 @@ public class BitTorrentClient {
 		case ActualMsg.CHOKE:
 			break;
 		case ActualMsg.UNCHOKE:
+			System.out.println("reply UnChoke Message");
+			unChoked = true;
+			if(unChoked & !fileComplete) {
+				sendRequestMsg();
+			}
 			break;
 		case ActualMsg.INTERESTED:
+			System.out.println("reply Interested Message");
+			LinkState state = new LinkState(serverPeerID, out);
+			chokedMap.put(serverPeerID,state);
 			break;
 		case ActualMsg.NOTINTERESTED:
+			//delete from map
 			break;
 		case ActualMsg.HAVE:
 			break;
@@ -269,6 +290,9 @@ public class BitTorrentClient {
 			break;
 		case ActualMsg.PIECE:
 			System.out.println("reply Piece Message");
+			if(unChoked & !fileComplete) {
+				sendRequestMsg();
+			}
 			break;
 		}
 	}
@@ -369,7 +393,7 @@ public class BitTorrentClient {
 		if(rcvMsg == null) {
 			System.out.println("parse Type error");
 		}
-		int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+		ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 		return rcvMsg;
 	}
 	
@@ -389,6 +413,42 @@ public class BitTorrentClient {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	void computeDownloadRate() {
+		Iterator<Integer> iter = unChokedMap.keySet().iterator();
+		while(iter.hasNext()) {
+			int id = iter.next();
+			LinkState s = unChokedMap.get(id);
+			s.speed = s.throughput / MyUtil.unchoking_interval;
+		}
+		System.out.println("update speed");
+	}
+	
+	void selectOptimisticallyUnchokedNeigbor() {
+		int size = chokedMap.size();
+		int n = 0;
+		int temp = 0;
+		if(size > 0) {
+			int index = rand.nextInt(size);
+			Iterator<Integer> iter = chokedMap.keySet().iterator();
+			while(iter.hasNext()&& n<index) {
+				temp = iter.next();
+				n++;
+			}
+			System.out.println("update optimistic neighbor");
+		}
+		optimisticNeighbor = chokedMap.get(temp);
+	}
+	
+	void selectPreferredNeighbors() {
+		System.out.println("select preferredNeighbors");
+	}
+	
+	void sendUnchokeMsg(LinkState optimisticNeighbor) {
+		Unchoke unchoke = new Unchoke();
+		byte[] c = ActualMsg.toDataGram(unchoke);
+		sendMessage(c);
 	}
 	
 	//main method

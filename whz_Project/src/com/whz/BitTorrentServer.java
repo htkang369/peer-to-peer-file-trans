@@ -1,6 +1,11 @@
 package com.whz;
 
 import java.net.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.io.*;
 
 import com.whz.msg.ActualMsg;
@@ -19,7 +24,6 @@ import com.whz.util.MyUtil;
 public class BitTorrentServer {
 
 	private static final int sPort = 8000;   //The server will be listening on this port number
-
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("The server is running."); 
@@ -50,6 +54,12 @@ public class BitTorrentServer {
         private byte [] bitfield;
         private byte [] peerBitfield;
         private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
+    	Random rand = new Random();
+        
+    	private HashMap<Integer,DataInputStream> interestedMap = new HashMap<>();
+        private HashMap<Integer, LinkState> chokedMap = new HashMap<>();
+        private HashMap<Integer, LinkState> unChokedMap = new HashMap<>();
+        private LinkState optimisticNeighbor;
 
         public Handler(Socket connection, int no) {
             this.connection = connection;
@@ -67,8 +77,25 @@ public class BitTorrentServer {
 			initBitfield();
 			sendBitfield();
 			receiveBitfield();
-				while(true)
-				{	
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				public void run(){
+					System.out.println("----set timer-----");
+					computeDownloadRate();
+					selectPreferredNeighbors();
+					//sendUnchokeMsg();
+				}
+			}, MyUtil.unchoking_interval, MyUtil.unchoking_interval);
+			Timer timer2 = new Timer();
+			timer2.schedule(new TimerTask() {
+				public void run(){
+					System.out.println("----set Optimistic timer-----");
+					selectOptimisticallyUnchokedNeigbor();
+					sendUnchokeMsg(optimisticNeighbor);
+				}
+			}, MyUtil.optimistic_unchoking_interval, MyUtil.optimistic_unchoking_interval);
+			while(true)
+			{	
 					//receive the message sent from the client
 					//piece = (Piece)in.readObject();
 					//byte[] b = (byte[]) in.readObject();
@@ -79,7 +106,7 @@ public class BitTorrentServer {
 					//MESSAGE = message.toUpperCase();
 					//send MESSAGE back to the client
 					//sendMessage(MESSAGE);		
-				}
+			}
 		}
 		catch(IOException ioException){
 			System.out.println("Disconnect with Client " + no);
@@ -287,6 +314,42 @@ public class BitTorrentServer {
 				}
 			}
 			return tempbytes;
+		}
+		
+		void computeDownloadRate() {
+			Iterator<Integer> iter = unChokedMap.keySet().iterator();
+			while(iter.hasNext()) {
+				int id = iter.next();
+				LinkState s = unChokedMap.get(id);
+				s.speed = s.throughput / MyUtil.unchoking_interval;
+			}
+			System.out.println("update speed");
+		}
+		
+		void selectOptimisticallyUnchokedNeigbor() {
+			int size = chokedMap.size();
+			int n = 0;
+			int temp = 0;
+			if(size > 0) {
+				int index = rand.nextInt(size);
+				Iterator<Integer> iter = chokedMap.keySet().iterator();
+				while(iter.hasNext()&& n<index) {
+					temp = iter.next();
+					n++;
+				}
+				System.out.println("update optimistic neighbor");
+			}
+			optimisticNeighbor = chokedMap.get(temp);
+		}
+		
+		void sendUnchokeMsg(LinkState optimisticNeighbor) {
+			Unchoke unchoke = new Unchoke();
+			byte[] c = ActualMsg.toDataGram(unchoke);
+			sendMessage(c);
+		}
+		
+		void selectPreferredNeighbors() {
+			System.out.println("select preferredNeighbors");
 		}
 		
 		private static void showAvailableBytes(InputStream in) {
