@@ -60,6 +60,8 @@ public class BitTorrentServer {
         private HashMap<Integer, LinkState> chokedMap = new HashMap<>();
         private HashMap<Integer, LinkState> unChokedMap = new HashMap<>();
         private LinkState optimisticNeighbor;
+        Timer timer = new Timer();
+        Timer timer2 = new Timer();
 
         public Handler(Socket connection, int no) {
             this.connection = connection;
@@ -77,7 +79,7 @@ public class BitTorrentServer {
 			initBitfield();
 			sendBitfield();
 			receiveBitfield();
-			Timer timer = new Timer();
+			
 			timer.schedule(new TimerTask() {
 				public void run(){
 					System.out.println("----set timer-----");
@@ -86,12 +88,17 @@ public class BitTorrentServer {
 					//sendUnchokeMsg();
 				}
 			}, MyUtil.unchoking_interval, MyUtil.unchoking_interval);
-			Timer timer2 = new Timer();
+			
 			timer2.schedule(new TimerTask() {
 				public void run(){
 					System.out.println("----set Optimistic timer-----");
 					selectOptimisticallyUnchokedNeigbor();
-					sendUnchokeMsg(optimisticNeighbor);
+					try {
+						sendUnchokeMsg(optimisticNeighbor);
+					} catch (IOException e) {
+						e.printStackTrace();
+						
+					}
 				}
 			}, MyUtil.optimistic_unchoking_interval, MyUtil.optimistic_unchoking_interval);
 			while(true)
@@ -110,6 +117,8 @@ public class BitTorrentServer {
 		}
 		catch(IOException ioException){
 			System.out.println("Disconnect with Client " + no);
+			timer2.cancel();
+			timer.cancel();
 		}
 		finally{
 			//Close connections
@@ -125,22 +134,18 @@ public class BitTorrentServer {
 		}
 	}
 	    
-		void sendMessage(byte[] msg)
+		void sendMessage(byte[] msg) throws IOException
 		{
-			try{
 				//stream write the message
 				out.write(msg);
 				out.flush();
-			}
-			catch(IOException ioException){
-				ioException.printStackTrace();
-			}
 		}
 		
 		/**
 		 * A sends a bitfield message to let B know which file pieces it has
+		 * @throws IOException 
 		 */
-		void sendBitfield() {
+		void sendBitfield() throws IOException {
 			Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,bitfield);
 			byte[] datagram = Bitfield.toDataGram(bitfieldMsg);
 			sendMessage(datagram);
@@ -148,8 +153,9 @@ public class BitTorrentServer {
 		
 		/**
 		 * B will also send its bitfield message to A, unless it has no pieces
+		 * @throws IOException 
 		 */
-		void receiveBitfield() {
+		void receiveBitfield() throws IOException {
 			Bitfield bitfieldMsg = (Bitfield) readActualMessage();
 			peerBitfield = bitfieldMsg.getPayLoad();
 			int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
@@ -169,7 +175,7 @@ public class BitTorrentServer {
 		}
 		
 	    
-		void sendHandshakeMessage() {
+		void sendHandshakeMessage() throws IOException {
 			
 			HandShakeMsg handshakeMsg = new HandShakeMsg(1002);
 			sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
@@ -188,96 +194,90 @@ public class BitTorrentServer {
 			}
 		}
 		
-		ActualMsg readActualMessage() {
+		ActualMsg readActualMessage() throws IOException {
 			byte[] length = new byte[4];
-			try {
-				in.read(length);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			in.read(length);
+
 			int msgLength = ActualMsg.parseLength(length);
-			byte[] rawMsg = new byte[msgLength];
-			try {
-				in.read(rawMsg);
-			} catch (IOException e) {
-				e.printStackTrace();
+			if(msgLength > 0) {
+				byte[] rawMsg = new byte[msgLength];
+				try {
+					in.read(rawMsg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				//should parse type
+				int msgType = ActualMsg.parseMsgType(rawMsg);
+				ActualMsg rcvMsg = null;
+				switch(msgType) {
+					case ActualMsg.CHOKE:
+						rcvMsg = new Choke();
+						break;
+					case ActualMsg.UNCHOKE:
+						rcvMsg = new Unchoke();
+						break;
+					case ActualMsg.INTERESTED:
+						rcvMsg = new Interested();
+						break;
+					case ActualMsg.NOTINTERESTED:
+						rcvMsg = new NotInterested();
+						break;
+					case ActualMsg.HAVE:
+						rcvMsg = new Have();
+						break;
+					case ActualMsg.BITFIELD:
+						System.out.println("receive Bitfield Message");
+						rcvMsg = new Bitfield();
+						break;
+					case ActualMsg.REQUEST:
+						rcvMsg = new Request();
+						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+						System.out.println("receive Request Message");
+						break;
+					case ActualMsg.PIECE:
+						System.out.println("receive Piece Message");
+						break;
+				}
+				if(rcvMsg == null) {
+					System.out.println("parse Type error");
+				}
+				ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+				return rcvMsg;
+			}else {
+				System.out.println("not our message");
+				return null;
 			}
-			//should parse type
-			int msgType = ActualMsg.parseMsgType(rawMsg);
-			ActualMsg rcvMsg = null;
-			switch(msgType) {
+		}
+		
+		void replyMsg(ActualMsg rcvMsg) throws IOException {
+			if(rcvMsg != null) {
+				int msgType = rcvMsg.getMsgType();
+				switch(msgType) {
 				case ActualMsg.CHOKE:
-					rcvMsg = new Choke();
 					break;
 				case ActualMsg.UNCHOKE:
-					rcvMsg = new Unchoke();
 					break;
 				case ActualMsg.INTERESTED:
-					rcvMsg = new Interested();
 					break;
 				case ActualMsg.NOTINTERESTED:
-					rcvMsg = new NotInterested();
 					break;
 				case ActualMsg.HAVE:
-					rcvMsg = new Have();
 					break;
 				case ActualMsg.BITFIELD:
-					System.out.println("receive Bitfield Message");
-					rcvMsg = new Bitfield();
+					System.out.println("reply Bitfield Message");
 					break;
 				case ActualMsg.REQUEST:
-					rcvMsg = new Request();
-					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-					System.out.println("receive Request Message");
+					System.out.println("reply Request Message");
+					sendPieceMsg(MyUtil.byteArrayToInt(rcvMsg.getPayLoad()));
 					break;
 				case ActualMsg.PIECE:
-					System.out.println("receive Piece Message");
-					rcvMsg = new Piece();
-					
-					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-					System.out.println("Receive message: " + "" + " from server");
-					if(rcvMsg.getPayLoad()!=null) {
-						System.out.write(rcvMsg.getPayLoad(), 0, MyUtil.PieceSize);
-					}
-					System.out.println();
-					System.out.println("receive Piece finished!");
+					System.out.println("reply Piece Message");
 					break;
-			}
-			if(rcvMsg == null) {
-				System.out.println("parse Type error");
-			}
-			int n = ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-			return rcvMsg;
-		}
-		
-		void replyMsg(ActualMsg rcvMsg) {
-			int msgType = rcvMsg.getMsgType();
-			switch(msgType) {
-			case ActualMsg.CHOKE:
-				break;
-			case ActualMsg.UNCHOKE:
-				break;
-			case ActualMsg.INTERESTED:
-				break;
-			case ActualMsg.NOTINTERESTED:
-				break;
-			case ActualMsg.HAVE:
-				break;
-			case ActualMsg.BITFIELD:
-				System.out.println("reply Bitfield Message");
-				break;
-			case ActualMsg.REQUEST:
-				System.out.println("reply Request Message");
-				sendPieceMsg(MyUtil.byteArrayToInt(rcvMsg.getPayLoad()));
-				break;
-			case ActualMsg.PIECE:
-				System.out.println("reply Piece Message");
-				break;
+				}
 			}
 		}
 		
-		void sendPieceMsg(int pieceNum) {
+		void sendPieceMsg(int pieceNum) throws IOException {
 			System.out.println("send Piece Message num = " + pieceNum);
 			byte[] payLoad = readFile(pieceNum);
 			Piece pieceMsg = new Piece(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
@@ -342,7 +342,7 @@ public class BitTorrentServer {
 			optimisticNeighbor = chokedMap.get(temp);
 		}
 		
-		void sendUnchokeMsg(LinkState optimisticNeighbor) {
+		void sendUnchokeMsg(LinkState optimisticNeighbor) throws IOException {
 			Unchoke unchoke = new Unchoke();
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);

@@ -16,7 +16,7 @@ public class BitTorrentClient {
 	Random rand = new Random();
 
     private int clientPeerID = 1000;  // client peer id
-    private int serverPeerID = 1001;  // server peer id
+    private int serverPeerID = 1002;  // server peer id
     private byte [] locallBitfield;
     private byte [] peerBitfield;
     private List<Integer> interestedPieceList = new ArrayList<>();
@@ -43,8 +43,9 @@ public class BitTorrentClient {
 	{
 		try{
 			//create a socket to connect to the server
+			
 			requestSocket = new Socket("localhost", 8000);
-			System.out.println("Connected to localhost in port 8000");
+			System.out.println("Connected to localhost in port 8000 ,  this peer ID = " + clientPeerID);
 			//initialize inputStream and outputStream
 			out = new DataOutputStream(requestSocket.getOutputStream());
 			out.flush();
@@ -82,6 +83,10 @@ public class BitTorrentClient {
 				
 				ActualMsg rcvMsg = readActualMessage();
 				replyMsg(rcvMsg);
+			}
+			
+			while(true) {
+				
 			}
 		}
 		catch (ConnectException e) {
@@ -260,40 +265,42 @@ public class BitTorrentClient {
 	}
 	
 	void replyMsg(ActualMsg rcvMsg) {
-		int msgType = rcvMsg.getMsgType();
-		switch(msgType) {
-		case ActualMsg.CHOKE:
-			break;
-		case ActualMsg.UNCHOKE:
-			System.out.println("reply UnChoke Message");
-			unChoked = true;
-			if(unChoked & !fileComplete) {
-				sendRequestMsg();
+		if(rcvMsg != null) {
+			int msgType = rcvMsg.getMsgType();
+			switch(msgType) {
+			case ActualMsg.CHOKE:
+				break;
+			case ActualMsg.UNCHOKE:
+				System.out.println("reply UnChoke Message");
+				unChoked = true;
+				if(unChoked & !fileComplete) {
+					sendRequestMsg();
+				}
+				break;
+			case ActualMsg.INTERESTED:
+				System.out.println("reply Interested Message");
+				LinkState state = new LinkState(serverPeerID, out);
+				chokedMap.put(serverPeerID,state);
+				break;
+			case ActualMsg.NOTINTERESTED:
+				//delete from map
+				break;
+			case ActualMsg.HAVE:
+				break;
+			case ActualMsg.BITFIELD:
+				System.out.println("reply Bitfield Message");
+				break;
+			case ActualMsg.REQUEST:
+				System.out.println("reply Request Message");
+				sendPieceMsg(MyUtil.byteArrayToInt(rcvMsg.getPayLoad()));
+				break;
+			case ActualMsg.PIECE:
+				System.out.println("reply Piece Message");
+				if(unChoked & !fileComplete) {
+					sendRequestMsg();
+				}
+				break;
 			}
-			break;
-		case ActualMsg.INTERESTED:
-			System.out.println("reply Interested Message");
-			LinkState state = new LinkState(serverPeerID, out);
-			chokedMap.put(serverPeerID,state);
-			break;
-		case ActualMsg.NOTINTERESTED:
-			//delete from map
-			break;
-		case ActualMsg.HAVE:
-			break;
-		case ActualMsg.BITFIELD:
-			System.out.println("reply Bitfield Message");
-			break;
-		case ActualMsg.REQUEST:
-			System.out.println("reply Request Message");
-			sendPieceMsg(MyUtil.byteArrayToInt(rcvMsg.getPayLoad()));
-			break;
-		case ActualMsg.PIECE:
-			System.out.println("reply Piece Message");
-			if(unChoked & !fileComplete) {
-				sendRequestMsg();
-			}
-			break;
 		}
 	}
 	
@@ -328,73 +335,78 @@ public class BitTorrentClient {
 			e.printStackTrace();
 		}
 		int msgLength = ActualMsg.parseLength(length);
-		byte[] rawMsg = new byte[msgLength];
-		try {
-			in.read(rawMsg);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(msgLength > 0) {
+			byte[] rawMsg = new byte[msgLength];
+			try {
+				in.read(rawMsg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			//should parse type
+			int msgType = ActualMsg.parseMsgType(rawMsg);
+			ActualMsg rcvMsg = null;
+			switch(msgType) {
+				case ActualMsg.CHOKE:
+					rcvMsg = new Choke();
+					break;
+				case ActualMsg.UNCHOKE:
+					rcvMsg = new Unchoke();
+					break;
+				case ActualMsg.INTERESTED:
+					rcvMsg = new Interested();
+					break;
+				case ActualMsg.NOTINTERESTED:
+					rcvMsg = new NotInterested();
+					break;
+				case ActualMsg.HAVE:
+					rcvMsg = new Have();
+					break;
+				case ActualMsg.BITFIELD:
+					System.out.println("receive Bitfield Message");
+					rcvMsg = new Bitfield();
+					break;
+				case ActualMsg.REQUEST:
+					rcvMsg = new Request();
+					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+					System.out.println("receive Request Message");
+					break;
+				case ActualMsg.PIECE:
+					System.out.println("receive Piece Message");
+					rcvMsg = new Piece();
+					
+					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+					if(rcvMsg.getPayLoad()!=null) {
+						System.out.write(rcvMsg.getPayLoad(), 4,MyUtil.byteArrayToInt(length) - 5);
+					}
+					System.out.println();
+					byte[] pieceNum = new byte[4];
+					byte[] payLoad = rcvMsg.getPayLoad();
+					System.arraycopy(payLoad, 0, pieceNum, 0, 4);
+					byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
+					System.arraycopy(payLoad, 4, content, 0, MyUtil.byteArrayToInt(length) - 5);
+					int piecenum = MyUtil.byteArrayToInt(pieceNum);
+					System.out.println("receive Piece finished! : number = " + piecenum);
+					changeLocalBitField(piecenum);
+					int t = interestedPieceList.indexOf(piecenum);
+					if(t != -1) {
+						interestedPieceList.remove(t);
+					}else {
+						System.out.println("do not need this one");
+					}
+					if(interestedPieceList.size() == 0) {
+						fileComplete = true;
+					}
+					break;
+			}
+			if(rcvMsg == null) {
+				System.out.println("parse Type error");
+			}
+			ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
+			return rcvMsg;
+		}else {
+			System.out.println("not our message");
+			return null;
 		}
-		//should parse type
-		int msgType = ActualMsg.parseMsgType(rawMsg);
-		ActualMsg rcvMsg = null;
-		switch(msgType) {
-			case ActualMsg.CHOKE:
-				rcvMsg = new Choke();
-				break;
-			case ActualMsg.UNCHOKE:
-				rcvMsg = new Unchoke();
-				break;
-			case ActualMsg.INTERESTED:
-				rcvMsg = new Interested();
-				break;
-			case ActualMsg.NOTINTERESTED:
-				rcvMsg = new NotInterested();
-				break;
-			case ActualMsg.HAVE:
-				rcvMsg = new Have();
-				break;
-			case ActualMsg.BITFIELD:
-				System.out.println("receive Bitfield Message");
-				rcvMsg = new Bitfield();
-				break;
-			case ActualMsg.REQUEST:
-				rcvMsg = new Request();
-				ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-				System.out.println("receive Request Message");
-				break;
-			case ActualMsg.PIECE:
-				System.out.println("receive Piece Message");
-				rcvMsg = new Piece();
-				
-				ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-				if(rcvMsg.getPayLoad()!=null) {
-					System.out.write(rcvMsg.getPayLoad(), 4,MyUtil.byteArrayToInt(length) - 5);
-				}
-				System.out.println();
-				byte[] pieceNum = new byte[4];
-				byte[] payLoad = rcvMsg.getPayLoad();
-				System.arraycopy(payLoad, 0, pieceNum, 0, 4);
-				byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
-				System.arraycopy(payLoad, 4, content, 0, MyUtil.byteArrayToInt(length) - 5);
-				int piecenum = MyUtil.byteArrayToInt(pieceNum);
-				System.out.println("receive Piece finished! : number = " + piecenum);
-				changeLocalBitField(piecenum);
-				int t = interestedPieceList.indexOf(piecenum);
-				if(t != -1) {
-					interestedPieceList.remove(t);
-				}else {
-					System.out.println("do not need this one");
-				}
-				if(interestedPieceList.size() == 0) {
-					fileComplete = true;
-				}
-				break;
-		}
-		if(rcvMsg == null) {
-			System.out.println("parse Type error");
-		}
-		ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-		return rcvMsg;
 	}
 	
 	void changeLocalBitField(int piecenum) {
