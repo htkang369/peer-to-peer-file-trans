@@ -65,6 +65,7 @@ public class BitTorrentClient {
 					sendRequestMsg();
 				}
 				ActualMsg rcvMsg = readActualMessage();
+				
 				replyMsg(rcvMsg);
 			}
 		}
