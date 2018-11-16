@@ -106,8 +106,11 @@ public abstract class ActualMsg implements Serializable{
 	
 	public static int parseMsgType(byte[] rawMsg) {
 		byte temptype;
-		temptype = rawMsg[0];
-		return (int)temptype;
+		if(rawMsg != null) {
+			temptype = rawMsg[0];
+			return (int)temptype;
+		}
+		return -1;
 	}
 	
 	/**

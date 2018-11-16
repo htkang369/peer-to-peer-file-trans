@@ -1,6 +1,7 @@
 package com.whz.msgtype;
 
 import com.whz.msg.ActualMsg;
+import com.whz.util.MyUtil;
 
 /**
  * The number of concurrent connections on which a peer uploads its pieces is limited. 
@@ -18,5 +19,6 @@ public class Choke extends ActualMsg{
 		super();
 		msg_type = (byte)CHOKE;
 		msg_payload = null;
+		msg_length = MyUtil.intToByteArray(1);
 	}
 }
