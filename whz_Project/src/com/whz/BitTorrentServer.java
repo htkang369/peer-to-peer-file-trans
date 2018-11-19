@@ -1,6 +1,8 @@
 package com.whz;
 
 import java.net.*;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -24,11 +26,38 @@ import com.whz.util.MyUtil;
 public class BitTorrentServer {
 
 	private static final int sPort = 8000;   //The server will be listening on this port number
+	private HashMap<Integer, LinkState> chokedMap = new HashMap<>();
+    private static HashMap<Integer, LinkState> unChokedMap = new HashMap<>();
+    private LinkState optimisticNeighbor;
+    Random rand = new Random();
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("The server is running."); 
         ServerSocket listener = new ServerSocket(sPort);
+        BitTorrentServer server = new BitTorrentServer();
 		int clientNum = 1;
+        Timer timer = new Timer();
+        Timer timer2 = new Timer();
+		timer.schedule(new TimerTask() {
+			public void run(){
+				System.out.println("----set timer-----");
+				server.computeDownloadRate();
+				server.selectPreferredNeighbors();
+				//sendUnchokeMsg();
+			}
+		}, MyUtil.unchoking_interval, MyUtil.unchoking_interval);
+		timer2.schedule(new TimerTask() {
+			public void run(){
+				System.out.println("----set Optimistic timer-----");
+				server.selectOptimisticallyUnchokedNeigbor();
+				try {
+					server.sendUnchokeMsg(server.optimisticNeighbor);
+				} catch (IOException e) {
+					e.printStackTrace();
+					
+				}
+			}
+		}, MyUtil.optimistic_unchoking_interval, MyUtil.optimistic_unchoking_interval);
         	try {
             	while(true) {
                 	new Handler(listener.accept(),clientNum).start();
@@ -37,14 +66,58 @@ public class BitTorrentServer {
             	}
         	} finally {
             	listener.close();
+    			timer2.cancel();
+    			timer.cancel();
         	} 
     	}
+	
+	void selectPreferredNeighbors() {
+		System.out.println("select preferredNeighbors");
+		
+	}
+	
+	void computeDownloadRate() {
+		Iterator<Integer> iter = unChokedMap.keySet().iterator();
+		while(iter.hasNext()) {
+			int id = iter.next();
+			LinkState s = unChokedMap.get(id);
+			Calendar calendar = Calendar.getInstance();
+			long timeInMillis = calendar.getTimeInMillis();
+			s.speed = (s.downloadThroughput + s.upLoadThroughput) / ( timeInMillis - s.startTime);
+		}
+		System.out.println("update speed");
+	}
+	
+	void selectOptimisticallyUnchokedNeigbor() {
+		int size = chokedMap.size();
+		int n = 0;
+		int temp = 0;
+		if(size > 0) {
+			int index = rand.nextInt(size);
+			Iterator<Integer> iter = chokedMap.keySet().iterator();
+			while(iter.hasNext()&& n<index) {
+				temp = iter.next();
+				n++;
+			}
+			System.out.println("update optimistic neighbor");
+		}
+		optimisticNeighbor = chokedMap.get(temp);
+	}
+	
+	void sendUnchokeMsg(LinkState optimisticNeighbor) throws IOException {
+		Iterator<Integer> iter = unChokedMap.keySet().iterator();
+		while(iter.hasNext()) {
+			int id = iter.next();
+			LinkState s = unChokedMap.get(id);
+			s.connection.sendUnchokeMsg(optimisticNeighbor);
+		}
+	}
 
 	/**
      	* A handler thread class.  Handlers are spawned from the listening
      	* loop and are responsible for dealing with a single client's requests.
     */
-    private static class Handler extends Thread {
+    public static class Handler extends Thread {
         private String message;    //message received from the client
         private String MESSAGE;    //uppercase message send to the client
         private Socket connection;
@@ -57,11 +130,8 @@ public class BitTorrentServer {
     	Random rand = new Random();
         
     	private HashMap<Integer,DataInputStream> interestedMap = new HashMap<>();
-        private HashMap<Integer, LinkState> chokedMap = new HashMap<>();
-        private HashMap<Integer, LinkState> unChokedMap = new HashMap<>();
-        private LinkState optimisticNeighbor;
-        Timer timer = new Timer();
-        Timer timer2 = new Timer();
+        
+ 
 
         public Handler(Socket connection, int no) {
             this.connection = connection;
@@ -79,28 +149,7 @@ public class BitTorrentServer {
 			initBitfield();
 			sendBitfield();
 			receiveBitfield();
-			
-			timer.schedule(new TimerTask() {
-				public void run(){
-					System.out.println("----set timer-----");
-					computeDownloadRate();
-					selectPreferredNeighbors();
-					//sendUnchokeMsg();
-				}
-			}, MyUtil.unchoking_interval, MyUtil.unchoking_interval);
-			
-			timer2.schedule(new TimerTask() {
-				public void run(){
-					System.out.println("----set Optimistic timer-----");
-					selectOptimisticallyUnchokedNeigbor();
-					try {
-						sendUnchokeMsg(optimisticNeighbor);
-					} catch (IOException e) {
-						e.printStackTrace();
-						
-					}
-				}
-			}, MyUtil.optimistic_unchoking_interval, MyUtil.optimistic_unchoking_interval);
+
 			while(true)
 			{	
 					//receive the message sent from the client
@@ -117,8 +166,6 @@ public class BitTorrentServer {
 		}
 		catch(IOException ioException){
 			System.out.println("Disconnect with Client " + no);
-			timer2.cancel();
-			timer.cancel();
 		}
 		finally{
 			//Close connections
@@ -283,6 +330,7 @@ public class BitTorrentServer {
 			Piece pieceMsg = new Piece(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
 			sendMessage(c);
+			unChokedMap.get(no).upLoadThroughput++;
 		}
 
 		
@@ -316,41 +364,13 @@ public class BitTorrentServer {
 			return tempbytes;
 		}
 		
-		void computeDownloadRate() {
-			Iterator<Integer> iter = unChokedMap.keySet().iterator();
-			while(iter.hasNext()) {
-				int id = iter.next();
-				LinkState s = unChokedMap.get(id);
-				s.speed = s.throughput / MyUtil.unchoking_interval;
-			}
-			System.out.println("update speed");
-		}
-		
-		void selectOptimisticallyUnchokedNeigbor() {
-			int size = chokedMap.size();
-			int n = 0;
-			int temp = 0;
-			if(size > 0) {
-				int index = rand.nextInt(size);
-				Iterator<Integer> iter = chokedMap.keySet().iterator();
-				while(iter.hasNext()&& n<index) {
-					temp = iter.next();
-					n++;
-				}
-				System.out.println("update optimistic neighbor");
-			}
-			optimisticNeighbor = chokedMap.get(temp);
-		}
-		
 		void sendUnchokeMsg(LinkState optimisticNeighbor) throws IOException {
 			Unchoke unchoke = new Unchoke();
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);
 		}
 		
-		void selectPreferredNeighbors() {
-			System.out.println("select preferredNeighbors");
-		}
+
 		
 		private static void showAvailableBytes(InputStream in) {
 			try {

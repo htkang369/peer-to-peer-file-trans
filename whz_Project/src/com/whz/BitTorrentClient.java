@@ -280,8 +280,8 @@ public class BitTorrentClient {
 				break;
 			case ActualMsg.INTERESTED:
 				System.out.println("reply Interested Message");
-				LinkState state = new LinkState(serverPeerID, out);
-				chokedMap.put(serverPeerID,state);
+				//LinkState state = new LinkState(serverPeerID, out);
+				//chokedMap.put(serverPeerID,state);
 				break;
 			case ActualMsg.NOTINTERESTED:
 				//delete from map
@@ -433,7 +433,7 @@ public class BitTorrentClient {
 		while(iter.hasNext()) {
 			int id = iter.next();
 			LinkState s = unChokedMap.get(id);
-			s.speed = s.throughput / MyUtil.unchoking_interval;
+			//s.speed = s.throughput / MyUtil.unchoking_interval;
 		}
 		System.out.println("update speed");
 	}
