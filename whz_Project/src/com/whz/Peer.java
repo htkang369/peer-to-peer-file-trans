@@ -187,7 +187,7 @@ public class Peer {
         private boolean isClient;
         private int peerID;
         private boolean isInterested;
-        private byte [] peerBitfield;
+        private BitField peerBitfield;
         private Random rand = new Random();
         private boolean unChoked = false;
 
@@ -276,6 +276,8 @@ public class Peer {
 			for(int i = 0; i< payloadLength-4; i++) {
 				System.out.print(bitfield.bitfield[i]);
 			}
+			peerBitfield = bitfield;
+			peerBitfields.put(peerID, peerBitfield);
 			System.out.println();
 			System.out.println("Bitfield payloadLeng = " + payloadLength);
 		
@@ -368,12 +370,12 @@ public class Peer {
 			//compare localBitfield with peerBitfield
 			boolean t = false;
 			for(int i =0; i<Config.bitFieldLength; i++) {
-				peerBitfield[i] = (byte) (peerBitfield[i]&((byte) ~ localBitfield.bitfield[i]));
-				if(peerBitfield[i] != 0) {
+				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i]&((byte) ~ localBitfield.bitfield[i]));
+				if(peerBitfield.bitfield[i] != 0) {
 					t = true;
 					for(int j = 0; j < 8;j++) {
 						int k = 1; 
-						k = (peerBitfield[i] >> j) & k;
+						k = (peerBitfield.bitfield[i] >> j) & k;
 						if( k == 1) {
 							interestedPieceList.add(i*8+j);
 							System.out.println("find out interested piece, pieceNum = " + (i*8+j));
