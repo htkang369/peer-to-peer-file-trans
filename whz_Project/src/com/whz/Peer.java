@@ -221,6 +221,9 @@ public class Peer {
 				e.printStackTrace();
 			}finally {
 				try {
+					System.out.println("close with peerID " + peerID);
+					in.close();
+					out.close();
 					connection.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -377,7 +380,7 @@ public class Peer {
 			boolean t = false;
 			System.out.println("localBitfield.bitfield:");
 			for(int i =0; i< Config.bitFieldLength; i++) {
-				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i]);
+				System.out.print(localBitfield.bitfield[i]);
 				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
 				if(peerBitfield.bitfield[i] != 0) {
 					t = true;
