@@ -56,6 +56,7 @@ public class Peer {
 		interestedPieceList = new ArrayList<>();
 		neighbor = new HashMap<>();
 		interestedList = new ArrayList<>();
+		localBitfield = new BitField();
 		
 		initBitfield();
 		
