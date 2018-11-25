@@ -212,6 +212,7 @@ public class Peer {
 			sendHandShake();
 			receiveHandShake();
 			sendBitfield();
+			System.out.println("middle send receive");
 			receiveBitfield();
 			findOutInterestedPiece();
 			sendInterestedOrNot();
