@@ -106,6 +106,9 @@ public class Peer {
 	
 	public static void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors");
+		for(int i = 0; i < interestedList.size(); i++) {
+			interestedList.get(i).computeDownloadRate();
+		}
 		Collections.sort(interestedList);
 		int size = Config.k;
 		if(interestedList.size() < Config.k) {
@@ -641,7 +644,6 @@ public class Peer {
 		@Override
 		public int compareTo(Handler o) {
 			// TODO Auto-generated method stub
-			computeDownloadRate();
 			return (int) (this.speed - o.speed);
 		}
 	}
