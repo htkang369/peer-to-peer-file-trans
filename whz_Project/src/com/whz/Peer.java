@@ -115,7 +115,9 @@ public class Peer {
 	}
 	
 	public static void sendOpUnchoke() {
-		optimisticNeighbor.sendUnchoke();
+		if(optimisticNeighbor!= null) {
+			optimisticNeighbor.sendUnchoke();
+		}
 	}
 	
 	public void sendChoke() {
