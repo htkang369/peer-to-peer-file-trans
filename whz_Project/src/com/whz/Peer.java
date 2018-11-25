@@ -414,7 +414,6 @@ public class Peer {
 			System.out.println("replyHave");
 			HaveMsg haveMsg = (HaveMsg) rcvMsg;
 			changePeerBitField(MyUtil.byteArrayToInt(haveMsg.getPayLoad()));
-			sendInterestedOrNot();
 		}
 
 		public void sendRequest() {
@@ -604,7 +603,7 @@ public class Peer {
 			int index = piecenum / 8;
 			int offset = piecenum %8;
 			int temp = 0x01 << (8 - offset);
-			if((~peerBitfield.bitfield[index] & temp) != 0) {
+			if((~localBitfield.bitfield[index] & temp) != 0) {
 				System.out.println("receive interested have from " + peerID + " pieceNum = " + piecenum);
 				if(isInterested == false) {
 					System.out.println("this is new interest");
