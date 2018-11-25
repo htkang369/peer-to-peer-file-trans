@@ -246,6 +246,11 @@ public class Peer {
 					replyMsg(rcvMsg);
 				}
 				System.out.println("receive file completely");
+				while(true) {			
+					ActualMsg rcvMsg = receiveActualMsg();
+					replyMsg(rcvMsg);
+				}
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

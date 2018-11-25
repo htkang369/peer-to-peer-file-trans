@@ -19,7 +19,7 @@ public class Config {
 	public static void initiatePeerConfig() {
 		peerIpAddress = new HashMap<>();
 
-//		peerIpAddress.put(1001, "10.193.121.91");
+		peerIpAddress.put(1001, "10.193.38.76");
 
 	}
 }
