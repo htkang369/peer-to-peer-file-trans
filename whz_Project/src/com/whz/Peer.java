@@ -255,7 +255,6 @@ public class Peer {
 					in.close();
 					out.close();
 					connection.close();
-					System.out.println("close with peerID " + peerID);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -629,7 +628,7 @@ public class Peer {
 			Calendar calendar = Calendar.getInstance();
 			long timeInMillis = calendar.getTimeInMillis();
 			speed = (downloadThroughput + upLoadThroughput) / ( timeInMillis - startTime);
-			System.out.println("update speed =" + speed);
+			System.out.println(peerID + " update speed =" + speed);
 		}
 		
 		public void clearSpeed() {
