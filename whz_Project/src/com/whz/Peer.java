@@ -275,7 +275,7 @@ public class Peer {
 			sendMessage(datagram);	
 		}
 		
-		public void receiveBitfield() {
+		public void receiveBitfield() throws IOException {
 			System.out.println("receive Bitfield Message from:" + peerID);
 			BitfieldMsg bitfieldMsg = (BitfieldMsg) receiveActualMsg();
 			BitField bitfield = new BitField();
@@ -398,14 +398,10 @@ public class Peer {
 			return t;
 		}
 		
-		ActualMsg receiveActualMsg() {
+		ActualMsg receiveActualMsg() throws IOException {
 			byte[] length = new byte[4];
-			try {
-				in.read(length);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			in.read(length);
+
 			int msgLength = ActualMsg.parseLength(length);
 			if(msgLength > 0) {
 				byte[] rawMsg = new byte[msgLength];
