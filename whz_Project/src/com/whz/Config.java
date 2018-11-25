@@ -3,6 +3,7 @@ package com.whz;
 import java.util.HashMap;
 
 public class Config {
+	public static int myID = 1001;
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
 	public static int pieceNum = 70;

@@ -31,7 +31,7 @@ import com.whz.msgtype.UnchokeMsg;
 import com.whz.util.MyUtil;
 
 public class Peer {
-	static int myID;
+	static int myID = Config.myID;
 	static HashMap<Integer, Handler> neighbor;
 	static ArrayList<Handler> interestedList;
 	static BitField localBitfield;
@@ -265,6 +265,7 @@ public class Peer {
 		}
 		
 		public void receiveBitfield() {
+			System.out.println("receive Bitfield Message from:" + peerID);
 			BitfieldMsg bitfieldMsg = (BitfieldMsg) receiveActualMsg();
 			BitField bitfield = new BitField();
 			bitfield.bitfield = bitfieldMsg.getPayLoad();
