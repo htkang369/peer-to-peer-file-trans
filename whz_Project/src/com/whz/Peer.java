@@ -392,12 +392,25 @@ public class Peer {
 			System.out.println("receivePiece");
 		}
 		
-		public void sendHave() {
-			System.out.println("sendHave");
+		public void sendHaveToAll(int pieceIndex) {
+			System.out.println("send have to all");
+			for(int i = 0; i < neighbor.size(); i++) {
+				neighbor.get(i).sendHave(pieceIndex);
+			}
 		}
 		
-		public void receiveHave() {
-			System.out.println("receiveHave");
+		public void sendHave(int pieceIndex) {
+			System.out.println("sendHave to " + peerID);
+			HaveMsg haveMsg = new HaveMsg(pieceIndex);
+			byte[] c = ActualMsg.toDataGram(haveMsg);
+			sendMessage(c);
+		}
+		
+		public void receiveHave(ActualMsg rcvMsg) {
+			System.out.println("replyHave");
+			HaveMsg haveMsg = (HaveMsg) rcvMsg;
+			changePeerBitField(MyUtil.byteArrayToInt(haveMsg.getPayLoad()));
+			sendInterestedOrNot();
 		}
 
 		public void sendRequest() {
@@ -505,6 +518,7 @@ public class Peer {
 							fileComplete = true;
 						}
 						downloadThroughput += Config.PieceSize;
+						sendHaveToAll(piecenum);
 						break;
 				}
 				if(rcvMsg == null) {
@@ -542,7 +556,7 @@ public class Peer {
 					receiveNotInterested();
 					break;
 				case ActualMsg.HAVE:
-					receiveHave();
+					receiveHave(rcvMsg);
 					break;
 				case ActualMsg.BITFIELD:
 					System.out.println("reply Bitfield Message");
@@ -580,6 +594,20 @@ public class Peer {
 			int offset = piecenum %8;
 			int temp = 0x01 << (8 - offset);
 			localBitfield.bitfield[index] = (byte) (localBitfield.bitfield[index] | temp);
+		}
+		
+		public void changePeerBitField(int piecenum) {
+			int index = piecenum / 8;
+			int offset = piecenum %8;
+			int temp = 0x01 << (8 - offset);
+			if((~peerBitfield.bitfield[index] & temp) != 0) {
+				System.out.println("receive interested have from " + peerID + "pieceNum = " + piecenum);
+				if(isInterested == false) {
+					isInterested = true;
+					sendInterestedOrNot();
+				}
+			}
+			peerBitfield.bitfield[index] = (byte) (peerBitfield.bitfield[index] | temp);
 		}
 		
 		public void sendMessage(byte[] msg)

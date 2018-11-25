@@ -1,6 +1,7 @@
 package com.whz.msgtype;
 
 import com.whz.msg.ActualMsg;
+import com.whz.util.MyUtil;
 
 @SuppressWarnings("serial")
 public class HaveMsg extends ActualMsg{
@@ -23,6 +24,12 @@ public class HaveMsg extends ActualMsg{
 
 	public HaveMsg(int message_length, byte[] message_payload) {
 		super(message_length, message_payload);
+		msg_type = (byte)HAVE;
+	}
+	
+	public HaveMsg(int pieceIndex) {
+		msg_payload = MyUtil.intToByteArray(pieceIndex);
+		msg_length = MyUtil.intToByteArray(5);
 		msg_type = (byte)HAVE;
 	}
 	
