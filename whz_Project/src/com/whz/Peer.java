@@ -105,7 +105,7 @@ public class Peer {
 	}
 	
 	public static void selectPreferredNeighbors() {
-		System.out.println("select preferredNeighbors");
+		System.out.println("select preferredNeighbors interestedList.size = " + interestedList.size());
 		for(int i = 0; i < interestedList.size(); i++) {
 			interestedList.get(i).computeDownloadRate();
 		}
