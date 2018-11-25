@@ -57,12 +57,25 @@ public class Peer {
 		neighbor = new HashMap<>();
 		interestedList = new ArrayList<>();
 		
+		initBitfield();
+		
 		Config.initiatePeerConfig();
 		tryToConnect();	
 		addTimerP();
 		addTimerM();
 		listenTcpConnection();	
 	}
+	
+    static void initBitfield() {
+		localBitfield.bitfield = new byte[Config.bitFieldLength];
+	}
+	
+//	static void initBitfield() {
+//		localBitfield.bitfield = new byte[Config.bitFieldLength];
+//		for(int i=0;i<Config.bitFieldLength;i++) {
+//			localBitfield.bitfield[i] = (byte) 0xFF;
+//		}
+//	}
 	
 	public static void addTimerP() {
 		timerP = new Timer();
@@ -233,7 +246,7 @@ public class Peer {
 			HandShakeMsg.checkHead(rcvhandshakeMsg);
 			if(isClient) {
 				if(!HandShakeMsg.checkPeerID(peerID, rcvhandshakeMsg)) {
-					System.out.println("error peerID:" + rcvhandshakeMsg.getPeerID());
+					System.out.println("error peerID:" + rcvhandshakeMsg.getPeerID() + " right peerID:" + peerID);
 				}else {
 					System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
 					neighbor.put(rcvhandshakeMsg.getPeerID(), this);
