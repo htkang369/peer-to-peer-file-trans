@@ -260,7 +260,7 @@ public class Peer {
 		
 		public void sendBitfield() {
 			System.out.println("send Bitfield Message");
-			BitfieldMsg bitfieldMsg = new BitfieldMsg(Config.bitFieldLength , localBitfield);
+			BitfieldMsg bitfieldMsg = new BitfieldMsg(Config.bitFieldLength , localBitfield.bitfield);
 			byte[] datagram = BitfieldMsg.toDataGram(bitfieldMsg);
 			sendMessage(datagram);
 			
