@@ -246,7 +246,11 @@ public class Peer {
 					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
 				}
+				System.out.println("receive file completely");
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally {
@@ -255,6 +259,7 @@ public class Peer {
 					in.close();
 					out.close();
 					connection.close();
+					System.out.println("close with peerID " + peerID);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -305,7 +310,7 @@ public class Peer {
 			sendMessage(datagram);	
 		}
 		
-		public void receiveBitfield() throws IOException {
+		public void receiveBitfield() throws Exception {
 			System.out.println("receive Bitfield Message from:" + peerID);
 			BitfieldMsg bitfieldMsg = (BitfieldMsg) receiveActualMsg();
 			BitField bitfield = new BitField();
@@ -432,7 +437,7 @@ public class Peer {
 			return t;
 		}
 		
-		ActualMsg receiveActualMsg() throws IOException {
+		ActualMsg receiveActualMsg() throws Exception {
 			byte[] length = new byte[4];
 			in.read(length);
 
@@ -513,7 +518,7 @@ public class Peer {
 				return rcvMsg;
 			}else {
 				System.out.println("not our message");
-				return null;
+				throw new Exception();
 			}
 		}
 		
