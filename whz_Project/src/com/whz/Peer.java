@@ -254,16 +254,16 @@ public class Peer {
 					neighbor.put(rcvhandshakeMsg.getPeerID(), this);
 				}
 			}else {
+				System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
 				peerID = rcvhandshakeMsg.getPeerID();
 			}
 		}
 		
 		public void sendBitfield() {
-			System.out.println("send Bitfield Message");
+			System.out.println("send Bitfield Message bitFieldLength = " + Config.bitFieldLength);
 			BitfieldMsg bitfieldMsg = new BitfieldMsg(Config.bitFieldLength , localBitfield.bitfield);
 			byte[] datagram = BitfieldMsg.toDataGram(bitfieldMsg);
-			sendMessage(datagram);
-			
+			sendMessage(datagram);	
 		}
 		
 		public void receiveBitfield() {
@@ -427,7 +427,7 @@ public class Peer {
 					case ActualMsg.BITFIELD:
 						System.out.println("receive Bitfield Message");
 						rcvMsg = new BitfieldMsg();
-						receiveBitfield();
+						//receiveBitfield();
 						break;
 					case ActualMsg.REQUEST:
 						rcvMsg = new RequestMsg();
