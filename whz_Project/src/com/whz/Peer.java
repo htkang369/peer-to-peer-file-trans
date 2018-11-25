@@ -109,8 +109,11 @@ public class Peer {
 	public static void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors");
 		Collections.sort(interestedList);
-
-		for(int i = 0; i < Config.k; i++) {
+		int size = Config.k;
+		if(interestedList.size() < Config.k) {
+			size = interestedList.size();
+		}
+		for(int i = 0; i < size; i++) {
 			int unChokePeerID = interestedList.get(i).peerID;
 			if(unChokedMap.get(unChokePeerID) == null) {
 				unChokedMap.put(unChokePeerID, interestedList.get(i));
@@ -136,10 +139,14 @@ public class Peer {
 	
 	public static void selectOptimisticallyUnchokedNeigbor() {
 		int size = chokedMap.size();
-		int index = random.nextInt(size);
-		optimisticNeighbor = chokedMap.get(index);
-		if(optimisticNeighbor != null) {
-			System.out.println("selectOptimisticallyUnchokedNeigbor " + optimisticNeighbor.peerID);
+		if(size > 0) {
+			int index = random.nextInt(size);
+			optimisticNeighbor = chokedMap.get(index);
+			if(optimisticNeighbor != null) {
+				System.out.println("selectOptimisticallyUnchokedNeigbor " + optimisticNeighbor.peerID);
+			}
+		}else {
+			System.out.println("do not have choked neighbor");
 		}
 	}
 	
