@@ -541,7 +541,9 @@ public class Peer {
 				//stream write the message
 				System.out.println("try send message");
 				out.write(msg);
+				System.out.println("try send message2");
 				out.flush();
+				System.out.println("try send message3");
 			}
 			catch(IOException ioException){
 				System.out.println("error send message");
