@@ -378,9 +378,8 @@ public class Peer {
 		boolean findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
 			boolean t = false;
-			System.out.println("localBitfield.bitfield:");
 			for(int i =0; i< Config.bitFieldLength; i++) {
-				System.out.print(localBitfield.bitfield[i]);
+				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i]);
 				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
 				if(peerBitfield.bitfield[i] != 0) {
 					t = true;
@@ -390,11 +389,12 @@ public class Peer {
 						if( k == 1) {
 							interestedPieceList.add(i*8+j);
 							System.out.println("find out interested piece, pieceNum = " + (i*8+j));
+							isInterested = true;
+							interestedList.add(this);
 						}
 					}
 				}
 			}
-			System.out.println();
 			return t;
 		}
 		
