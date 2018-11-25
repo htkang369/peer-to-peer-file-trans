@@ -67,16 +67,16 @@ public class Peer {
 		listenTcpConnection();	
 	}
 	
-    static void initBitfield() {
-		localBitfield.bitfield = new byte[Config.bitFieldLength];
-	}
-	
-//	static void initBitfield() {
+//    static void initBitfield() {
 //		localBitfield.bitfield = new byte[Config.bitFieldLength];
-//		for(int i=0;i<Config.bitFieldLength;i++) {
-//			localBitfield.bitfield[i] = (byte) 0xFF;
-//		}
 //	}
+	
+	static void initBitfield() {
+		localBitfield.bitfield = new byte[Config.bitFieldLength];
+		for(int i=0;i<Config.bitFieldLength;i++) {
+			localBitfield.bitfield[i] = (byte) 0xFF;
+		}
+	}
 	
 	public static void addTimerP() {
 		timerP = new Timer();
@@ -208,6 +208,12 @@ public class Peer {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				try {
+					connection.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			sendHandShake();
 			receiveHandShake();
