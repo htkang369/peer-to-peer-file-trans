@@ -394,8 +394,10 @@ public class Peer {
 		
 		public void sendHaveToAll(int pieceIndex) {
 			System.out.println("send have to all");
-			for(int i = 0; i < neighbor.size(); i++) {
-				neighbor.get(i).sendHave(pieceIndex);
+			Iterator<Integer> iter = neighbor.keySet().iterator();
+			while(iter.hasNext()) {
+				int key = iter.next();
+				neighbor.get(key).sendHave(pieceIndex);
 			}
 		}
 		
