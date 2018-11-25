@@ -538,6 +538,7 @@ public class Peer {
 		{
 			try{
 				//stream write the message
+				System.out.println("try send message");
 				out.write(msg);
 				out.flush();
 			}
