@@ -273,7 +273,7 @@ public class Peer {
 			bitfield.bitfield = bitfieldMsg.getPayLoad();
 			int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
 			System.out.println("parse Bitfield Message from:" + peerID);
-			for(int i = 0; i< payloadLength-4; i++) {
+			for(int i = 0; i< payloadLength; i++) {
 				System.out.print(bitfield.bitfield[i]);
 			}
 			peerBitfield = bitfield;
