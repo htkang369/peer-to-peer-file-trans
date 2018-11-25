@@ -30,7 +30,7 @@ public abstract class ActualMsg implements Serializable{
 	}
 	
 	public ActualMsg(int message_length, byte[] message_payload) {
-		this.msg_length = MyUtil.intToByteArray(message_length + 4);
+		this.msg_length = MyUtil.intToByteArray(message_length);
 		this.msg_payload = message_payload;
 	}
 	
