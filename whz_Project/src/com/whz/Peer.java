@@ -321,7 +321,7 @@ public class Peer {
 		}
 		
 		public void receiveNotInterested() {
-			System.out.println("receiveUnchoke");
+			System.out.println("receiveNotInterested");
 		}
 		
 		public void sendUnchoke() {
