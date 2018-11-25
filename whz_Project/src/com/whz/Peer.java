@@ -355,6 +355,7 @@ public class Peer {
 				System.out.println("this is new Interested peer id = " + peerID);
 				interestedList.add(this);
 			}
+			
 		}
 		
 		public void receiveNotInterested() {
@@ -556,7 +557,7 @@ public class Peer {
 					System.out.println("reply Interested Message");
 					//LinkState state = new LinkState(serverPeerID, out);
 					//chokedMap.put(serverPeerID,state);
-					receiveInterested();
+					receiveInterested(rcvMsg);
 					break;
 				case ActualMsg.NOTINTERESTED:
 					receiveNotInterested();
