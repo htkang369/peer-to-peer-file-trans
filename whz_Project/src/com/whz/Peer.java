@@ -205,28 +205,28 @@ public class Peer {
 				out = new DataOutputStream(connection.getOutputStream());
 				in = new DataInputStream(new BufferedInputStream(connection.getInputStream()));
 				out.flush();
+				sendHandShake();
+				receiveHandShake();
+				sendBitfield();
+				System.out.println("middle send receive");
+				receiveBitfield();
+				findOutInterestedPiece();
+				sendInterestedOrNot();
+				while(!fileComplete) {			
+					ActualMsg rcvMsg = receiveActualMsg();
+					replyMsg(rcvMsg);
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
 				try {
 					connection.close();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-			sendHandShake();
-			receiveHandShake();
-			sendBitfield();
-			System.out.println("middle send receive");
-			receiveBitfield();
-			findOutInterestedPiece();
-			sendInterestedOrNot();
-			while(!fileComplete) {			
-				ActualMsg rcvMsg = receiveActualMsg();
-				replyMsg(rcvMsg);
-			}
-			
+			}		
 		}
 		
 		public void sendHandShake() {
@@ -375,9 +375,10 @@ public class Peer {
 		boolean findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
 			boolean t = false;
-			for(int i =0; i<Config.bitFieldLength; i++) {
-				System.out.println(localBitfield.bitfield[i]);
-				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i]&((byte) ~ localBitfield.bitfield[i]));
+			System.out.println("localBitfield.bitfield:");
+			for(int i =0; i< Config.bitFieldLength; i++) {
+				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i]);
+				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
 				if(peerBitfield.bitfield[i] != 0) {
 					t = true;
 					for(int j = 0; j < 8;j++) {
@@ -390,6 +391,7 @@ public class Peer {
 					}
 				}
 			}
+			System.out.println();
 			return t;
 		}
 		
