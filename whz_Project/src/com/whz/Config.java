@@ -15,6 +15,6 @@ public class Config {
 	
 	public static void initiatePeerConfig() {
 		peerIpAddress = new HashMap<>();
-		peerIpAddress.put(1001, "192.168.1.1");
+		peerIpAddress.put(1001, "10.193.80.53");
 	}
 }
