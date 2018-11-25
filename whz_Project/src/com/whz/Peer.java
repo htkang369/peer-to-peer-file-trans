@@ -349,9 +349,12 @@ public class Peer {
 			}
 		}
 		
-		public void receiveInterested() {
+		public void receiveInterested(ActualMsg rcvMsg) {
 			System.out.println("receiveInterested");
-			interestedList.add(this);
+			if(!isInterested) {
+				System.out.println("this is new Interested peer id = " + peerID);
+				interestedList.add(this);
+			}
 		}
 		
 		public void receiveNotInterested() {
@@ -605,11 +608,9 @@ public class Peer {
 			int temp = 0x01 << (8 - offset);
 			if((~localBitfield.bitfield[index] & temp) != 0) {
 				System.out.println("receive interested have from " + peerID + " pieceNum = " + piecenum);
-				if(isInterested == false) {
-					System.out.println("this is new interest");
-					isInterested = true;
-					sendInterestedOrNot();
-				}
+				
+				sendInterestedOrNot();
+
 			}
 			peerBitfield.bitfield[index] = (byte) (peerBitfield.bitfield[index] | temp);
 		}
