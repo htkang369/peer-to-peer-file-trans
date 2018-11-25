@@ -1,5 +1,6 @@
 package com.whz.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,9 +34,15 @@ public class MyUtil {
 	
 	public static byte[] readFile(int pieceNum) {
 		InputStream inFile = null;
+		File directory = new File("");//设定为当前文件夹 
+//		try{ 
+//		    System.out.println(directory.getCanonicalPath());//获取标准的路径 
+//		    System.out.println(directory.getAbsolutePath());//获取绝对路径 
+//		}catch(Exception e){} 
+		
 		byte[] tempbytes = new byte[MyUtil.PieceSize];
 		try {		
-			inFile = new FileInputStream("test/testfile");
+			inFile = new FileInputStream("whz_Project/test/testfile");
 			showAvailableBytes(inFile);
 			inFile.skip(pieceNum * MyUtil.PieceSize);
 			if(inFile.read(tempbytes) != -1) {

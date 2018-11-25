@@ -1,11 +1,9 @@
 package com.whz;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -117,7 +115,7 @@ public class Peer {
 			int unChokePeerID = interestedList.get(i).peerID;
 			if(unChokedMap.get(unChokePeerID) == null) {
 				unChokedMap.put(unChokePeerID, interestedList.get(i));
-				System.out.println("unChokedMap add new" + unChokePeerID);
+				System.out.println("unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
 				sendUnchoke(unChokedMap.get(unChokePeerID));
 				chokedMap.remove(unChokePeerID);
 			}else {
@@ -205,7 +203,6 @@ public class Peer {
 		private Socket connection;
         private DataInputStream in;	//stream read from the socket
         private DataOutputStream out;    //stream write to the socket
-        private int no;		//The index number of the client
         private boolean isClient;
         private int peerID;
         private boolean isInterested;
@@ -220,7 +217,6 @@ public class Peer {
 
         public Handler(Socket connection, int no, boolean isClient, int peerID) {
             this.connection = connection;
-	    	this.no = no;
 	    	this.isClient = isClient;
 	    	this.peerID = peerID;
 	    	interestedPieceList = new ArrayList<>();
@@ -384,7 +380,7 @@ public class Peer {
 		}
 		
 		public void sendPieceMsg(int pieceNum) {
-			System.out.println("send Piece Message");
+			System.out.println("send Piece Message num: " + pieceNum);
 			byte[] payLoad = MyUtil.readFile(pieceNum);
 			PieceMsg pieceMsg = new PieceMsg(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
@@ -590,11 +586,8 @@ public class Peer {
 		{
 			try{
 				//stream write the message
-				System.out.println("try send message");
 				out.write(msg);
-				System.out.println("try send message2");
 				out.flush();
-				System.out.println("try send message3");
 			}
 			catch(IOException ioException){
 				System.out.println("error send message");
