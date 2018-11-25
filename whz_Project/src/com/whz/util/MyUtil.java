@@ -1,5 +1,11 @@
 package com.whz.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import com.whz.BitTorrentClient;
+
 public class MyUtil {
 	//byte array to int 
 	public static int pieceNum = 70;
@@ -23,5 +29,42 @@ public class MyUtil {
 		        (byte) ((a >> 8) & 0xFF),   
 		        (byte) (a & 0xFF)
 		};
+	}
+	
+	public static byte[] readFile(int pieceNum) {
+		InputStream inFile = null;
+		byte[] tempbytes = new byte[MyUtil.PieceSize];
+		try {		
+			inFile = new FileInputStream("test/testfile");
+			showAvailableBytes(inFile);
+			inFile.skip(pieceNum * MyUtil.PieceSize);
+			if(inFile.read(tempbytes) != -1) {
+				System.out.write(tempbytes, 0, MyUtil.PieceSize);
+				System.out.println();
+				System.out.println("one piece!");
+			}
+		}catch(Exception e1) {
+			e1.printStackTrace();
+		}finally {
+			if(inFile != null) {
+				try {
+					inFile.close();
+				}catch(IOException e1) {
+					
+				}
+			}
+		}
+		return tempbytes;
+	}
+	
+	public static void showAvailableBytes(InputStream in) {
+		try {
+			System.out.println("number of bytes in file: " + in.available());
+			double c = (double)in.available()/ MyUtil.PieceSize;
+			System.out.println("c:"+ c);
+			System.out.println("# of pieces:"+ Math.ceil(c));
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

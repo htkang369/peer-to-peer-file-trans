@@ -417,7 +417,7 @@ public class BitTorrentClient {
 		locallBitfield[index] = (byte) (locallBitfield[index] | temp);
 	}
 	
-	private static void showAvailableBytes(InputStream in) {
+	public static void showAvailableBytes(InputStream in) {
 		try {
 			System.out.println("number of bytes in file: " + in.available());
 			double c = (double)in.available()/ MyUtil.PieceSize;

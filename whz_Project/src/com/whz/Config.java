@@ -12,4 +12,9 @@ public class Config {
 	public static int k = 1;
 	public static int optimistic_unchoking_interval = 2000;
 	public static int unchoking_interval = 1000;//second
+	
+	public static void initiatePeerConfig() {
+		peerIpAddress = new HashMap<>();
+		peerIpAddress.put(1001, "192.168.1.1");
+	}
 }
