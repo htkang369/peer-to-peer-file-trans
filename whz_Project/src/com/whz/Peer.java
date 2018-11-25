@@ -262,6 +262,7 @@ public class Peer {
 			BitfieldMsg bitfieldMsg = new BitfieldMsg(Config.bitFieldLength , localBitfield);
 			byte[] datagram = BitfieldMsg.toDataGram(bitfieldMsg);
 			sendMessage(datagram);
+			
 		}
 		
 		public void receiveBitfield() {
@@ -541,6 +542,7 @@ public class Peer {
 				out.flush();
 			}
 			catch(IOException ioException){
+				System.out.println("error send message");
 				ioException.printStackTrace();
 			}
 		}
