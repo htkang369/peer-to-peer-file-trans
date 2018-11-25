@@ -3,7 +3,7 @@ package com.whz.msgtype;
 import com.whz.msg.ActualMsg;
 
 @SuppressWarnings("serial")
-public class Have extends ActualMsg{
+public class HaveMsg extends ActualMsg{
 
 	/**
 	 * ‘have’messages have a payload that contains a 4-byte piece index field. 
@@ -12,21 +12,21 @@ public class Have extends ActualMsg{
 	 * @param message_type
 	 * @param message_payload
 	 */
-	public Have(byte[] message_length, byte message_type, byte[] message_payload) {
+	public HaveMsg(byte[] message_length, byte message_type, byte[] message_payload) {
 		super(message_length, message_type, message_payload);
 	}
 	
-	public Have(byte[] message_length, byte[] message_payload) {
+	public HaveMsg(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
 		msg_type = (byte)HAVE;
 	}
 
-	public Have(int message_length, byte[] message_payload) {
+	public HaveMsg(int message_length, byte[] message_payload) {
 		super(message_length, message_payload);
 		msg_type = (byte)HAVE;
 	}
 	
-	public Have() {
+	public HaveMsg() {
 		super();
 		msg_type = (byte)HAVE;
 	}

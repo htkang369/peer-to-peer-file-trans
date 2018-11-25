@@ -167,8 +167,8 @@ public class BitTorrentClient {
 	 */
 	void sendBitfield() {
 		System.out.println("send Bitfield Message");
-		Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,locallBitfield);
-		byte[] datagram = Bitfield.toDataGram(bitfieldMsg);
+		BitfieldMsg bitfieldMsg = new BitfieldMsg(bitfieldLength + 1,locallBitfield);
+		byte[] datagram = BitfieldMsg.toDataGram(bitfieldMsg);
 		sendMessage(datagram);
 	}
 	
@@ -176,7 +176,7 @@ public class BitTorrentClient {
 	 * B will also send its bitfield message to A, unless it has no pieces
 	 */
 	void receiveBitfield() {
-		Bitfield bitfieldMsg = (Bitfield) readActualMessage();
+		BitfieldMsg bitfieldMsg = (BitfieldMsg) readActualMessage();
 		peerBitfield = bitfieldMsg.getPayLoad();
 		int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
 		System.out.println("parse Bitfield Message");
@@ -222,7 +222,7 @@ public class BitTorrentClient {
 	 */
 	void sendInterestedMessage() {
 		System.out.println("send Interested Message");
-		Interested interestedMsg = new Interested();
+		InterestedMsg interestedMsg = new InterestedMsg();
 		byte[] c = ActualMsg.toDataGram(interestedMsg);
 		sendMessage(c);
 	}
@@ -234,7 +234,7 @@ public class BitTorrentClient {
 	 */
 	void sendNotInterestedMessage(){
 		System.out.println("send Not interested Message");
-		NotInterested notInterested = new NotInterested();
+		NotInterestedMsg notInterested = new NotInterestedMsg();
 		byte[] c = ActualMsg.toDataGram(notInterested);
 		sendMessage(c);
 	}
@@ -307,7 +307,7 @@ public class BitTorrentClient {
 	
 	void sendRequestMsg() {
 		System.out.println("send Request Message");
-		Request request_message = new Request();
+		RequestMsg request_message = new RequestMsg();
 		int length_interest = interestedPieceList.size();
 		System.out.println("interestedPieceList size = " + length_interest);
 		int index = rand.nextInt(length_interest);
@@ -322,7 +322,7 @@ public class BitTorrentClient {
 	void sendPieceMsg(int pieceNum) {
 		System.out.println("send Piece Message");
 		byte[] payLoad = readFile(pieceNum);
-		Piece pieceMsg = new Piece(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
+		PieceMsg pieceMsg = new PieceMsg(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 		byte[] c = ActualMsg.toDataGram(pieceMsg);
 		sendMessage(c);
 	}
@@ -348,32 +348,32 @@ public class BitTorrentClient {
 			ActualMsg rcvMsg = null;
 			switch(msgType) {
 				case ActualMsg.CHOKE:
-					rcvMsg = new Choke();
+					rcvMsg = new ChokeMsg();
 					break;
 				case ActualMsg.UNCHOKE:
-					rcvMsg = new Unchoke();
+					rcvMsg = new UnchokeMsg();
 					break;
 				case ActualMsg.INTERESTED:
-					rcvMsg = new Interested();
+					rcvMsg = new InterestedMsg();
 					break;
 				case ActualMsg.NOTINTERESTED:
-					rcvMsg = new NotInterested();
+					rcvMsg = new NotInterestedMsg();
 					break;
 				case ActualMsg.HAVE:
-					rcvMsg = new Have();
+					rcvMsg = new HaveMsg();
 					break;
 				case ActualMsg.BITFIELD:
 					System.out.println("receive Bitfield Message");
-					rcvMsg = new Bitfield();
+					rcvMsg = new BitfieldMsg();
 					break;
 				case ActualMsg.REQUEST:
-					rcvMsg = new Request();
+					rcvMsg = new RequestMsg();
 					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 					System.out.println("receive Request Message");
 					break;
 				case ActualMsg.PIECE:
 					System.out.println("receive Piece Message");
-					rcvMsg = new Piece();
+					rcvMsg = new PieceMsg();
 					
 					ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 					if(rcvMsg.getPayLoad()!=null) {
@@ -459,7 +459,7 @@ public class BitTorrentClient {
 	}
 	
 	void sendUnchokeMsg(LinkState optimisticNeighbor) {
-		Unchoke unchoke = new Unchoke();
+		UnchokeMsg unchoke = new UnchokeMsg();
 		byte[] c = ActualMsg.toDataGram(unchoke);
 		sendMessage(c);
 	}

@@ -94,6 +94,10 @@ public class HandShakeMsg implements Serializable {
 		return dataGram;
 	}
 	
+	public static boolean checkHead(HandShakeMsg handShakeMsg) {
+		return true;
+	}
+	
 	public static boolean checkPeerID(int peerID, HandShakeMsg handShakeMsg) {
 		return checkPeerID(MyUtil.intToByteArray(peerID), handShakeMsg);
 	}

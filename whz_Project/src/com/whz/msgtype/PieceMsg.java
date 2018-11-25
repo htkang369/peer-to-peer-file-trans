@@ -4,7 +4,7 @@ import com.whz.msg.ActualMsg;
 import com.whz.util.MyUtil;
 
 @SuppressWarnings("serial")
-public class Piece extends ActualMsg{
+public class PieceMsg extends ActualMsg{
 	
 	private byte[] piece_index;
 	private byte[] picee_content;
@@ -16,21 +16,21 @@ public class Piece extends ActualMsg{
 	 * @param message_type
 	 * @param message_payload
 	 */
-	public Piece(byte[] message_length, byte[] message_payload) {
+	public PieceMsg(byte[] message_length, byte[] message_payload) {
 		super(message_length, message_payload);
 		msg_type  = (byte)PIECE;
 	}
 	
-	public Piece(int message_length, byte[] message_payload) {
+	public PieceMsg(int message_length, byte[] message_payload) {
 		super(message_length, message_payload);
 		msg_type  = (byte)PIECE;
 	}
 	
-	public Piece(byte[] message_length , byte message_type, byte[] message_payload) {
+	public PieceMsg(byte[] message_length , byte message_type, byte[] message_payload) {
 		super(message_length, message_payload);
 	}
 	
-	public Piece(int message_length, byte[] piece_index , byte[] picee_content) {
+	public PieceMsg(int message_length, byte[] piece_index , byte[] picee_content) {
 		this.piece_index = piece_index;
 		this.picee_content = picee_content;
 		msg_length = MyUtil.intToByteArray(message_length);
@@ -41,7 +41,7 @@ public class Piece extends ActualMsg{
 	}
 	
 	
-	public Piece() {
+	public PieceMsg() {
 		super();
 		msg_type  = (byte)PIECE;
 	}

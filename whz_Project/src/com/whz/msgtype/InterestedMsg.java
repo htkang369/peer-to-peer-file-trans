@@ -4,12 +4,12 @@ import com.whz.msg.ActualMsg;
 import com.whz.util.MyUtil;
 
 @SuppressWarnings("serial")
-public class Interested extends ActualMsg{
+public class InterestedMsg extends ActualMsg{
 	/**
 	 * do not have pay load
 	 * @param message_length
 	 */
-	public Interested() {
+	public InterestedMsg() {
 		super();
 		msg_type = (byte)INTERESTED;
 		msg_payload = null;

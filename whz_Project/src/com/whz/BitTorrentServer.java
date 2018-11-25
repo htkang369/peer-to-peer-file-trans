@@ -12,14 +12,14 @@ import java.io.*;
 
 import com.whz.msg.ActualMsg;
 import com.whz.msg.HandShakeMsg;
-import com.whz.msgtype.Bitfield;
-import com.whz.msgtype.Choke;
-import com.whz.msgtype.Have;
-import com.whz.msgtype.Interested;
-import com.whz.msgtype.NotInterested;
-import com.whz.msgtype.Piece;
-import com.whz.msgtype.Request;
-import com.whz.msgtype.Unchoke;
+import com.whz.msgtype.BitfieldMsg;
+import com.whz.msgtype.ChokeMsg;
+import com.whz.msgtype.HaveMsg;
+import com.whz.msgtype.InterestedMsg;
+import com.whz.msgtype.NotInterestedMsg;
+import com.whz.msgtype.PieceMsg;
+import com.whz.msgtype.RequestMsg;
+import com.whz.msgtype.UnchokeMsg;
 import com.whz.util.MyUtil;
 
 
@@ -60,8 +60,9 @@ public class BitTorrentServer {
 		}, MyUtil.optimistic_unchoking_interval, MyUtil.optimistic_unchoking_interval);
         	try {
             	while(true) {
-                	new Handler(listener.accept(),clientNum).start();
-                	System.out.println("Client "  + clientNum + " is connected!");
+            		 new Handler(listener.accept(),clientNum).start();
+                	
+            		System.out.println("Client "  + clientNum + " is connected!");
                 	clientNum++;
             	}
         	} finally {
@@ -73,7 +74,16 @@ public class BitTorrentServer {
 	
 	void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors");
-		
+		Iterator<Integer> iter = unChokedMap.keySet().iterator();//unchoke
+		while(iter.hasNext()) {
+			int id = iter.next();
+			LinkState s = unChokedMap.get(id);
+		}
+		Iterator<Integer> iter2 = chokedMap.keySet().iterator();//choke
+		while(iter2.hasNext()) {
+			int id = iter2.next();
+			LinkState s = chokedMap.get(id);
+		}
 	}
 	
 	void computeDownloadRate() {
@@ -193,8 +203,8 @@ public class BitTorrentServer {
 		 * @throws IOException 
 		 */
 		void sendBitfield() throws IOException {
-			Bitfield bitfieldMsg = new Bitfield(bitfieldLength + 1,bitfield);
-			byte[] datagram = Bitfield.toDataGram(bitfieldMsg);
+			BitfieldMsg bitfieldMsg = new BitfieldMsg(bitfieldLength + 1,bitfield);
+			byte[] datagram = BitfieldMsg.toDataGram(bitfieldMsg);
 			sendMessage(datagram);
 		}
 		
@@ -203,7 +213,7 @@ public class BitTorrentServer {
 		 * @throws IOException 
 		 */
 		void receiveBitfield() throws IOException {
-			Bitfield bitfieldMsg = (Bitfield) readActualMessage();
+			BitfieldMsg bitfieldMsg = (BitfieldMsg) readActualMessage();
 			peerBitfield = bitfieldMsg.getPayLoad();
 			int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
 			System.out.println("parse Bitfield Message");
@@ -258,26 +268,26 @@ public class BitTorrentServer {
 				ActualMsg rcvMsg = null;
 				switch(msgType) {
 					case ActualMsg.CHOKE:
-						rcvMsg = new Choke();
+						rcvMsg = new ChokeMsg();
 						break;
 					case ActualMsg.UNCHOKE:
-						rcvMsg = new Unchoke();
+						rcvMsg = new UnchokeMsg();
 						break;
 					case ActualMsg.INTERESTED:
-						rcvMsg = new Interested();
+						rcvMsg = new InterestedMsg();
 						break;
 					case ActualMsg.NOTINTERESTED:
-						rcvMsg = new NotInterested();
+						rcvMsg = new NotInterestedMsg();
 						break;
 					case ActualMsg.HAVE:
-						rcvMsg = new Have();
+						rcvMsg = new HaveMsg();
 						break;
 					case ActualMsg.BITFIELD:
 						System.out.println("receive Bitfield Message");
-						rcvMsg = new Bitfield();
+						rcvMsg = new BitfieldMsg();
 						break;
 					case ActualMsg.REQUEST:
-						rcvMsg = new Request();
+						rcvMsg = new RequestMsg();
 						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 						System.out.println("receive Request Message");
 						break;
@@ -327,7 +337,7 @@ public class BitTorrentServer {
 		void sendPieceMsg(int pieceNum) throws IOException {
 			System.out.println("send Piece Message num = " + pieceNum);
 			byte[] payLoad = readFile(pieceNum);
-			Piece pieceMsg = new Piece(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
+			PieceMsg pieceMsg = new PieceMsg(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
 			sendMessage(c);
 			unChokedMap.get(no).upLoadThroughput++;
@@ -365,7 +375,7 @@ public class BitTorrentServer {
 		}
 		
 		void sendUnchokeMsg(LinkState optimisticNeighbor) throws IOException {
-			Unchoke unchoke = new Unchoke();
+			UnchokeMsg unchoke = new UnchokeMsg();
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);
 		}

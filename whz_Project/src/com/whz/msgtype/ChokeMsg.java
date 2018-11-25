@@ -14,8 +14,8 @@ import com.whz.util.MyUtil;
  *
  */
 @SuppressWarnings("serial")
-public class Choke extends ActualMsg{
-	public Choke() {
+public class ChokeMsg extends ActualMsg{
+	public ChokeMsg() {
 		super();
 		msg_type = (byte)CHOKE;
 		msg_payload = null;

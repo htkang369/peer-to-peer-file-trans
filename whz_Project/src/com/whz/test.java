@@ -4,21 +4,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import com.whz.util.MyUtil;
 
 public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Calendar calendar = Calendar.getInstance();
-		Date time = calendar.getTime();
-		System.out.println(time);
-		long timeInMillis = calendar.getTimeInMillis();
-		System.out.println(timeInMillis);
-		for(long i =0; i < 100000000;i++) {
-		}
-		calendar = Calendar.getInstance();
-		long timeInMillis2 = calendar.getTimeInMillis();
-		System.out.println(timeInMillis2-timeInMillis);
+		System.out.println(1/8);
+		System.out.println(Math.ceil(1.0));
+		//System.out.println(Math.ceil( MyUtil.pieceNum/8));
 	}
 
 	
