@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -40,7 +42,6 @@ public class Peer {
 	static HashMap<Integer, Handler> chokedMap;
 	static ArrayList<Handler> preferredList;
 	static Handler optimisticNeighbor;
-	static List<Integer> interestedPieceList;
 	static Timer timerP;
 	static Timer timerM;
 	static boolean fileComplete;
@@ -53,7 +54,6 @@ public class Peer {
 		unChokedMap = new HashMap<>();
 		chokedMap = new HashMap<>();
 		preferredList = new ArrayList<>();
-		interestedPieceList = new ArrayList<>();
 		neighbor = new HashMap<>();
 		interestedList = new ArrayList<>();
 		localBitfield = new BitField();
@@ -83,8 +83,8 @@ public class Peer {
 		timerP.schedule(new TimerTask() {
 			public void run(){
 				System.out.println("----set timer-----");
-				Peer.selectPreferredNeighbors();
-				//Peer.sendChokeUnchoke();
+				selectPreferredNeighbors();
+				clearSpeed();
 			}
 		}, Config.unchoking_interval, Config.unchoking_interval);
 	}
@@ -100,45 +100,60 @@ public class Peer {
 		}, Config.optimistic_unchoking_interval, Config.optimistic_unchoking_interval);
 	}
 	
+	public static void clearSpeed() {
+		for(int i = 0; i < interestedList.size(); i++) {
+			interestedList.get(i).clearSpeed();
+		}
+	}
+	
 	public static void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors");
+		Collections.sort(interestedList);
+
+		for(int i = 0; i < Config.k; i++) {
+			int unChokePeerID = interestedList.get(i).peerID;
+			if(unChokedMap.get(unChokePeerID) == null) {
+				unChokedMap.put(unChokePeerID, interestedList.get(i));
+				System.out.println("unChokedMap add new" + unChokePeerID);
+				sendUnchoke(unChokedMap.get(unChokePeerID));
+				chokedMap.remove(unChokePeerID);
+			}else {
+				System.out.println("unChokedMap already has " + unChokePeerID);
+			}
+		}
+		for(int i = Config.k; i < interestedList.size(); i++) {
+			int chokePeerID = interestedList.get(i).peerID;
+			if(chokedMap.get(chokePeerID) == null) {
+				chokedMap.put(chokePeerID, interestedList.get(i));
+				System.out.println("chokedMap add new" + chokePeerID);
+				sendChoke(chokedMap.get(chokePeerID));
+				unChokedMap.remove(chokePeerID);			
+			}else {
+				System.out.println("chokedMap already has " + chokePeerID);
+			}
+		}
 	}
 	
 	public static void selectOptimisticallyUnchokedNeigbor() {
 		int size = chokedMap.size();
-		int n = 0;
-		int temp = 0;
-		if(size > 0) {
-			int index = random.nextInt(size);
-			Iterator<Integer> iter = chokedMap.keySet().iterator();
-			while(iter.hasNext()&& n<index) {
-				temp = iter.next();
-				n++;
-			}
-			System.out.println("update optimistic neighbor");
+		int index = random.nextInt(size);
+		optimisticNeighbor = chokedMap.get(index);
+		if(optimisticNeighbor != null) {
+			System.out.println("selectOptimisticallyUnchokedNeigbor " + optimisticNeighbor.peerID);
 		}
-		optimisticNeighbor = chokedMap.get(temp);
 	}
 	
-	public static void sendChokeUnchoke() {
-		Iterator<Integer> iter = unChokedMap.keySet().iterator();
-		while(iter.hasNext()) {
-			int temp = iter.next();
-			unChokedMap.get(temp).sendUnchoke();
-		}
+	public static void sendUnchoke(Handler handler) {
+		handler.sendUnchoke();
+	}
+	
+	public static void sendChoke(Handler handler) {
+		handler.sendChoke();
 	}
 	
 	public static void sendOpUnchoke() {
 		if(optimisticNeighbor!= null) {
 			optimisticNeighbor.sendUnchoke();
-		}
-	}
-	
-	public void sendChoke() {
-		Iterator<Integer> iter = chokedMap.keySet().iterator();
-		while(iter.hasNext()) {
-			int temp = iter.next();
-			chokedMap.get(temp).sendChoke();
 		}
 	}
 	
@@ -179,7 +194,7 @@ public class Peer {
 		}
 	}
 	
-	public static class Handler extends Thread{
+	public static class Handler extends Thread implements Comparable<Handler>{
 		private Socket connection;
         private DataInputStream in;	//stream read from the socket
         private DataOutputStream out;    //stream write to the socket
@@ -190,12 +205,20 @@ public class Peer {
         private BitField peerBitfield;
         private Random rand = new Random();
         private boolean unChoked = false;
+        public List<Integer> interestedPieceList;
+    	private int downloadThroughput;
+    	private int upLoadThroughput;
+    	private long startTime;
+    	private float speed;
 
         public Handler(Socket connection, int no, boolean isClient, int peerID) {
             this.connection = connection;
 	    	this.no = no;
 	    	this.isClient = isClient;
 	    	this.peerID = peerID;
+	    	interestedPieceList = new ArrayList<>();
+	    	downloadThroughput = 0;
+	    	upLoadThroughput = 0;
         }
         
 		public void run() {
@@ -318,10 +341,12 @@ public class Peer {
 		
 		public void receiveInterested() {
 			System.out.println("receiveInterested");
+			interestedList.add(this);
 		}
 		
 		public void receiveNotInterested() {
 			System.out.println("receiveNotInterested");
+			interestedList.remove(this);
 		}
 		
 		public void sendUnchoke() {
@@ -332,6 +357,8 @@ public class Peer {
 		
 		public void receiveUnchoke() {
 			System.out.println("receiveUnchoke");
+			Calendar calendar = Calendar.getInstance();
+			startTime = calendar.getTimeInMillis();
 		}
 		
 		public void sendChoke() {
@@ -350,6 +377,7 @@ public class Peer {
 			PieceMsg pieceMsg = new PieceMsg(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
 			sendMessage(c);
+			upLoadThroughput += Config.PieceSize;
 		}
 		
 		public void receivePiece() {
@@ -390,7 +418,6 @@ public class Peer {
 							interestedPieceList.add(i*8+j);
 							System.out.println("find out interested piece, pieceNum = " + (i*8+j));
 							isInterested = true;
-							interestedList.add(this);
 						}
 					}
 				}
@@ -416,33 +443,31 @@ public class Peer {
 				switch(msgType) {
 					case ActualMsg.CHOKE:
 						rcvMsg = new ChokeMsg();
-						receiveChoke();
+						System.out.println("receive ChokeMsg");
 						break;
 					case ActualMsg.UNCHOKE:
 						rcvMsg = new UnchokeMsg();
-						receiveUnchoke();
+						System.out.println("receive UnchokeMsg");
 						break;
 					case ActualMsg.INTERESTED:
 						rcvMsg = new InterestedMsg();
-						receiveInterested();
+						System.out.println("receive InterestedMsg");
 						break;
 					case ActualMsg.NOTINTERESTED:
 						rcvMsg = new NotInterestedMsg();
-						receiveNotInterested();
+						System.out.println("receive NotInterestedMsge");
 						break;
 					case ActualMsg.HAVE:
 						rcvMsg = new HaveMsg();
-						receiveHave();
+						System.out.println("receive HaveMsg");
 						break;
 					case ActualMsg.BITFIELD:
 						System.out.println("receive Bitfield Message");
 						rcvMsg = new BitfieldMsg();
-						//receiveBitfield();
 						break;
 					case ActualMsg.REQUEST:
 						rcvMsg = new RequestMsg();
 						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-						receiveRequest();
 						System.out.println("receive Request Message");
 						break;
 					case ActualMsg.PIECE:
@@ -471,6 +496,7 @@ public class Peer {
 						if(interestedPieceList.size() == 0) {
 							fileComplete = true;
 						}
+						downloadThroughput += Config.PieceSize;
 						break;
 				}
 				if(rcvMsg == null) {
@@ -489,6 +515,7 @@ public class Peer {
 				int msgType = rcvMsg.getMsgType();
 				switch(msgType) {
 				case ActualMsg.CHOKE:
+					receiveChoke();
 					break;
 				case ActualMsg.UNCHOKE:
 					System.out.println("reply UnChoke Message");
@@ -501,11 +528,13 @@ public class Peer {
 					System.out.println("reply Interested Message");
 					//LinkState state = new LinkState(serverPeerID, out);
 					//chokedMap.put(serverPeerID,state);
+					receiveInterested();
 					break;
 				case ActualMsg.NOTINTERESTED:
-					//delete from map
+					receiveNotInterested();
 					break;
 				case ActualMsg.HAVE:
+					receiveHave();
 					break;
 				case ActualMsg.BITFIELD:
 					System.out.println("reply Bitfield Message");
@@ -559,6 +588,27 @@ public class Peer {
 				System.out.println("error send message");
 				ioException.printStackTrace();
 			}
+		}
+		
+		void computeDownloadRate() {
+			Calendar calendar = Calendar.getInstance();
+			long timeInMillis = calendar.getTimeInMillis();
+			speed = (downloadThroughput + upLoadThroughput) / ( timeInMillis - startTime);
+			System.out.println("update speed =" + speed);
+		}
+		
+		public void clearSpeed() {
+			downloadThroughput = 0;
+			upLoadThroughput = 0;
+			Calendar calendar = Calendar.getInstance();
+			startTime = calendar.getTimeInMillis();
+		}
+
+		@Override
+		public int compareTo(Handler o) {
+			// TODO Auto-generated method stub
+			computeDownloadRate();
+			return (int) (this.speed - o.speed);
 		}
 	}
 	
