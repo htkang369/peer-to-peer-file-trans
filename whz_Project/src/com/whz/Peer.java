@@ -440,7 +440,7 @@ public class Peer {
 			//compare localBitfield with peerBitfield
 			boolean t = false;
 			for(int i =0; i< Config.bitFieldLength; i++) {
-				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
+//				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
 				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
 				if(peerBitfield.bitfield[i] != 0) {
 					t = true;

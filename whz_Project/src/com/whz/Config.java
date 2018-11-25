@@ -7,7 +7,7 @@ public class Config {
 	public static int myID = 1001;
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
-	public static int FileSize = 56885248;
+	public static int FileSize = 6966555;
 	public static int PieceSize = 100;
 	public static int pieceNum = (int) Math.ceil(((double)FileSize/(double)PieceSize));
 	public static int bitFieldLength = (int) Math.ceil(((double)pieceNum/(double)8));
@@ -19,7 +19,7 @@ public class Config {
 	public static void initiatePeerConfig() {
 		peerIpAddress = new HashMap<>();
 
-		peerIpAddress.put(1001, "10.193.38.76");
+//		peerIpAddress.put(1001, "10.193.38.76");
 
 	}
 }
