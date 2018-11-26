@@ -487,6 +487,7 @@ public class Peer {
 		 */
 		void findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
+			interestedPieceList = new ArrayList<>();
 			for(int i =0; i< Config.bitFieldLength; i++) {
 //				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
 				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
