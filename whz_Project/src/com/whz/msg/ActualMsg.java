@@ -18,6 +18,10 @@ public abstract class ActualMsg implements Serializable{
 	public static final int REQUEST = 6;
 	public static final int PIECE = 7;
 	
+	public static final int MSG_TYPE_LENGTH = 1;
+	public static final int MSG_LENGTH_LENGTH = 4;
+	
+	
 	public ActualMsg(byte[] message_length, byte message_type, byte[] message_payload) {
 		this.msg_length = message_length;
 		this.msg_type = message_type;
@@ -129,7 +133,7 @@ public abstract class ActualMsg implements Serializable{
 		byte[] tempMsgPayLoad = actual.getPayLoad();
 		intMessageLength = MyUtil.byteArrayToInt(tempMsgLength) - 1;
 		
-		byte[] dataGram = new byte[4 + intMessageLength];
+		byte[] dataGram = new byte[MSG_LENGTH_LENGTH + MSG_TYPE_LENGTH + intMessageLength];
 		//Encapsulate messagelength
 		for(int i=0;i<4;i++) {
 			dataGram[i] = tempMsgLength[i];
