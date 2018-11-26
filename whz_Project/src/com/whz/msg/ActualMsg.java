@@ -123,22 +123,21 @@ public abstract class ActualMsg implements Serializable{
 	 * @return
 	 */
 	public static byte[] toDataGram(ActualMsg actual) {
-		int length;
+		int intMessageLength;
 		byte[] tempMsgLength = actual.getMsgLength();
 		byte temptype = actual.getMsgType();
 		byte[] tempMsgPayLoad = actual.getPayLoad();
-		length = MyUtil.byteArrayToInt(tempMsgLength);
-		byte[] lengthcontent = MyUtil.intToByteArray(length);
+		intMessageLength = MyUtil.byteArrayToInt(tempMsgLength) - 1;
 		
-		byte[] dataGram = new byte[4 + length];
+		byte[] dataGram = new byte[4 + intMessageLength];
 		//Encapsulate messagelength
 		for(int i=0;i<4;i++) {
-			dataGram[i] = lengthcontent[i];
+			dataGram[i] = tempMsgLength[i];
 		}
 		//Encapsulate header
 		dataGram[4] = temptype;
 		if(tempMsgPayLoad != null) {
-			for(int i=5;i<length + 4;i++) {
+			for(int i = 5;i < intMessageLength + 5;i++) {
 				dataGram[i] = tempMsgPayLoad[i-5];
 			}
 		}
