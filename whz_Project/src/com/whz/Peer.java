@@ -502,9 +502,9 @@ public class Peer {
 //						System.arraycopy(oneByte, 0, rawMsg, count, 1);
 						byte[] oneByte = new byte[msgLength];
 						int readCount = in.read(oneByte);
-						count += readCount;
-						System.out.println("readlly read = " + count + "read " + readCount + "this time");
 						System.arraycopy(oneByte, 0, rawMsg, count, readCount);
+						count += readCount;
+						System.out.println("total read = " + count + " read " + readCount + "this time");		
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
