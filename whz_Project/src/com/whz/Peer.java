@@ -488,9 +488,8 @@ public class Peer {
 			interestedPieceList = new ArrayList<>();
 			for(int i =0; i< Config.bitFieldLength; i++) {
 //				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
-				byte not = (byte) ~ localBitfield.bitfield[i];
-				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & not);
-				if(peerBitfield.bitfield[i] != 0) {
+				byte temp = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
+				if(temp != 0) {
 					isInterested = true;
 					for(int j = 0; j < 8;j++) {
 						int k = peerBitfield.bitfield[i] >> j;
@@ -691,8 +690,7 @@ public class Peer {
 			int index = piecenum / 8;
 			int offset = piecenum % 8;
 			int temp = 0x01 << (7 - offset);
-			byte not = (byte) ~localBitfield.bitfield[index];
-			if(( not & temp) != 0) {
+			if((~localBitfield.bitfield[index] & temp) != 0) {
 				//localBitfield.bitfield[index]  = (byte) (localBitfield.bitfield[index] | temp);
 				System.out.println("receive new interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
 				isInterested = true;
