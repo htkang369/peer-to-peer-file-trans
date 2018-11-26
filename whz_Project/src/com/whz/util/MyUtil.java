@@ -1,5 +1,6 @@
 package com.whz.util;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileDescriptor;
@@ -97,16 +98,18 @@ public class MyUtil {
 		try {  
 			System.out.print("输入要保存文件的内容：");  
 				// 创建文件输出流对象  
-				FileOutputStream os = new FileOutputStream("logFile.txt", true);  
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("logFile.txt"));  
 				// 写入输出流  
-				os.write(data, 0, count);  
+			bos.write(data, 0, count);  
 				// 关闭输出流  
-				os.close();  
-				System.out.println("已保存到WriteFile.txt!");  
-			} catch (IOException ioe) {  
-				System.out.println(ioe);  
-			} catch (Exception e) {  
-				System.out.println(e);  
+			bos.close();  
+				System.out.println("已保存到 logFile.txt!");  
+		} catch (IOException ioe) {  
+			System.out.println("writeToFile IOException!"); 
+			System.out.println(ioe);  
+		} catch (Exception e) {  
+			System.out.println("writeToFile Exception!"); 
+			System.out.println(e);  
 		}  
 	}
 }
