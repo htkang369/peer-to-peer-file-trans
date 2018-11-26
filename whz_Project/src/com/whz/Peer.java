@@ -55,7 +55,7 @@ public class Peer {
 		neighbor = new HashMap<>();
 		interestedList = new ArrayList<>();
 		localBitfield = new BitField();
-		MyUtil.initiateOut();
+		//MyUtil.initiateOut();
 		
 		initBitfield();
 		
@@ -514,9 +514,13 @@ public class Peer {
 						
 						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 						if(rcvMsg.getPayLoad()!=null) {
-							System.out.write(rcvMsg.getPayLoad(), 4,MyUtil.byteArrayToInt(length) - 5);
+							//System.out.write(rcvMsg.getPayLoad(), 4,MyUtil.byteArrayToInt(length) - 5);
+							byte[] content =  new byte[msgLength - 5];
+							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
+							MyUtil.writeToFile(content, msgLength - 5);
 						}
 						System.out.println();
+						System.out.flush();
 						byte[] pieceNum = new byte[4];
 						byte[] payLoad = rcvMsg.getPayLoad();
 						System.arraycopy(payLoad, 0, pieceNum, 0, 4);

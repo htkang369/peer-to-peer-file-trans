@@ -92,8 +92,8 @@ public abstract class ActualMsg implements Serializable{
 		return length;
 	}
 	
-	public static int parseMsgContent(byte[] msg, byte[] contentLength, ActualMsg actual) {
-		int length = MyUtil.byteArrayToInt(contentLength);
+	public static int parseMsgContent(byte[] msg, byte[] messagetLength, ActualMsg actual) {
+		int length = MyUtil.byteArrayToInt(messagetLength);
 		byte temptype;
 		byte[] tempMsgPayLoad = new byte[length-1];
 
@@ -102,7 +102,7 @@ public abstract class ActualMsg implements Serializable{
 			tempMsgPayLoad[i] = msg[i+1];
 		}
 		
-		actual.setMsgLength(contentLength);
+		actual.setMsgLength(messagetLength);
 		actual.setMsgType(temptype);
 		actual.setPayLoad(tempMsgPayLoad);
 		return length;

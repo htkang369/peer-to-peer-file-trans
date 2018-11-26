@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,5 +91,22 @@ public class MyUtil {
 	     }catch (FileNotFoundException e) {  
 	         e.printStackTrace();  
 	     }  
+	}
+	
+	public static void writeToFile(byte[] data, int count) {
+		try {  
+			System.out.print("输入要保存文件的内容：");  
+				// 创建文件输出流对象  
+				FileOutputStream os = new FileOutputStream("logFile.txt", true);  
+				// 写入输出流  
+				os.write(data, 0, count);  
+				// 关闭输出流  
+				os.close();  
+				System.out.println("已保存到WriteFile.txt!");  
+			} catch (IOException ioe) {  
+				System.out.println(ioe);  
+			} catch (Exception e) {  
+				System.out.println(e);  
+		}  
 	}
 }

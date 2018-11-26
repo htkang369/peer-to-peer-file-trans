@@ -8,7 +8,7 @@ public class Config {
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
 	public static int FileSize = 7000000;
-	public static int PieceSize = 2000;
+	public static int PieceSize = 20000;
 	public static int pieceNum = (int) Math.ceil(((double)FileSize/(double)PieceSize));
 	public static int bitFieldLength = (int) Math.ceil(((double)pieceNum/(double)8));
 //	public static int bitFieldLength = (int) Math.ceil(pieceNum/8);
