@@ -136,7 +136,7 @@ public class BitTorrentServer {
         private int no;		//The index number of the client
         private byte [] bitfield;
         private byte [] peerBitfield;
-        private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
+        private int bitfieldLength = (int) Math.ceil( MyUtil.oldpieceNum/8);
     	Random rand = new Random();
         
     	private HashMap<Integer,DataInputStream> interestedMap = new HashMap<>();

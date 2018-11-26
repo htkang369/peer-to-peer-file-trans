@@ -20,7 +20,7 @@ public class BitTorrentClient {
     private byte [] locallBitfield;
     private byte [] peerBitfield;
     private List<Integer> interestedPieceList = new ArrayList<>();
-    private int bitfieldLength = (int) Math.ceil( MyUtil.pieceNum/8);
+    private int bitfieldLength = (int) Math.ceil( MyUtil.oldpieceNum/8);
     private boolean fileComplete = false;
     private boolean unChoked = false;
     

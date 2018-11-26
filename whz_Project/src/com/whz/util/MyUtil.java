@@ -12,10 +12,11 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 import com.whz.BitTorrentClient;
+import com.whz.Config;
 
 public class MyUtil {
 	//byte array to int 
-	public static int pieceNum = 70;
+	public static int oldpieceNum = 70;
 	public static int FileSize = 100000232;
 	public static int PieceSize = 100;
 	public static int k = 1;
@@ -47,13 +48,13 @@ public class MyUtil {
 //		    System.out.println(directory.getAbsolutePath());//获取绝对路径 
 //		}catch(Exception e){} 
 		
-		byte[] tempbytes = new byte[MyUtil.PieceSize];
+		byte[] tempbytes = new byte[Config.PieceSize];
 		try {		
 			inFile = new FileInputStream("test/testfile");
 			showAvailableBytes(inFile);
-			inFile.skip(pieceNum * MyUtil.PieceSize);
+			inFile.skip(pieceNum * Config.PieceSize);
 			if(inFile.read(tempbytes) != -1) {
-				System.out.write(tempbytes, 0, MyUtil.PieceSize);
+				System.out.write(tempbytes, 0, Config.PieceSize);
 				System.out.println();
 				System.out.println("one piece!");
 			}

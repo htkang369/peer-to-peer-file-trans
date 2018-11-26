@@ -37,7 +37,7 @@ public class PieceMsg extends ActualMsg{
 		msg_type  = (byte)PIECE;
 		msg_payload = new byte[message_length - 1];
 		System.arraycopy(piece_index, 0, msg_payload, 0, 4);
-		System.arraycopy(picee_content, 0, msg_payload, 4, message_length-5);
+		System.arraycopy(picee_content, 0, msg_payload, 4, message_length - 5);
 	}
 	
 	
