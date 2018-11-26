@@ -581,6 +581,7 @@ public class Peer {
 				return rcvMsg;
 			}else {
 				System.out.println("not our message" + " peerID: "+peerID);
+				rawMsg = null;
 				throw new Exception();
 			}
 		}

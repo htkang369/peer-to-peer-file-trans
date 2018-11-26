@@ -21,7 +21,10 @@ public class test {
 		byte[] rawMsg3 = new byte[msgLength];
 		byte[] rawMsg4 = new byte[msgLength];
 		System.out.println("heelo");
-		//System.out.println(Math.ceil( MyUtil.pieceNum/8));
+		for(int i =0;i<100000;i++) {
+			rawMsg4 = new byte[msgLength];
+		}
+		System.out.println("ss");
 	}
 
 	
