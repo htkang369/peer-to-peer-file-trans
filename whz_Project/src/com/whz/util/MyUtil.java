@@ -75,7 +75,7 @@ public class MyUtil {
 	public static void showAvailableBytes(InputStream in) {
 		try {
 			System.out.println("number of bytes in file: " + in.available());
-			double c = (double)in.available()/ MyUtil.PieceSize;
+			double c = (double)in.available()/ Config.PieceSize;
 			System.out.println("c:"+ c);
 			System.out.println("# of pieces:"+ Math.ceil(c));
 		}catch(IOException e) {
