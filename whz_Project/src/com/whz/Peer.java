@@ -82,7 +82,7 @@ public class Peer {
 			public void run(){
 				System.out.println("----set timer-----");
 				selectPreferredNeighbors();
-				clearSpeed();
+				clearSpeed(); // 下载速度不应该清空，每次只能赋值，不能清空。或者可以在 line 120进行clear speed。
 			}
 		}, Config.unchoking_interval, Config.unchoking_interval);
 	}
@@ -100,14 +100,14 @@ public class Peer {
 	
 	public static void clearSpeed() {
 		for(int i = 0; i < interestedList.size(); i++) {
-			interestedList.get(i).clearSpeed();
+			interestedList.get(i).clearSpeed(); // 这里不能用清空，只应该赋值
 		}
 	}
 	
 	public static void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors interestedList.size = " + interestedList.size());
-		for(int i = 0; i < interestedList.size(); i++) {
-			interestedList.get(i).computeDownloadRate();
+		for(int i = 0; i < interestedList.size(); i++) { // 这里每次都要重新计算download rate？ 应该从unchoke list里边计算DownloadRate。但是要注意下这里，
+			interestedList.get(i).computeDownloadRate(); // 因为逻辑上对本地有兴趣的都会在这里，unchoke list是这里的子集。建议最后一个更改这里，更改这里之前要先进行备份，否则有可能出错。
 		}
 		Collections.sort(interestedList);
 		int size = Config.k;
@@ -117,6 +117,7 @@ public class Peer {
 		for(int i = 0; i < size; i++) {
 			int unChokePeerID = interestedList.get(i).peerID;
 			if(unChokedMap.get(unChokePeerID) == null) {
+				// 或者我们也可以把clear speed放到这里来
 				unChokedMap.put(unChokePeerID, interestedList.get(i));
 				System.out.println("unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
 				sendUnchoke(unChokedMap.get(unChokePeerID));
@@ -169,7 +170,7 @@ public class Peer {
 		Iterator<Integer> iter = Config.peerIpAddress.keySet().iterator();
 		Socket requestSocket = null;
 		while(iter.hasNext()) {
-			int temp = iter.next();
+			int temp = iter.next();  // 确定一开始的指针指向哪里？如果指的是空，也会试图跟自己连接。
 			try {
 				requestSocket = new Socket(Config.peerIpAddress.get(temp), 8000);
 				System.out.println("Connected to " + Config.peerIpAddress.get(temp) + " in port 8000 ,  this peer ID = " + myID);
@@ -183,14 +184,13 @@ public class Peer {
     			requestSocket.close();
 			}
 		}
-		
 	}
 	
 	public static void listenTcpConnection() throws IOException {
 		ServerSocket listener = new ServerSocket(Config.sPort);
 		try {
 			while(true) {
-	       		Handler handler = new Handler(listener.accept(),clientNum, false, 0);
+	       		Handler handler = new Handler(listener.accept(),clientNum, false, 0); // 在receive的部分，储存进neighbor是有错的。
 	       		handler.start();
 	       		System.out.println("Client "  + clientNum + " is connected!");
 	           	clientNum++;
@@ -298,7 +298,7 @@ public class Peer {
 					System.out.println("error peerID:" + rcvhandshakeMsg.getPeerID() + " right peerID:" + peerID);
 				}else {
 					System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
-					neighbor.put(rcvhandshakeMsg.getPeerID(), this);
+					neighbor.put(rcvhandshakeMsg.getPeerID(), this);  // 这里，我是client，是发起方，应该已经put进neighbor里边去了。所以这里应该有错。
 				}
 			}else {
 				System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
@@ -386,7 +386,7 @@ public class Peer {
 			sendMessage(c);
 		}
 		
-		public void receiveChoke() {
+		public void receiveChoke() { // 这里应该做个更改标志位的动作？ 比如 ： unchoke = false;
 			System.out.println("receiveChoke" + " peerID: "+peerID);
 		}
 		
@@ -403,7 +403,7 @@ public class Peer {
 			System.out.println("receivePiece" + " peerID: "+peerID);
 		}
 		
-		public void sendHaveToAll(int pieceIndex) {
+		public void sendHaveToAll(int pieceIndex) {  // 这里我们不光需要send have to all,也需要根据情况决定是否需要send not interest 给其他人。
 			System.out.println("send have to all" + " peerID: "+peerID);
 			Iterator<Integer> iter = neighbor.keySet().iterator();
 			while(iter.hasNext()) {
@@ -444,7 +444,7 @@ public class Peer {
 				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
 				if(peerBitfield.bitfield[i] != 0) {
 					t = true;
-					for(int j = 0; j < 8;j++) {
+					for(int j = 0; j < 8;j++) { 
 						int k = 1; 
 						k = (peerBitfield.bitfield[i] >> j) & k;
 						if( k == 1) {
@@ -570,7 +570,7 @@ public class Peer {
 				case ActualMsg.HAVE:
 					receiveHave(rcvMsg);
 					break;
-				case ActualMsg.BITFIELD:
+				case ActualMsg.BITFIELD: // 这里是事实是不需要，我们应该在这里更改一部分使其变成一个报错机制。比如print（“warning，receive bitfield message at wrong time”）
 					System.out.println("reply Bitfield Message" + " peerID: "+peerID);
 					break;
 				case ActualMsg.REQUEST:
@@ -584,7 +584,7 @@ public class Peer {
 					}
 					break;
 				}
-			}
+			} // 这里是不是加上一个错误处理，能够更好的适合debug呢？
 		}
 		
 		public void sendRequestMsg() {
@@ -614,7 +614,7 @@ public class Peer {
 			int temp = 0x01 << (8 - offset);
 			if((~localBitfield.bitfield[index] & temp) != 0) {
 				System.out.println("receive interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
-				
+				// 这里是不是应该更改标志位？ 比如设置 isInterested = true; 或者 isInterested = false; 因为随后的函数里用到了isInterested这个标志位。
 				sendInterestedOrNot();
 
 			}

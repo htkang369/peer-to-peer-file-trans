@@ -94,7 +94,7 @@ public class HandShakeMsg implements Serializable {
 		return dataGram;
 	}
 	
-	public static boolean checkHead(HandShakeMsg handShakeMsg) {
+	public static boolean checkHead(HandShakeMsg handShakeMsg) { // 这里还没有写，记得不要落下这里的东西。应该是在这里需要与那串字符串进行对比。
 		return true;
 	}
 	
