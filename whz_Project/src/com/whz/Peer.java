@@ -218,6 +218,14 @@ public class Peer {
     	private int upLoadThroughput;
     	private long startTime;
     	private float speed;
+    	BitfieldMsg bitfieldMsg;
+    	InterestedMsg interestedMsg;
+    	NotInterestedMsg notInterested;
+    	HandShakeMsg handshakeMsg;
+    	UnchokeMsg unchoke;
+    	ChokeMsg choke;
+    	HaveMsg haveMsg;
+    	RequestMsg request_message;
 
         public Handler(Socket connection, int no, boolean isClient, int peerID) {
             this.connection = connection;
@@ -242,15 +250,16 @@ public class Peer {
 				receiveBitfield();
 				findOutInterestedPiece();
 				sendInterestedOrNot();
-				ActualMsg rcvMsg;
+				
 				while(!fileComplete) {			
-					rcvMsg = receiveActualMsg();
+					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
+					rcvMsg = null;
 				}
 				System.out.println("receive file completely" + " peerID: "+peerID);
 				MyUtil.pw.println("receive file completely" + " peerID: "+peerID);
 				while(true) {			
-					rcvMsg = receiveActualMsg();
+					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
 				}
 				
@@ -275,7 +284,7 @@ public class Peer {
 		
 		public void sendHandShake() {
 			System.out.println("send HandShake Message" + " peerID: "+peerID);
-			HandShakeMsg handshakeMsg = new HandShakeMsg(myID);
+			handshakeMsg = new HandShakeMsg(myID);
 			sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
 		}
 		
@@ -312,7 +321,7 @@ public class Peer {
 		
 		public void sendBitfield() {
 			System.out.println("send Bitfield Message bitFieldLength = " + Config.bitFieldLength + " peerID: "+peerID);
-			BitfieldMsg bitfieldMsg = new BitfieldMsg(Config.bitFieldLength + 1 , localBitfield.bitfield);
+			bitfieldMsg = new BitfieldMsg(Config.bitFieldLength + 1 , localBitfield.bitfield);
 			byte[] datagram = BitfieldMsg.toDataGram(bitfieldMsg);
 			sendMessage(datagram);	
 			datagram = null;
@@ -348,13 +357,13 @@ public class Peer {
 		public void sendInterestedOrNot() {
 			if(isInterested) {
 				System.out.println("send Interested Message" + " peerID: "+peerID);
-				InterestedMsg interestedMsg = new InterestedMsg();
+				interestedMsg = new InterestedMsg();
 				byte[] c = ActualMsg.toDataGram(interestedMsg);
 				sendMessage(c);
 				c = null;
 			}else {
 				System.out.println("send Not interested Message" + " peerID: "+peerID);
-				NotInterestedMsg notInterested = new NotInterestedMsg();
+				notInterested = new NotInterestedMsg();
 				byte[] c = ActualMsg.toDataGram(notInterested);
 				sendMessage(c);
 				c = null;
@@ -376,7 +385,7 @@ public class Peer {
 		}
 		
 		public void sendUnchoke() {
-			UnchokeMsg unchoke = new UnchokeMsg();
+			unchoke = new UnchokeMsg();
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);
 			c = null;
@@ -389,7 +398,7 @@ public class Peer {
 		}
 		
 		public void sendChoke() {
-			ChokeMsg choke = new ChokeMsg();
+			choke = new ChokeMsg();
 			byte[] c = ActualMsg.toDataGram(choke);
 			sendMessage(c);
 			c = null;
@@ -427,7 +436,7 @@ public class Peer {
 		
 		public void sendHave(int pieceIndex) {
 			System.out.println("sendHave to"  + " peerID: "+peerID);
-			HaveMsg haveMsg = new HaveMsg(pieceIndex);
+			haveMsg = new HaveMsg(pieceIndex);
 			byte[] c = ActualMsg.toDataGram(haveMsg);
 			sendMessage(c);
 			c = null;
@@ -617,7 +626,7 @@ public class Peer {
 		
 		public void sendRequestMsg() {
 			System.out.println("send Request Message" + " peerID: "+peerID);
-			RequestMsg request_message = new RequestMsg();
+			request_message = new RequestMsg();
 			int length_interest = interestedPieceList.size();
 			System.out.println("interestedPieceList size = " + length_interest + " peerID: "+peerID);
 			int index = rand.nextInt(length_interest);
