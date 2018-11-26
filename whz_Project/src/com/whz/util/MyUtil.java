@@ -96,7 +96,7 @@ public class MyUtil {
 	
 	public static void writeToFile(byte[] data, int count) {
 		try {  
-			System.out.print("输入要保存文件的内容：");  
+			System.out.println("输入要保存文件的内容：");  
 				// 创建文件输出流对象  
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("logFile.txt"));  
 				// 写入输出流  

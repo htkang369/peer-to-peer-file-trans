@@ -513,21 +513,21 @@ public class Peer {
 						rcvMsg = new PieceMsg();
 						
 						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-						if(rcvMsg.getPayLoad()!=null) {
-							//System.out.write(rcvMsg.getPayLoad(), 4,MyUtil.byteArrayToInt(length) - 5);
-							byte[] content =  new byte[msgLength - 5];
-							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
-							MyUtil.writeToFile(content, msgLength - 5);
-						}
-						System.out.println();
-						System.out.flush();
 						byte[] pieceNum = new byte[4];
 						byte[] payLoad = rcvMsg.getPayLoad();
 						System.arraycopy(payLoad, 0, pieceNum, 0, 4);
 						byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
-						System.arraycopy(payLoad, 4, content, 0, MyUtil.byteArrayToInt(length) - 5);
+						System.arraycopy(payLoad, 4, content, 0, msgLength - 5);
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
 						System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
+						if(content !=null) {
+							System.out.write(content, 4, MyUtil.byteArrayToInt(length) - 5);
+							System.out.println();
+							System.out.flush();
+//							byte[] content =  new byte[msgLength - 5];
+//							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
+//							MyUtil.writeToFile(content, msgLength - 5);
+						}
 						changeLocalBitField(piecenum);
 						int t = interestedPieceList.indexOf(piecenum);
 						if(t != -1) {
