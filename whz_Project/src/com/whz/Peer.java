@@ -490,7 +490,7 @@ public class Peer {
 			in.read(length);
 
 			int msgLength = ActualMsg.parseLength(length);
-			if(msgLength > 0) {
+			if(msgLength > 0 && msgLength < 5000000) {
 				MyUtil.pw.println("msgLength = " + msgLength);
 				rawMsg = new byte[msgLength];
 				try {
