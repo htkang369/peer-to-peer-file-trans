@@ -496,8 +496,15 @@ public class Peer {
 				try {
 					int count = 0;
 					while(count != msgLength) {
-						count += in.read(rawMsg);
-						System.out.println("readlly read = " + count);
+//						byte[] oneByte = new byte[1];
+//						count += in.read(oneByte);
+//						System.out.println("readlly read = " + count);
+//						System.arraycopy(oneByte, 0, rawMsg, count, 1);
+						byte[] oneByte = new byte[msgLength];
+						int readCount = in.read(oneByte);
+						count += readCount;
+						System.out.println("readlly read = " + count + "read " + readCount + "this time");
+						System.arraycopy(oneByte, 0, rawMsg, count, readCount);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
