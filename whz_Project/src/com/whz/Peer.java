@@ -218,6 +218,7 @@ public class Peer {
     	private int upLoadThroughput;
     	private long startTime;
     	private float speed;
+    	private ActualMsg rcvMsg;
 
         public Handler(Socket connection, int no, boolean isClient, int peerID) {
             this.connection = connection;
@@ -242,8 +243,9 @@ public class Peer {
 				receiveBitfield();
 				findOutInterestedPiece();
 				sendInterestedOrNot();
+				
 				while(!fileComplete) {			
-					ActualMsg rcvMsg = receiveActualMsg();
+					rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
 				}
 				System.out.println("receive file completely" + " peerID: "+peerID);
@@ -521,7 +523,7 @@ public class Peer {
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
 						System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
 						if(content !=null) {
-							System.out.write(content, 4, MyUtil.byteArrayToInt(length) - 5);
+							System.out.write(content, 0, MyUtil.byteArrayToInt(length) - 5);
 							System.out.println();
 							System.out.flush();
 //							byte[] content =  new byte[msgLength - 5];
