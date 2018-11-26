@@ -29,6 +29,7 @@ import com.whz.msgtype.PieceMsg;
 import com.whz.msgtype.RequestMsg;
 import com.whz.msgtype.UnchokeMsg;
 import com.whz.util.MyUtil;
+import com.whz.util.MyUtil.Out;
 
 public class Peer {
 	static int myID = Config.myID;
@@ -55,6 +56,7 @@ public class Peer {
 		neighbor = new HashMap<>();
 		interestedList = new ArrayList<>();
 		localBitfield = new BitField();
+		MyUtil.initiateOut();
 		
 		initBitfield();
 		
@@ -393,7 +395,7 @@ public class Peer {
 		public void sendPieceMsg(int pieceNum) {
 			System.out.println("send Piece Message num: " + pieceNum + " peerID: "+peerID);
 			byte[] payLoad = MyUtil.readFile(pieceNum);
-			PieceMsg pieceMsg = new PieceMsg(MyUtil.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
+			PieceMsg pieceMsg = new PieceMsg(Config.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
 			sendMessage(c);
 			upLoadThroughput += Config.PieceSize;

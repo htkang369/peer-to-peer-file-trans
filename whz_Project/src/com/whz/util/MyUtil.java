@@ -2,8 +2,10 @@ package com.whz.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 import com.whz.BitTorrentClient;
 
@@ -42,7 +44,7 @@ public class MyUtil {
 		
 		byte[] tempbytes = new byte[MyUtil.PieceSize];
 		try {		
-			inFile = new FileInputStream("whz_Project/test/testfile");
+			inFile = new FileInputStream("test/testfile");
 			showAvailableBytes(inFile);
 			inFile.skip(pieceNum * MyUtil.PieceSize);
 			if(inFile.read(tempbytes) != -1) {
@@ -73,5 +75,14 @@ public class MyUtil {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void initiateOut(){  
+	     try {  
+	         PrintStream print=new PrintStream("log.txt");  //写好输出位置文件；
+	         System.setOut(print);  
+	     }catch (FileNotFoundException e) {  
+	         e.printStackTrace();  
+	     }  
 	}
 }
