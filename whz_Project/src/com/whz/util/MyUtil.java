@@ -1,11 +1,15 @@
 package com.whz.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 import com.whz.BitTorrentClient;
 
@@ -17,6 +21,7 @@ public class MyUtil {
 	public static int k = 1;
 	public static int optimistic_unchoking_interval = 2000;
 	public static int unchoking_interval = 1000;//second
+	public static PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(FileDescriptor.out)));
 	
 	public static int byteArrayToInt(byte[] b) {
 		return   b[3] & 0xFF |
