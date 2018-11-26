@@ -255,12 +255,14 @@ public class Peer {
 					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
 					rcvMsg = null;
+					System.gc();
 				}
 				System.out.println("receive file completely" + " peerID: "+peerID);
 				MyUtil.pw.println("receive file completely" + " peerID: "+peerID);
 				while(true) {			
 					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
+					rcvMsg = null;
 				}
 				
 			} catch (IOException e) {
@@ -341,6 +343,7 @@ public class Peer {
 			peerBitfields.put(peerID, peerBitfield);
 			System.out.println();
 			System.out.println("Bitfield payloadLeng = " + payloadLength + " peerID: "+peerID);
+			bitfieldMsg = null;
 		
 		}
 		
@@ -481,6 +484,7 @@ public class Peer {
 			return t;
 		}
 		
+		byte[] rawMsg;
 		ActualMsg receiveActualMsg() throws Exception {
 			byte[] length = new byte[4];
 			in.read(length);
@@ -488,7 +492,7 @@ public class Peer {
 			int msgLength = ActualMsg.parseLength(length);
 			if(msgLength > 0) {
 				MyUtil.pw.println("msgLength = " + msgLength);
-				byte[] rawMsg = new byte[msgLength];
+				rawMsg = new byte[msgLength];
 				try {
 					in.read(rawMsg);
 				} catch (IOException e) {
