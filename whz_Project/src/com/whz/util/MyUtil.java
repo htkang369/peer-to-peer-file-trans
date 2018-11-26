@@ -56,7 +56,7 @@ public class MyUtil {
 			showAvailableBytes(inFile);
 			inFile.skip(pieceNum * Config.PieceSize);
 			if(inFile.read(tempbytes) != -1) {
-				System.out.write(tempbytes, 0, Config.PieceSize);
+//				System.out.write(tempbytes, 0, Config.PieceSize);
 				System.out.println();
 				System.out.println("one piece!");
 			}

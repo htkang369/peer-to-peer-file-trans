@@ -436,8 +436,6 @@ public class Peer {
 		
 		public void sendPieceMsg(int pieceNum) {
 			System.out.println("send Piece Message num: " + pieceNum + " peerID: "+peerID);
-			MyUtil.pw.println("send Piece Message num: " + pieceNum + " peerID: "+peerID);
-			MyUtil.pw.flush();
 			byte[] payLoad = MyUtil.readFile(pieceNum);
 			PieceMsg pieceMsg = new PieceMsg(Config.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
@@ -673,10 +671,11 @@ public class Peer {
 			request_message.setPayLoad(a);
 			request_message.setMsgLength(MyUtil.intToByteArray(5));
 			byte[] c = ActualMsg.toDataGram(request_message);
+			System.out.println("send Request Message" + " peerID: "+peerID + " piecenum = " + index);
 			sendMessage(c);
 			a = null;
 			c = null;
-			System.out.println("send Request Message" + " peerID: "+peerID + " piecenum = " + index);
+			
 		}
 		
 		public void changeLocalBitField(int piecenum) {
@@ -691,6 +690,7 @@ public class Peer {
 			int offset = piecenum %8;
 			int temp = 0x01 << (8 - offset);
 			if((~localBitfield.bitfield[index] & temp) != 0) {
+				localBitfield.bitfield[index]  = (byte) (localBitfield.bitfield[index] | temp);
 				System.out.println("receive new interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
 				isInterested = true;
 				interestedPieceList.add(piecenum);
