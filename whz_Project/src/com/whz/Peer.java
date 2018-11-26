@@ -681,7 +681,7 @@ public class Peer {
 		public void changeLocalBitField(int piecenum) {
 			int index = piecenum / 8;
 			int offset = piecenum % 8;
-			int temp = 0x01 << (8 - offset);
+			int temp = 0x01 << (7 - offset);
 			localBitfield.bitfield[index] = (byte) (localBitfield.bitfield[index] | temp);
 			System.out.println("change local bitfield piecenum =  " + piecenum + " index = " + index + " offset: " + offset);
 			System.out.println(" local bitfield value =  " + String.format("%02X", localBitfield.bitfield[index]));
@@ -690,7 +690,7 @@ public class Peer {
 		public void changePeerBitField(int piecenum) {
 			int index = piecenum / 8;
 			int offset = piecenum % 8;
-			int temp = 0x01 << (8 - offset);
+			int temp = 0x01 << (7 - offset);
 			if((~localBitfield.bitfield[index] & temp) != 0) {
 				//localBitfield.bitfield[index]  = (byte) (localBitfield.bitfield[index] | temp);
 				System.out.println("receive new interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
