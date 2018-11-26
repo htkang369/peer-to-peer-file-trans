@@ -29,7 +29,6 @@ import com.whz.msgtype.PieceMsg;
 import com.whz.msgtype.RequestMsg;
 import com.whz.msgtype.UnchokeMsg;
 import com.whz.util.MyUtil;
-import com.whz.util.MyUtil.Out;
 
 public class Peer {
 	static int myID = Config.myID;
