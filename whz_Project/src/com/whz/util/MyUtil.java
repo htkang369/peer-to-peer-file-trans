@@ -85,7 +85,7 @@ public class MyUtil {
 	
 	public static void initiateOut(){  
 	     try {  
-	         PrintStream print=new PrintStream("log.txt");  //写好输出位置文件；
+	         PrintStream print=new PrintStream("log.txt");
 	         System.setOut(print);  
 	     }catch (FileNotFoundException e) {  
 	         e.printStackTrace();  

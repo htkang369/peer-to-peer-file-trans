@@ -14,7 +14,13 @@ public class test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println(1/8);
+		int msgLength = 20000;
 		System.out.println(Math.ceil(((double)1/(double)8)));
+		byte[] rawMsg = new byte[msgLength];
+		byte[] rawMsg2 = new byte[msgLength];
+		byte[] rawMsg3 = new byte[msgLength];
+		byte[] rawMsg4 = new byte[msgLength];
+		System.out.println("heelo");
 		//System.out.println(Math.ceil( MyUtil.pieceNum/8));
 	}
 

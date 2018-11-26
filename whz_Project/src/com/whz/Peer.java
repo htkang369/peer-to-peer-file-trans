@@ -468,12 +468,13 @@ public class Peer {
 
 			int msgLength = ActualMsg.parseLength(length);
 			if(msgLength > 0) {
+				MyUtil.pw.println("msgLength = " + msgLength);
 				byte[] rawMsg = new byte[msgLength];
 				try {
 					in.read(rawMsg);
 				} catch (IOException e) {
 					e.printStackTrace();
-				}
+				}			
 				//should parse type
 				int msgType = ActualMsg.parseMsgType(rawMsg);
 				ActualMsg rcvMsg = null;
@@ -505,7 +506,7 @@ public class Peer {
 					case ActualMsg.REQUEST:
 						rcvMsg = new RequestMsg();
 						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
-						System.out.println("receive Request Message" + " peerID: "+peerID);
+						System.out.println("receive Request Message msg Length = " + msgLength + " peerID: "+peerID);
 						break;
 					case ActualMsg.PIECE:
 						System.out.println("receive Piece Message" + " peerID: "+peerID);
