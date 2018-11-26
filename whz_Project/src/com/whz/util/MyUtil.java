@@ -52,7 +52,7 @@ public class MyUtil {
 		
 		byte[] tempbytes = new byte[Config.PieceSize];
 		try {		
-			inFile = new FileInputStream("Gone_with_the_wind.txt");
+			inFile = new FileInputStream("whz_Project/Gone_with_the_wind.txt");
 			showAvailableBytes(inFile);
 			inFile.skip(pieceNum * Config.PieceSize);
 			if(inFile.read(tempbytes) != -1) {

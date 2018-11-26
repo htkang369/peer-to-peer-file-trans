@@ -554,10 +554,10 @@ public class Peer {
 						
 						ActualMsg.parseMsgContent(rawMsg, length, rcvMsg);
 						byte[] pieceNum = new byte[4];
-						//byte[] payLoad = rcvMsg.getPayLoad();
-						//System.arraycopy(payLoad, 0, pieceNum, 0, 4);
-						//byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
-						//System.arraycopy(payLoad, 4, content, 0, msgLength - 5);
+						byte[] payLoad = rcvMsg.getPayLoad();
+						System.arraycopy(payLoad, 0, pieceNum, 0, 4);
+						byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
+						System.arraycopy(payLoad, 4, content, 0, msgLength - 5);
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
 						System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
 						if(rcvMsg.getPayLoad() !=null) {
