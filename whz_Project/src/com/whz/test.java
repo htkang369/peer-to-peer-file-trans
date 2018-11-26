@@ -24,7 +24,7 @@ public class test {
 		for(int i =0;i<100000;i++) {
 			rawMsg4 = new byte[msgLength];
 		}
-		System.out.println("ss");
+		System.out.println(String.format("%02X", 0xaf));
 	}
 
 	
