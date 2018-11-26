@@ -9,7 +9,7 @@ select preferredNeighbors interestedList.size = 0
 ----set timer-----
 select preferredNeighbors interestedList.size = 0
 ----set Optimistic timer-----
-do not have choked neighbor
+do not have choked neighborsss
 ----set timer-----
 select preferredNeighbors interestedList.size = 0
 ----set timer-----
