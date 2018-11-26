@@ -498,7 +498,7 @@ public class Peer {
 						k = (peerBitfield.bitfield[i] >> j) & k;
 						if( k == 1) {
 							interestedPieceList.add(i*8+j);
-							System.out.println("find out interested piece, pieceNum = " + (i*8+j) + " peerID: "+peerID);
+//							System.out.println("find out interested piece, pieceNum = " + (i*8+j) + " peerID: "+peerID);
 						}
 					}
 				}
@@ -664,7 +664,7 @@ public class Peer {
 		}
 		
 		public void sendRequestMsg() {
-			System.out.println("send Request Message" + " peerID: "+peerID);
+			
 			request_message = new RequestMsg();
 			int length_interest = interestedPieceList.size();
 			System.out.println("interestedPieceList size = " + length_interest + " peerID: "+peerID);
@@ -676,6 +676,7 @@ public class Peer {
 			sendMessage(c);
 			a = null;
 			c = null;
+			System.out.println("send Request Message" + " peerID: "+peerID + " piecenum = " + index);
 		}
 		
 		public void changeLocalBitField(int piecenum) {
