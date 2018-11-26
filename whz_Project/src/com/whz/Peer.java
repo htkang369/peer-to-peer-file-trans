@@ -247,7 +247,7 @@ public class Peer {
 					replyMsg(rcvMsg);
 				}
 				System.out.println("receive file completely" + " peerID: "+peerID);
-				MyUtil.pw.print("receive file completely" + " peerID: "+peerID);
+				MyUtil.pw.println("receive file completely" + " peerID: "+peerID);
 				while(true) {			
 					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
@@ -394,7 +394,8 @@ public class Peer {
 		
 		public void sendPieceMsg(int pieceNum) {
 			System.out.println("send Piece Message num: " + pieceNum + " peerID: "+peerID);
-			MyUtil.pw.print("send Piece Message num: " + pieceNum + " peerID: "+peerID);
+			MyUtil.pw.println("send Piece Message num: " + pieceNum + " peerID: "+peerID);
+			MyUtil.pw.flush();
 			byte[] payLoad = MyUtil.readFile(pieceNum);
 			PieceMsg pieceMsg = new PieceMsg(Config.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
