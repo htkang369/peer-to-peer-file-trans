@@ -96,14 +96,11 @@ public class MyUtil {
 	
 	public static void writeToFile(byte[] data, int count) {
 		try {  
-			System.out.println("输入要保存文件的内容：");  
-				// 创建文件输出流对象  
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("logFile.txt"));  
-				// 写入输出流  
+			System.out.println("write to file");  
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("receiveFile.txt"));  
 			bos.write(data, 0, count);  
-				// 关闭输出流  
 			bos.close();  
-				System.out.println("已保存到 logFile.txt!");  
+				System.out.println("write to receiveFile.txt!");  
 		} catch (IOException ioe) {  
 			System.out.println("writeToFile IOException!"); 
 			System.out.println(ioe);  

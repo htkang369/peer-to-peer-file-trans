@@ -83,7 +83,7 @@ public class Peer {
 			public void run(){
 				System.out.println("----set timer-----");
 				selectPreferredNeighbors();
-				clearSpeed();
+				//clearSpeed();
 			}
 		}, Config.unchoking_interval, Config.unchoking_interval);
 	}
@@ -128,7 +128,7 @@ public class Peer {
 		}
 		for(int i = Config.k; i < interestedList.size(); i++) {
 			int chokePeerID = interestedList.get(i).peerID;
-			if(chokedMap.get(chokePeerID) == null) {
+			if(chokedMap.get(chokePeerID) == null && (chokePeerID != optimisticNeighbor.peerID)) {
 				chokedMap.put(chokePeerID, interestedList.get(i));
 				System.out.println("chokedMap add new" + chokePeerID);
 				sendChoke(chokedMap.get(chokePeerID));
@@ -176,7 +176,6 @@ public class Peer {
 				System.out.println("Connected to " + Config.peerIpAddress.get(temp) + " in port 8000 ,  this peer ID = " + myID);
 				Handler handler = new Handler(requestSocket, clientNum, true, temp);
 	       		handler.start();
-	       		neighbor.put(temp, handler);
 	       		System.out.println("server "  + Config.peerIpAddress.get(temp) + " is connected!");
 	           	clientNum++;
 			}catch (ConnectException e) {
@@ -212,7 +211,7 @@ public class Peer {
         private boolean isInterested;
         private BitField peerBitfield;
         private Random rand = new Random();
-        private boolean unChoked = false;
+        private boolean isUnChoked = false;
         public List<Integer> interestedPieceList;
     	private int downloadThroughput;
     	private int upLoadThroughput;
@@ -257,7 +256,7 @@ public class Peer {
 					rcvMsg = null;
 					System.gc();
 				}
-				System.out.println("receive file completely" + " peerID: "+peerID);
+				System.out.println("-------------------------receive file completely-------------------------------" + " peerID: "+peerID);
 				MyUtil.pw.println("receive file completely" + " peerID: "+peerID);
 				while(true) {			
 					ActualMsg rcvMsg = receiveActualMsg();
@@ -294,8 +293,9 @@ public class Peer {
 		 * A(Client) receives a handshake to B(Server),should have timer or not?
 		 * 
 		 * check whether the handshake header is right and the peer ID is the expected one
+		 * @throws Exception 
 		 */
-		public void receiveHandShake() {
+		public void receiveHandShake() throws Exception {
 			byte[] rawMsg = new byte[32];
 			try {
 				in.read(rawMsg);
@@ -310,13 +310,15 @@ public class Peer {
 			if(isClient) {
 				if(!HandShakeMsg.checkPeerID(peerID, rcvhandshakeMsg)) {
 					System.out.println("error peerID:" + rcvhandshakeMsg.getPeerID() + " right peerID:" + peerID);
+					throw new Exception("error peerID:" + rcvhandshakeMsg.getPeerID() + " right peerID:" + peerID);
 				}else {
 					System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
-					neighbor.put(rcvhandshakeMsg.getPeerID(), this);
+					neighbor.put(peerID, this);// client add neighbor
 				}
 			}else {
 				System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
 				peerID = rcvhandshakeMsg.getPeerID();
+				neighbor.put(peerID, this);//server add neighbor
 			}
 			rawMsg = null;
 		}
@@ -373,6 +375,26 @@ public class Peer {
 			}
 		}
 		
+		public void sendNotInterestedOrNotSend() {
+			if(!isInterested) {
+				System.out.println("send Not interested Message" + " peerID: "+peerID);
+				notInterested = new NotInterestedMsg();
+				byte[] c = ActualMsg.toDataGram(notInterested);
+				sendMessage(c);
+				c = null;
+			}
+		}
+		
+		public void sendInterestedOrNotSend() {
+			if(isInterested) {
+				System.out.println("send Interested Message" + " peerID: "+peerID);
+				interestedMsg = new InterestedMsg();
+				byte[] c = ActualMsg.toDataGram(interestedMsg);
+				sendMessage(c);
+				c = null;
+			}
+		}
+		
 		public void receiveInterested(ActualMsg rcvMsg) {
 			System.out.println("receiveInterested" + " peerID: "+peerID);
 			if(!isInterested) {
@@ -409,6 +431,7 @@ public class Peer {
 		
 		public void receiveChoke() {
 			System.out.println("receiveChoke" + " peerID: "+peerID);
+			isUnChoked = false;
 		}
 		
 		public void sendPieceMsg(int pieceNum) {
@@ -462,26 +485,23 @@ public class Peer {
 		/**
 		 * if A receives a bitfield message form B, finds out whether B has pieces that it doesn't have
 		 */
-		boolean findOutInterestedPiece() {
+		void findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
-			boolean t = false;
 			for(int i =0; i< Config.bitFieldLength; i++) {
 //				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
 				peerBitfield.bitfield[i] = (byte) (peerBitfield.bitfield[i] & ((byte) ~ localBitfield.bitfield[i]));
 				if(peerBitfield.bitfield[i] != 0) {
-					t = true;
+					isInterested = true;
 					for(int j = 0; j < 8;j++) {
 						int k = 1; 
 						k = (peerBitfield.bitfield[i] >> j) & k;
 						if( k == 1) {
 							interestedPieceList.add(i*8+j);
 							System.out.println("find out interested piece, pieceNum = " + (i*8+j) + " peerID: "+peerID);
-							isInterested = true;
 						}
 					}
 				}
 			}
-			return t;
 		}
 		
 		byte[] rawMsg;
@@ -561,12 +581,13 @@ public class Peer {
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
 						System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
 						if(rcvMsg.getPayLoad() !=null) {
-							System.out.write(rcvMsg.getPayLoad(), 4, MyUtil.byteArrayToInt(length) - 5);
-							System.out.println();
-							System.out.flush();
+//							System.out.write(content, 0, MyUtil.byteArrayToInt(length) - 5);
+//							System.out.println();
+//							System.out.flush();
 //							byte[] content =  new byte[msgLength - 5];
 //							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
 //							MyUtil.writeToFile(content, msgLength - 5);
+							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5);
 						}
 						
 						changeLocalBitField(piecenum);
@@ -581,7 +602,8 @@ public class Peer {
 						}
 						downloadThroughput += Config.PieceSize;
 						sendHaveToAll(piecenum);
-						
+						findOutInterestedPiece();
+						sendNotInterestedOrNotSend();
 						pieceNum = null;
 						break;
 				}
@@ -606,8 +628,8 @@ public class Peer {
 					break;
 				case ActualMsg.UNCHOKE:
 					System.out.println("reply UnChoke Message" + " peerID: "+peerID);
-					unChoked = true;
-					if(unChoked & !fileComplete) {
+					isUnChoked = true;
+					if(isUnChoked & !fileComplete) {
 						sendRequestMsg();
 					}
 					break;
@@ -632,7 +654,7 @@ public class Peer {
 					break;
 				case ActualMsg.PIECE:
 					System.out.println("reply Piece Message" + " peerID: "+peerID);
-					if(unChoked & !fileComplete) {
+					if(isUnChoked & !fileComplete) {
 						sendRequestMsg();
 					}
 					break;
@@ -667,10 +689,10 @@ public class Peer {
 			int offset = piecenum %8;
 			int temp = 0x01 << (8 - offset);
 			if((~localBitfield.bitfield[index] & temp) != 0) {
-				System.out.println("receive interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
-				
-				sendInterestedOrNot();
-
+				System.out.println("receive new interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
+				isInterested = true;
+				interestedPieceList.add(piecenum);
+				sendInterestedOrNotSend();
 			}
 			peerBitfield.bitfield[index] = (byte) (peerBitfield.bitfield[index] | temp);
 		}
