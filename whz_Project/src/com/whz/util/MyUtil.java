@@ -94,7 +94,7 @@ public class MyUtil {
 	     }  
 	}
 	
-	public static void writeToFile(byte[] data, int count) {
+	public static synchronized void writeToFile(byte[] data, int count) {
 		try {  
 			System.out.println("write to file");  
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("receiveFile.txt"));  

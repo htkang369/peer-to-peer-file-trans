@@ -118,10 +118,21 @@ public class Peer {
 		for(int i = 0; i < size; i++) {
 			int unChokePeerID = interestedList.get(i).peerID;
 			if(unChokedMap.get(unChokePeerID) == null) {
-				unChokedMap.put(unChokePeerID, interestedList.get(i));
-				System.out.println("unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
-				sendUnchoke(unChokedMap.get(unChokePeerID));
-				chokedMap.remove(unChokePeerID);
+				if(optimisticNeighbor != null) {
+					if(optimisticNeighbor.peerID != unChokePeerID) {
+						unChokedMap.put(unChokePeerID, interestedList.get(i));
+						System.out.println("unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
+						sendUnchoke(unChokedMap.get(unChokePeerID));
+						chokedMap.remove(unChokePeerID);
+					}else {
+						System.out.println("op do not need send unchoke when it is select as preferred too");
+					}
+				}else {
+					unChokedMap.put(unChokePeerID, interestedList.get(i));
+					System.out.println("unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
+					sendUnchoke(unChokedMap.get(unChokePeerID));
+					chokedMap.remove(unChokePeerID);
+				}
 			}else {
 				System.out.println("unChokedMap already has " + unChokePeerID);
 			}
