@@ -575,7 +575,7 @@ public class Peer {
 //						count += in.read(oneByte);
 //						System.out.println("readlly read = " + count);
 //						System.arraycopy(oneByte, 0, rawMsg, count, 1);
-						byte[] oneByte = new byte[msgLength];
+						byte[] oneByte = new byte[msgLength - count];
 						int readCount = in.read(oneByte);
 						System.arraycopy(oneByte, 0, rawMsg, count, readCount);
 						count += readCount;
