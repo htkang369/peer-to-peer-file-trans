@@ -490,6 +490,7 @@ public class Peer {
 //				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
 				byte not = (byte) ~ localBitfield.bitfield[i];
 				byte temp = (byte) (peerBitfield.bitfield[i] & not);
+				System.out.println(" i = "+ i + "Config.bitFieldLength  " + Config.bitFieldLength);
 				System.out.println(" not local bitfield value =  " + String.format("%02X", not));
 				System.out.println(" peerBitfield bitfield value =  " + String.format("%02X", peerBitfield.bitfield[i]));
 				System.out.println(" temp bitfield value =  " + String.format("%02X", temp));
@@ -497,7 +498,7 @@ public class Peer {
 					isInterested = true;
 					for(int j = 0; j < 8;j++) {
 						int k = 1;
-						k = (peerBitfield.bitfield[i] >> j) & k;
+						k = (not >> j) & k;
 						if( k == 1) {
 							interestedPieceList.add(i*8+j);
 							System.out.println("find out interested piece, pieceNum = " + (i*8+j) + " peerID: "+peerID);
