@@ -26788,3 +26788,472 @@ peerID: 1002 update speed =0.0
 unChokedMap already has 1003
 select preferredNeighbors interestedList.size = 2 Config.k :1
 chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1002
+error send message peerID: 1002
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 2
+peerID: 1003 update speed =0.0
+peerID: 1002 update speed =0.0
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 2 Config.k :1
+chokedMap already has 1002

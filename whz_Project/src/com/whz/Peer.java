@@ -67,11 +67,11 @@ public class Peer {
 	}
 	
 	static void initBitfield() {
-		if(Config.myID == 1001) {
+		if(Config.myID != 1001) {
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
-		for(int i=0;i<Config.bitFieldLength;i++) {
-			localBitfield.bitfield[i] = (byte) 0xFF;
-		}
+			for(int i=0;i<Config.bitFieldLength;i++) {
+				localBitfield.bitfield[i] = (byte) 0xFF;
+			}
 		}else {
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
 		}
