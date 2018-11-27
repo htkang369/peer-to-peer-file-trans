@@ -231,8 +231,8 @@ public class Peer {
 			}
 		}finally {
 			listener.close();
-			timerP.cancel();
-			timerM.cancel();
+			//timerP.cancel();
+			//timerM.cancel();
 		}
 	}
 	
@@ -379,9 +379,9 @@ public class Peer {
 			}
 			for(int i = 0; i< payloadLength -1; i++) {
 				if(peerID == 1003) {
-					System.out.print(bitfield.bitfield[i]);
+					System.out.print(String.format("%02X", bitfield.bitfield[i]));
 				}else {
-					MyUtil.pw.print(bitfield.bitfield[i]);
+					MyUtil.pw.print(String.format("%02X", bitfield.bitfield[i]));
 					MyUtil.pw.flush();
 				}
 			}
