@@ -642,7 +642,7 @@ public class Peer {
 //							byte[] content =  new byte[msgLength - 5];
 //							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
 //							MyUtil.writeToFile(content, msgLength - 5);
-							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5);
+							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
 						}
 						
 						changeLocalBitField(piecenum);

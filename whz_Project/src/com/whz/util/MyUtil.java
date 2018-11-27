@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 
 import com.whz.BitTorrentClient;
 import com.whz.Config;
@@ -94,13 +95,14 @@ public class MyUtil {
 	     }  
 	}
 	
-	public static synchronized void writeToFile(byte[] data, int count) {
+	public static synchronized void writeToFile(byte[] data, int count, int piecenum) {
 		try {  
-			System.out.println("write to file");  
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("receiveFile.txt"));  
-			bos.write(data, 0, count);  
-			bos.close();  
-				System.out.println("write to receiveFile.txt!");  
+			System.out.println("write to file");
+			RandomAccessFile raf = new RandomAccessFile(Config.receiveFileName, "rw");
+			raf.seek(piecenum * Config.PieceSize);
+			raf.write(data);  
+			raf.close();  
+			System.out.println("write to receiveFile.txt!");  
 		} catch (IOException ioe) {  
 			System.out.println("writeToFile IOException!"); 
 			System.out.println(ioe);  
