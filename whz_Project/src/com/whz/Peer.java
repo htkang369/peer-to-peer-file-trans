@@ -69,6 +69,7 @@ public class Peer {
 	static void initBitfield() {
 		if(Config.myID != 1001) {
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
+			fileComplete = true;
 			for(int i=0;i<Config.bitFieldLength;i++) {
 				localBitfield.bitfield[i] = (byte) 0xFF;
 			}
@@ -310,6 +311,8 @@ public class Peer {
 					in.close();
 					out.close();
 					connection.close();
+					timerP.cancel();
+					timerM.cancel();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -563,6 +566,7 @@ public class Peer {
 		ActualMsg receiveActualMsg() throws Exception {
 			byte[] length = new byte[4];
 			in.read(length);
+			
 
 			int msgLength = ActualMsg.parseLength(length);
 			if(msgLength > 0 && msgLength < 5000000) {

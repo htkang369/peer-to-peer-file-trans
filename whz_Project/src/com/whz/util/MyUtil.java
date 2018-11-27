@@ -98,7 +98,7 @@ public class MyUtil {
 	public static synchronized void writeToFile(byte[] data, int count, int piecenum) {
 		try {  
 			System.out.println("write to file");
-			RandomAccessFile raf = new RandomAccessFile(Config.receiveFileName, "rw");
+			RandomAccessFile raf = new RandomAccessFile(Config.fileName, "rw");
 			raf.seek(piecenum * Config.PieceSize);
 			raf.write(data);  
 			raf.close();  
