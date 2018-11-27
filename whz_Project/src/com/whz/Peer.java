@@ -498,10 +498,11 @@ public class Peer {
 					isInterested = true;
 					for(int j = 0; j < 8;j++) {
 						int k = 1;
-						k = (not << j) & k;
+						k = (not >> j) & k;
 						if( k == 1) {
-							interestedPieceList.add(i*8+j);
-							System.out.println("find out interested piece, pieceNum = " + (i*8+j) + " peerID: "+peerID);
+							int piecenum = i*8+(7 - j);
+							interestedPieceList.add(piecenum);
+							System.out.println("find out interested piece, pieceNum = " + piecenum + " peerID: "+peerID);
 						}
 					}
 				}
