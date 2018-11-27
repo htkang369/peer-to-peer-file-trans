@@ -105,7 +105,7 @@ public class Peer {
 		}
 	}
 	
-	public static void selectPreferredNeighbors() {
+	public static synchronized void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors interestedList.size = " + interestedList.size());
 		for(int i = 0; i < interestedList.size(); i++) {
 			interestedList.get(i).computeDownloadRate();
@@ -133,30 +133,42 @@ public class Peer {
 				if(optimisticNeighbor != null) {
 					if(chokePeerID != optimisticNeighbor.peerID) {
 						chokedMap.put(chokePeerID, interestedList.get(i));
-						System.out.println("chokedMap add new" + chokePeerID);
+						System.out.println("chokedMap add new" + chokePeerID + "interestedList peerID" + interestedList.get(i).peerID);
 						sendChoke(chokedMap.get(chokePeerID));
 						unChokedMap.remove(chokePeerID);			
-					}
-				}else {
-					System.out.println("optimisticNeighbor is null choke Peer ID: " + chokePeerID);
-					System.out.println("chokedMap already has " + chokePeerID);
+					}else {
+						System.out.println(chokePeerID + " is optimisticNeighbor, do not need send choke");
+					} 
+				}else if(optimisticNeighbor == null){
+					System.out.println("optimisticNeighbor is null choke Peer ID: " + chokePeerID + " interestedList peerID" + interestedList.get(i).peerID);
 					chokedMap.put(chokePeerID, interestedList.get(i));
 					System.out.println("chokedMap add new" + chokePeerID);
 					sendChoke(chokedMap.get(chokePeerID));
 					unChokedMap.remove(chokePeerID);
-
 				}
+			}else {
+				System.out.println("chokedMap already has " + chokePeerID);
 			}
 		}
 	}
 	
-	public static void selectOptimisticallyUnchokedNeigbor() {
+	public static synchronized void selectOptimisticallyUnchokedNeigbor() {
 		int size = chokedMap.size();
 		if(size > 0) {
 			int index = random.nextInt(size);
-			optimisticNeighbor = chokedMap.get(index);
+			int count = 0;
+			Iterator<Integer> iter = chokedMap.keySet().iterator();
+			while(iter.hasNext()) {
+				int temp = iter.next();
+				count ++;
+				if(count == size) {
+					optimisticNeighbor = chokedMap.get(temp);
+				}
+			}
 			if(optimisticNeighbor != null) {
 				System.out.println("selectOptimisticallyUnchokedNeigbor " + optimisticNeighbor.peerID);
+			}else {
+				System.out.println("selectOptimisticallyUnchokedNeigbor = null index =" + index + " size = " + size);
 			}
 		}else {
 			System.out.println("do not have choked neighbor");
