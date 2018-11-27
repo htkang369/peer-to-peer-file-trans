@@ -66,14 +66,14 @@ public class Peer {
 		listenTcpConnection();	
 	}
 	
-//    static void initBitfield() {
-//		localBitfield.bitfield = new byte[Config.bitFieldLength];
-//	}
-	
 	static void initBitfield() {
-		localBitfield.bitfield = new byte[Config.bitFieldLength];
+		if(Config.myID == 1001) {
+			localBitfield.bitfield = new byte[Config.bitFieldLength];
 		for(int i=0;i<Config.bitFieldLength;i++) {
 			localBitfield.bitfield[i] = (byte) 0xFF;
+		}
+		}else {
+			localBitfield.bitfield = new byte[Config.bitFieldLength];
 		}
 	}
 	
