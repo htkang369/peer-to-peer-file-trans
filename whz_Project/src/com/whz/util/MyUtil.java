@@ -43,7 +43,7 @@ public class MyUtil {
 		};
 	}
 	
-	public static byte[] readFile(int pieceNum) {
+	public synchronized static byte[] readFile(int pieceNum) {
 		InputStream inFile = null;
 		File directory = new File("");//设定为当前文件夹 
 //		try{ 
@@ -97,7 +97,7 @@ public class MyUtil {
 	
 	public static synchronized void writeToFile(byte[] data, int count, int piecenum) {
 		try {  
-			System.out.println("write to file");
+			System.out.println("write to file piecenum = " + piecenum + "count" + count);
 			RandomAccessFile raf = new RandomAccessFile(Config.fileName, "rw");
 			raf.seek(piecenum * Config.PieceSize);
 			raf.write(data);  

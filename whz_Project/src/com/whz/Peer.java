@@ -67,13 +67,17 @@ public class Peer {
 	}
 	
 	static void initBitfield() {
-		if(Config.myID != 1001) {
+		if(Config.myID == 1001) {
+			MyUtil.pw.println("mID" + Config.myID);
+			MyUtil.pw.flush();
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
 			fileComplete = true;
 			for(int i=0;i<Config.bitFieldLength;i++) {
 				localBitfield.bitfield[i] = (byte) 0xFF;
 			}
 		}else {
+			MyUtil.pw.println("mID" + Config.myID);
+			MyUtil.pw.flush();
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
 		}
 	}
