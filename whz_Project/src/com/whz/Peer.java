@@ -208,7 +208,7 @@ public class Peer {
         private DataOutputStream out;    //stream write to the socket
         private boolean isClient;
         private int peerID;
-        private boolean isInterested;
+        private boolean isInterested = false;
         private BitField peerBitfield;
         private Random rand = new Random();
         private boolean isUnChoked = false;
@@ -377,7 +377,7 @@ public class Peer {
 		
 		public void sendNotInterestedOrNotSend() {
 			if(!isInterested) {
-				System.out.println("send Not interested Message" + " peerID: "+peerID);
+				System.out.println("send a Not interested Message" + " peerID: "+peerID);
 				notInterested = new NotInterestedMsg();
 				byte[] c = ActualMsg.toDataGram(notInterested);
 				sendMessage(c);
@@ -387,7 +387,7 @@ public class Peer {
 		
 		public void sendInterestedOrNotSend() {
 			if(isInterested) {
-				System.out.println("send Interested Message" + " peerID: "+peerID);
+				System.out.println("send a Interested Message" + " peerID: "+peerID);
 				interestedMsg = new InterestedMsg();
 				byte[] c = ActualMsg.toDataGram(interestedMsg);
 				sendMessage(c);
@@ -493,7 +493,8 @@ public class Peer {
 				if(temp != 0) {
 					isInterested = true;
 					for(int j = 0; j < 8;j++) {
-						int k = peerBitfield.bitfield[i] >> j;
+						int k = 1;
+						k = peerBitfield.bitfield[i] >> j & k;
 						if( k == 1) {
 							interestedPieceList.add(i*8+j);
 							System.out.println("find out interested piece, pieceNum = " + (i*8+j) + " peerID: "+peerID);
