@@ -498,6 +498,7 @@ public class Peer {
 			PieceMsg pieceMsg = new PieceMsg(Config.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
 			sendMessage(c);
+			MyUtil.writeSendContent(pieceMsg.getPayLoad(),20000, pieceNum, peerID);
 			upLoadThroughput += Config.PieceSize;
 			payLoad = null;
 			c = null;

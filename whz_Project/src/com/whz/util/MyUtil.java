@@ -61,6 +61,7 @@ public class MyUtil {
 //				System.out.write(tempbytes, 0, Config.PieceSize);
 				System.out.println();
 				System.out.println("one piece! read count = " + count);
+				System.out.flush();
 			}
 		}catch(Exception e1) {
 			e1.printStackTrace();
@@ -99,12 +100,30 @@ public class MyUtil {
 	public static synchronized void writeToFile(byte[] data, int count, int piecenum) {
 		try {  
 			System.out.println("write to file piecenum = " + piecenum + "count" + count);
-			System.out.flush();
 			RandomAccessFile raf = new RandomAccessFile(Config.fileName, "rw");
 			raf.seek(piecenum * Config.PieceSize);
 			raf.write(data);  
 			raf.close();  
 			System.out.println("write to receiveFile.txt!");  
+			System.out.flush();
+		} catch (IOException ioe) {  
+			System.out.println("writeToFile IOException!"); 
+			System.out.println(ioe);  
+		} catch (Exception e) {  
+			System.out.println("writeToFile Exception!"); 
+			System.out.println(e);  
+		}  
+	}
+	
+	public static synchronized void writeSendContent(byte[] data, int count, int piecenum, int peerID) {
+		try {  
+			System.out.println("send to " + peerID + " piecenum = " + piecenum + "count" + count);
+			RandomAccessFile raf = new RandomAccessFile(Config.fileName + peerID, "rw");
+			raf.seek(piecenum * Config.PieceSize);
+			raf.write(data);  
+			raf.close();  
+			System.out.println("write to receiveFile.txt!");  
+			System.out.flush();
 		} catch (IOException ioe) {  
 			System.out.println("writeToFile IOException!"); 
 			System.out.println(ioe);  
