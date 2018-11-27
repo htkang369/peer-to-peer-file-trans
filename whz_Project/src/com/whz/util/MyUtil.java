@@ -56,10 +56,11 @@ public class MyUtil {
 			inFile = new FileInputStream(Config.fileName);
 			showAvailableBytes(inFile);
 			inFile.skip(pieceNum * Config.PieceSize);
-			if(inFile.read(tempbytes) != -1) {
+			int count = inFile.read(tempbytes);
+			if( count != -1) {
 //				System.out.write(tempbytes, 0, Config.PieceSize);
 				System.out.println();
-				System.out.println("one piece!");
+				System.out.println("one piece! read count = " + count);
 			}
 		}catch(Exception e1) {
 			e1.printStackTrace();
