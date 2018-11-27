@@ -1,0 +1,3 @@
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 0
+select preferredNeighbors interestedList.size = 0 Config.k :1

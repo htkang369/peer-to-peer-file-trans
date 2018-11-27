@@ -55,7 +55,7 @@ public class Peer {
 		neighbor = new HashMap<>();
 		interestedList = new ArrayList<>();
 		localBitfield = new BitField();
-		//MyUtil.initiateOut();
+		MyUtil.initiateOut();
 		
 		initBitfield();
 		
@@ -81,7 +81,7 @@ public class Peer {
 		timerP = new Timer();
 		timerP.schedule(new TimerTask() {
 			public void run(){
-				System.out.println("----set timer-----");
+				System.out.println("----set preferred timer-----");
 				selectPreferredNeighbors();
 				//clearSpeed();
 			}
@@ -126,15 +126,26 @@ public class Peer {
 				System.out.println("unChokedMap already has " + unChokePeerID);
 			}
 		}
+		System.out.println("select preferredNeighbors interestedList.size = " + interestedList.size() + " Config.k :" + Config.k);
 		for(int i = Config.k; i < interestedList.size(); i++) {
 			int chokePeerID = interestedList.get(i).peerID;
-			if(chokedMap.get(chokePeerID) == null && (chokePeerID != optimisticNeighbor.peerID)) {
-				chokedMap.put(chokePeerID, interestedList.get(i));
-				System.out.println("chokedMap add new" + chokePeerID);
-				sendChoke(chokedMap.get(chokePeerID));
-				unChokedMap.remove(chokePeerID);			
-			}else {
-				System.out.println("chokedMap already has " + chokePeerID);
+			if(chokedMap.get(chokePeerID) == null) {
+				if(optimisticNeighbor != null) {
+					if(chokePeerID != optimisticNeighbor.peerID) {
+						chokedMap.put(chokePeerID, interestedList.get(i));
+						System.out.println("chokedMap add new" + chokePeerID);
+						sendChoke(chokedMap.get(chokePeerID));
+						unChokedMap.remove(chokePeerID);			
+					}
+				}else {
+					System.out.println("optimisticNeighbor is null choke Peer ID: " + chokePeerID);
+					System.out.println("chokedMap already has " + chokePeerID);
+					chokedMap.put(chokePeerID, interestedList.get(i));
+					System.out.println("chokedMap add new" + chokePeerID);
+					sendChoke(chokedMap.get(chokePeerID));
+					unChokedMap.remove(chokePeerID);
+
+				}
 			}
 		}
 	}
@@ -396,7 +407,7 @@ public class Peer {
 		}
 		
 		public void receiveInterested(ActualMsg rcvMsg) {
-			System.out.println("receiveInterested" + " peerID: "+peerID);
+			System.out.println("reply eInterested" + " peerID: "+peerID);
 			if(!isInterested) {
 				System.out.println("this is new Interested peer id = " + peerID);
 				interestedList.add(this);
