@@ -371,14 +371,30 @@ public class Peer {
 			BitField bitfield = new BitField();
 			bitfield.bitfield = bitfieldMsg.getPayLoad();
 			int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
-			System.out.println("parse Bitfield Message from:" + peerID + " payloadLength = " + payloadLength + " bitfield length =" + Config.bitFieldLength);
+			if(peerID == 1003) {
+				System.out.println("parse Bitfield Message from:" + peerID + " payloadLength = " + payloadLength + " bitfield length =" + Config.bitFieldLength);
+			}else {
+				MyUtil.pw.println("parse Bitfield Message from:" + peerID + " payloadLength = " + payloadLength + " bitfield length =" + Config.bitFieldLength);
+				MyUtil.pw.flush();
+			}
 			for(int i = 0; i< payloadLength -1; i++) {
-				System.out.print(bitfield.bitfield[i]);
+				if(peerID == 1003) {
+					System.out.print(bitfield.bitfield[i]);
+				}else {
+					MyUtil.pw.print(bitfield.bitfield[i]);
+					MyUtil.pw.flush();
+				}
 			}
 			peerBitfield = bitfield;
 			peerBitfields.put(peerID, peerBitfield);
+			if(peerID == 1003) {
 			System.out.println();
 			System.out.println("Bitfield payloadLeng = " + payloadLength + " peerID: "+peerID);
+			}else {
+				MyUtil.pw.println();
+				MyUtil.pw.println("Bitfield payloadLeng = " + payloadLength + " peerID: "+peerID);
+				MyUtil.pw.flush();
+			}
 			bitfieldMsg = null;
 		
 		}
