@@ -297,6 +297,7 @@ public class Peer {
 				}
 				System.out.println("-------------------------receive file completely-------------------------------" + " peerID: "+peerID);
 				MyUtil.pw.println("receive file completely" + " peerID: "+peerID);
+				MyUtil.pw.flush();
 				while(true) {			
 					ActualMsg rcvMsg = receiveActualMsg();
 					replyMsg(rcvMsg);
@@ -742,7 +743,7 @@ public class Peer {
 			
 		}
 		
-		public void changeLocalBitField(int piecenum) {
+		public synchronized void changeLocalBitField(int piecenum) {
 			int index = piecenum / 8;
 			int offset = piecenum % 8;
 			int temp = 0x01 << (7 - offset);
@@ -751,7 +752,7 @@ public class Peer {
 			System.out.println(" local bitfield value =  " + String.format("%02X", localBitfield.bitfield[index]));
 		}
 		
-		public void changePeerBitField(int piecenum) {
+		public synchronized void changePeerBitField(int piecenum) {
 			int index = piecenum / 8;
 			int offset = piecenum % 8;
 			int temp = 0x01 << (7 - offset);
