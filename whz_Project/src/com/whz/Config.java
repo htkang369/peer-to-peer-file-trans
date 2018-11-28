@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Config {
-	public static int myID = 1005;
+	public static int myID = 1001;
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
 	public static int FileSize;
@@ -40,25 +40,25 @@ public class Config {
 		
 		peerIpAddress = new HashMap<>();
 		
-		 try {
-	            BufferedReader reader = new BufferedReader(new FileReader(peer_filename));
-	            String line = reader.readLine();
-	            while (line != null) {
-	                String[] content = line.trim().split(" ");
-	                peerIpAddress.put(Integer.parseInt(content[0]), content[1]);	                
-	                line = reader.readLine();
-	            }
-	            reader.close();
-	        } catch (FileNotFoundException fne) {
-	            System.out.println("Cannot find this file, please use CfgGenerator first");
-	        } catch (IOException ie) {
-	            System.out.println("Cannot read this file, please check the file");
-	        }
+//		 try {
+//	            BufferedReader reader = new BufferedReader(new FileReader(peer_filename));
+//	            String line = reader.readLine();
+//	            while (line != null) {
+//	                String[] content = line.trim().split(" ");
+//	                peerIpAddress.put(Integer.parseInt(content[0]), content[1]);	                
+//	                line = reader.readLine();
+//	            }
+//	            reader.close();
+//	        } catch (FileNotFoundException fne) {
+//	            System.out.println("Cannot find this file, please use CfgGenerator first");
+//	        } catch (IOException ie) {
+//	            System.out.println("Cannot read this file, please check the file");
+//	        }
 		
-		peerIpAddress.put(1001, "10.3.89.216");
-		peerIpAddress.put(1002, "10.3.89.215");
-		peerIpAddress.put(1003, "10.136.166.196");
-		peerIpAddress.put(1004, "10.3.89.211");
+//		peerIpAddress.put(1001, "10.3.89.216");
+//		peerIpAddress.put(1002, "10.3.89.215");
+//		peerIpAddress.put(1003, "10.136.166.196");
+//		peerIpAddress.put(1004, "10.3.89.211");
 //		peerIpAddress.put(1005, "10.3.89.214");
 
 	}
