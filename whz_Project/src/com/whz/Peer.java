@@ -76,6 +76,7 @@ public class Peer {
 				localBitfield.bitfield[i] = (byte) 0xFF;
 			}
 		}else {
+			fileComplete = false;
 			MyUtil.pw.println("mID" + Config.myID);
 			MyUtil.pw.flush();
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
@@ -130,11 +131,11 @@ public class Peer {
 						sendUnchoke(unChokedMap.get(unChokePeerID));
 						chokedMap.remove(unChokePeerID);
 					}else {
-						System.out.println("op do not need send unchoke when it is select as preferred too");
+						System.out.println(unChokePeerID + "op do not need send unchoke when it is select as preferred too");
 					}
 				}else {
 					unChokedMap.put(unChokePeerID, interestedList.get(i));
-					System.out.println("unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
+					System.out.println("unChokedMap already unchoked reselect" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
 					sendUnchoke(unChokedMap.get(unChokePeerID));
 					chokedMap.remove(unChokePeerID);
 				}
@@ -170,6 +171,7 @@ public class Peer {
 	
 	public static synchronized void selectOptimisticallyUnchokedNeigbor() {
 		int size = chokedMap.size();
+		System.out.println("selectOptimisticallyUnchokedNeigbor chokedMap size = " + size);
 		if(size > 0) {
 			int index = random.nextInt(size);
 			int count = 0;
@@ -313,6 +315,7 @@ public class Peer {
 			}finally {
 				try {
 					System.out.println("close with peerID: " + peerID);
+					MyUtil.pw.println("close with peerID: " + peerID);
 					in.close();
 					out.close();
 					connection.close();
@@ -560,6 +563,7 @@ public class Peer {
 		 */
 		synchronized void  findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
+			isInterested = false;
 			interestedPieceList = new ArrayList<>();
 			for(int i =0; i< Config.bitFieldLength; i++) {
 //				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
@@ -585,7 +589,7 @@ public class Peer {
 		}
 		
 		byte[] rawMsg;
-		ActualMsg receiveActualMsg() throws Exception {
+		synchronized ActualMsg receiveActualMsg() throws Exception {
 			byte[] length = new byte[4];
 			in.read(length);
 			
@@ -696,7 +700,7 @@ public class Peer {
 			}
 		}
 		
-		public void replyMsg(ActualMsg rcvMsg) {
+		public synchronized void replyMsg(ActualMsg rcvMsg) {
 			if(rcvMsg != null) {
 				int msgType = rcvMsg.getMsgType();
 				switch(msgType) {

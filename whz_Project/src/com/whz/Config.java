@@ -8,7 +8,7 @@ public class Config {
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
 	public static int FileSize =  3825566 ;
-	public static int PieceSize = 20000;
+	public static int PieceSize = 5000;
 	public static int pieceNum = (int) Math.ceil(((double)FileSize/(double)PieceSize));
 	public static int bitFieldLength = (int) Math.ceil(((double)pieceNum/(double)8));
 //	public static int bitFieldLength = (int) Math.ceil(pieceNum/8);
@@ -24,7 +24,7 @@ public class Config {
 
 //		peerIpAddress.put(1001, "10.3.89.216");
 //		peerIpAddress.put(1002, "10.3.89.215");
-//		peerIpAddress.put(1003, "10.13.166.196");
+//		peerIpAddress.put(1003, "10.136.166.196");
 //		peerIpAddress.put(1004, "10.3.89.211");
 //		peerIpAddress.put(1005, "10.3.89.214");
 
