@@ -22272,3 +22272,1134 @@ unChokedMap already has 1003
 select preferredNeighbors interestedList.size = 4 Config.k :2
 chokedMap already has 1004
 chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381863240
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381863240
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381863240
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381863240
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381864241
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381864241
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381864241
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381864241
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381865241
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381865241
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381865241
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381865241
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381866242
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381866242
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381866242
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381866242
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381867242
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381867242
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381867242
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381867242
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381868243
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381868243
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381868243
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381868243
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381869243
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381869243
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381869243
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381869243
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381870243
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381870243
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381870243
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381870243
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381871244
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381871244
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381871244
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381871244
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381872245
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381872245
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381872245
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381872245
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381873245
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381873245
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381873245
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381873245
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381874245
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381874245
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381874245
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381874245
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381875246
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381875246
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381875246
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381875246
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381876246
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381876246
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381876246
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381876246
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381877247
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381877247
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381877247
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381877247
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381878247
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381878247
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381878247
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381878247
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381879248
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381879248
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381879248
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381879248
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381880248
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381880248
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381880248
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381880248
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381881249
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381881249
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381881249
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381881249
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381882250
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381882250
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381882250
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381882250
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381883250
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381883250
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381883250
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381883250
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381884250
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381884250
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381884250
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381884250
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381885251
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381885251
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381885251
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381885251
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381886251
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381886251
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381886251
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381886251
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381887252
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381887252
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381887252
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381887252
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381888253
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381888253
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381888253
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381888253
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381889254
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381889254
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381889254
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381889254
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381890255
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381890255
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381890255
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381890255
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381891255
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381891255
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381891255
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381891255
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381892256
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381892256
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381892256
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381892256
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381893257
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381893257
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381893257
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381893257
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381894258
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381894258
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381894258
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381894258
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381895259
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381895259
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381895259
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381895259
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381896259
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381896259
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381896259
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381896259
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381897259
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381897259
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381897259
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381897259
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381898260
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381898260
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381898260
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381898260
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381899261
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381899261
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381899261
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381899261
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381900262
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381900262
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381900262
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381900262
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381901262
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381901262
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381901262
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381901262
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381902263
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381902263
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381902263
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381902263
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381903264
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381903264
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381903264
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381903264
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381904264
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381904264
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381904264
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381904264
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381905265
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381905265
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381905265
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381905265
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381906265
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381906265
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381906265
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381906265
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381907265
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381907265
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381907265
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381907265
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381908266
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381908266
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381908266
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381908266
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381909266
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381909266
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381909266
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381909266
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381910266
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381910266
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381910266
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381910266
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381911267
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381911267
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381911267
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381911267
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381912268
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381912268
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381912268
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381912268
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381913268
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381913268
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381913268
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381913268
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381914269
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381914269
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381914269
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381914269
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381915269
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381915269
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381915269
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381915269
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381916269
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381916269
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381916269
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381916269
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381917270
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381917270
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381917270
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381917270
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381918271
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381918271
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381918271
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381918271
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381919271
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381919271
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381919271
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381919271
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381920271
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381920271
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381920271
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381920271
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381921272
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381921272
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381921272
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381921272
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381922273
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381922273
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381922273
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381922273
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381923273
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381923273
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381923273
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381923273
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381924274
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381924274
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381924274
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381924274
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381925274
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381925274
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381925274
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381925274
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381926275
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381926275
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381926275
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381926275
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381927276
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381927276
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381927276
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381927276
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381928276
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381928276
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381928276
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381928276
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381929277
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381929277
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381929277
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381929277
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381930277
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381930277
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381930277
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381930277
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381931278
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381931278
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381931278
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381931278
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381932278
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381932278
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381932278
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381932278
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381933279
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381933279
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381933279
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381933279
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381934279
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381934279
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381934279
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381934279
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381935280
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381935280
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381935280
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381935280
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381936280
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381936280
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381936280
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381936280
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381937280
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381937280
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381937280
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381937280
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381938281
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381938281
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381938281
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381938281
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381939282
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381939282
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381939282
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381939282
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381940283
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381940283
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381940283
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381940283
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381941283
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381941283
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381941283
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381941283
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381942284
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381942284
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381942284
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381942284
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381943284
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381943284
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381943284
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381943284
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381944284
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381944284
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381944284
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381944284
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381945285
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381945285
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381945285
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381945285
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381946285
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381946285
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381946285
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381946285
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381947286
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381947286
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381947286
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381947286
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381948287
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381948287
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381948287
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381948287
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381949288
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381949288
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381949288
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381949288
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381950288
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381950288
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381950288
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381950288
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381951289
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381951289
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381951289
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381951289
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381952290
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381952290
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381952290
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381952290
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381953290
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381953290
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381953290
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381953290
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381954291
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381954291
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381954291
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381954291
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381955292
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381955292
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381955292
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381955292
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+----set Optimistic timer-----
+selectOptimisticallyUnchokedNeigbor 1005
+----set preferred timer-----
+select preferredNeighbors interestedList.size = 4
+peerID: 1002 update speed =0.0 downloadThroughput 0 upLoadThroughput3840000 startTime 0 now1543381956292
+peerID: 1003 update speed =0.0 downloadThroughput 0 upLoadThroughput3600000 startTime 0 now1543381956292
+peerID: 1004 update speed =0.0 downloadThroughput 0 upLoadThroughput3740000 startTime 0 now1543381956292
+peerID: 1005 update speed =0.0 downloadThroughput 0 upLoadThroughput1940000 startTime 0 now1543381956292
+unChokedMap already has 1002
+unChokedMap already has 1003
+select preferredNeighbors interestedList.size = 4 Config.k :2
+chokedMap already has 1004
+chokedMap already has 1005
+close with peerID: 1004
+close with peerID: 1005
+close with peerID: 1002

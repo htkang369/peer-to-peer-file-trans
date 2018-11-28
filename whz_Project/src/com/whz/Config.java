@@ -22,7 +22,11 @@ public class Config {
 	public static void initiatePeerConfig() {
 		peerIpAddress = new HashMap<>();
 
-//		peerIpAddress.put(1001, "10.3.89.214");
+//		peerIpAddress.put(1001, "10.3.89.216");
+//		peerIpAddress.put(1002, "10.3.89.215");
+//		peerIpAddress.put(1003, "10.13.166.196");
+//		peerIpAddress.put(1004, "10.3.89.211");
+//		peerIpAddress.put(1005, "10.3.89.214");
 
 	}
 }
