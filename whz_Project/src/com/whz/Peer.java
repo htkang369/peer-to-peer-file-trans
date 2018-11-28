@@ -725,7 +725,7 @@ public class Peer {
 		public boolean checkFileComplete() {
 			for(int i =0; i < Config.bitFieldLength - 1; i++) {
 				System.out.println("checkFileComplete  localBitfield.bitfield["+i+"]" + String.format("%02X", localBitfield.bitfield[i])+ " peerID: "+peerID);
-				if(localBitfield.bitfield[i] != 0xff) {
+				if(localBitfield.bitfield[i] != 0xFF) {
 					System.out.println("checkFileComplete localBitfield.bitfield["+ i +"] != 0xff ");
 				    fileComplete = false;
 					return false;
