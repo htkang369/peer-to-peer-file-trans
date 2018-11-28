@@ -381,14 +381,14 @@ public class Peer {
 			BitfieldMsg bitfieldMsg = (BitfieldMsg) receiveActualMsg();
 			BitField bitfield = new BitField();
 			bitfield.bitfield = bitfieldMsg.getPayLoad();
-			int payloadLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
+			int msgLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
 			if(peerID == 1003) {
-				System.out.println("parse Bitfield Message from:" + peerID + " payloadLength = " + payloadLength + " bitfield length =" + Config.bitFieldLength);
+				System.out.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
 			}else {
-				MyUtil.pw.println("parse Bitfield Message from:" + peerID + " payloadLength = " + payloadLength + " bitfield length =" + Config.bitFieldLength);
+				MyUtil.pw.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
 				MyUtil.pw.flush();
 			}
-			for(int i = 0; i< payloadLength -1; i++) {
+			for(int i = 0; i< msgLength -1; i++) {
 				if(peerID == 1003) {
 					System.out.print(String.format("%02X", bitfield.bitfield[i]));
 				}else {
@@ -400,10 +400,10 @@ public class Peer {
 			peerBitfields.put(peerID, peerBitfield);
 			if(peerID == 1003) {
 			System.out.println();
-			System.out.println("Bitfield payloadLeng = " + payloadLength + " peerID: "+peerID);
+			System.out.println("Bitfield msgLength = " + msgLength + " peerID: "+peerID);
 			}else {
 				MyUtil.pw.println();
-				MyUtil.pw.println("Bitfield payloadLeng = " + payloadLength + " peerID: "+peerID);
+				MyUtil.pw.println("Bitfield msgLength = " + msgLength + " peerID: "+peerID);
 				MyUtil.pw.flush();
 			}
 			bitfieldMsg = null;
@@ -704,9 +704,9 @@ public class Peer {
 						findOutInterestedPiece();
 						sendNotInterestedOrNotSend();
 						if(interestedPieceList.size() == 0) {
-							System.out.println("receive Piece file complete" + " peerID: "+peerID);
-							fileComplete = true;
+							System.out.println("after receive piece interestedPieceList.size() == 0" + " peerID: "+peerID);
 						}
+						checkFileComplete();
 						pieceNum = null;
 						break;
 				}
@@ -720,6 +720,18 @@ public class Peer {
 				rawMsg = null;
 				throw new Exception();
 			}
+		}
+		
+		public boolean checkFileComplete() {
+			for(int i =0; i < Config.bitFieldLength - 1; i++) {
+				if(localBitfield.bitfield[i] != 0xff) {
+				    fileComplete = false;
+					return false;
+				}
+			}
+			System.out.println("file compelete checkfileComplete" + " peerID: "+peerID);
+			fileComplete = true;;
+			return true;
 		}
 		
 		public synchronized void replyMsg(ActualMsg rcvMsg) {
