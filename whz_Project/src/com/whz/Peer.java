@@ -797,7 +797,12 @@ public class Peer {
 				//localBitfield.bitfield[index]  = (byte) (localBitfield.bitfield[index] | temp);
 				System.out.println("receive new interested have from " + peerID + " pieceNum = " + piecenum + " peerID: "+peerID);
 				isInterested = true;
-//				interestedPieceList.add(piecenum);
+				if(!interestedPieceList.contains(piecenum)) {
+					System.out.println("add new have interested to interested PieceList");
+					interestedPieceList.add(piecenum);
+				}else {
+					System.out.println("already add new have interested to interested PieceList");
+				}
 				sendInterestedOrNotSend();
 			}
 			peerBitfield.bitfield[index] = (byte) (peerBitfield.bitfield[index] | temp);
