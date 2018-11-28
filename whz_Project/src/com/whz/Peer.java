@@ -595,7 +595,7 @@ public class Peer {
 					isInterested = true;
 					for(int j = 0; j < 8;j++) {
 						int k = 1;
-						k = (not >> j) & k;
+						k = (temp >> j) & k;
 						if( k == 1) {
 							int piecenum = i*8+(7 - j);
 							interestedPieceList.add(piecenum);
