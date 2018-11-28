@@ -781,17 +781,21 @@ public class Peer {
 			
 			request_message = new RequestMsg();
 			int length_interest = interestedPieceList.size();
-			System.out.println("interestedPieceList size = " + length_interest + " peerID: "+peerID);
-			int index = rand.nextInt(length_interest);//select rand row of interestedPieceList
-			byte[] a = MyUtil.intToByteArray(interestedPieceList.get(index));
-			request_message.setPayLoad(a);
-			request_message.setMsgLength(MyUtil.intToByteArray(5));
-			byte[] c = ActualMsg.toDataGram(request_message);
-			System.out.println("send Request Message" + " peerID: "+peerID + " piecenum = " + MyUtil.byteArrayToInt(a));
-			sendMessage(c);
-			a = null;
-			c = null;
-			
+			if(length_interest > 0) {
+				System.out.println("interestedPieceList size = " + length_interest + " peerID: "+peerID);
+				int index = rand.nextInt(length_interest);//select rand row of interestedPieceList
+				byte[] a = MyUtil.intToByteArray(interestedPieceList.get(index));
+				request_message.setPayLoad(a);
+				request_message.setMsgLength(MyUtil.intToByteArray(5));
+				byte[] c = ActualMsg.toDataGram(request_message);
+				System.out.println("send Request Message" + " peerID: "+peerID + " piecenum = " + MyUtil.byteArrayToInt(a));
+				sendMessage(c);
+				a = null;
+				c = null;
+			}else {
+				System.out.println("interestedPieceList size = " + length_interest + " peerID: "+peerID);
+				System.out.println("interestedPieceList size = 0 , do not need send ");
+			}
 		}
 		
 		public synchronized void changeLocalBitField(int piecenum) {
