@@ -463,6 +463,7 @@ public class Peer {
 				if(interestedList.contains(this)) {
 					System.out.println("interestedList already have interested neighbor" + " peerID: "+peerID);
 				}else {
+					System.out.println("interestedList add interested neighbor" + " peerID: "+peerID);
 					interestedList.add(this);
 				}		
 			}else {
@@ -586,10 +587,10 @@ public class Peer {
 //				System.out.println("localBitfield.bitfield:" + localBitfield.bitfield[i] + " peerID: "+peerID);
 				byte not = (byte) ~ localBitfield.bitfield[i];
 				byte temp = (byte) (peerBitfield.bitfield[i] & not);
-				System.out.println(" i = "+ i + " Config.bitFieldLength  " + Config.bitFieldLength);
-				System.out.println(" not local bitfield value =  " + String.format("%02X", not));
-				System.out.println(" peerBitfield bitfield value =  " + String.format("%02X", peerBitfield.bitfield[i]));
-				System.out.println(" temp bitfield value =  " + String.format("%02X", temp));
+				System.out.println(" i = "+ i + " Config.bitFieldLength  " + Config.bitFieldLength + " peerID: "+peerID);
+				System.out.println(" not local bitfield value =  " + String.format("%02X", not) + " peerID: "+peerID);
+				System.out.println(" peerBitfield bitfield value =  " + String.format("%02X", peerBitfield.bitfield[i]) + " peerID: "+peerID);
+				System.out.println(" temp bitfield value =  " + String.format("%02X", temp) + " peerID: "+peerID);
 				if(temp != 0) {
 					isInterested = true;
 					for(int j = 0; j < 8;j++) {
@@ -703,6 +704,7 @@ public class Peer {
 						findOutInterestedPiece();
 						sendNotInterestedOrNotSend();
 						if(interestedPieceList.size() == 0) {
+							System.out.println("receive Piece file complete" + " peerID: "+peerID);
 							fileComplete = true;
 						}
 						pieceNum = null;
