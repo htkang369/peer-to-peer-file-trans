@@ -58,9 +58,11 @@ public class Peer {
 		localBitfield = new BitField();
 		MyUtil.initiateOut();
 		
+		
 		initBitfield();
 		
 		Config.initiatePeerConfig();
+		Config.init_variables();
 		tryToConnect();	
 		addTimerP();
 		addTimerM();
