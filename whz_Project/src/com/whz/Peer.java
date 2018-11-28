@@ -656,19 +656,13 @@ public class Peer {
 						}
 						
 						changeLocalBitField(piecenum);
-						int t = interestedPieceList.indexOf(piecenum);
-						if(t != -1) {
-							interestedPieceList.remove(t);
-						}else {
-							System.out.println("do not need this one" + " peerID: "+peerID);
-						}
-						if(interestedPieceList.size() == 0) {
-							fileComplete = true;
-						}
 						downloadThroughput += Config.PieceSize;
 						sendHaveToAll(piecenum);
 						findOutInterestedPiece();
 						sendNotInterestedOrNotSend();
+						if(interestedPieceList.size() == 0) {
+							fileComplete = true;
+						}
 						pieceNum = null;
 						break;
 				}
