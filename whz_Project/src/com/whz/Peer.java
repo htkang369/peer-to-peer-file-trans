@@ -477,6 +477,7 @@ public class Peer {
 		
 		public void sendUnchoke() {
 			unchoke = new UnchokeMsg();
+			System.out.println("send unchoke to " + " peerID: "+peerID);
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);
 			c = null;
@@ -490,13 +491,14 @@ public class Peer {
 		
 		public void sendChoke() {
 			choke = new ChokeMsg();
+			System.out.println("send choke to " + " peerID: "+peerID);
 			byte[] c = ActualMsg.toDataGram(choke);
 			sendMessage(c);
 			c = null;
 		}
 		
 		public void receiveChoke() {
-			System.out.println("receiveChoke" + " peerID: "+peerID);
+			System.out.println("receiveChoke from" + " peerID: "+peerID);
 			isUnChoked = false;
 		}
 		
@@ -527,7 +529,7 @@ public class Peer {
 		}
 		
 		public void receivePiece() {
-			System.out.println("receivePiece" + " peerID: "+peerID);
+			System.out.println("receivePiece from" + " peerID: "+peerID);
 		}
 		
 		public void sendHaveToAll(int pieceIndex) {
