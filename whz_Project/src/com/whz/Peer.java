@@ -135,7 +135,7 @@ public class Peer {
 					}
 				}else {
 					unChokedMap.put(unChokePeerID, interestedList.get(i));
-					System.out.println("unChokedMap already unchoked reselect" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
+					System.out.println("op is null, and unChokedMap add new" + unChokePeerID + " speed = " + unChokedMap.get(unChokePeerID).speed);
 					sendUnchoke(unChokedMap.get(unChokePeerID));
 					chokedMap.remove(unChokePeerID);
 				}
@@ -782,8 +782,9 @@ public class Peer {
 			int index = piecenum / 8;
 			int offset = piecenum % 8;
 			int temp = 0x01 << (7 - offset);
+			System.out.println("change local bitfield piecenum =  " + piecenum + " originl:"+ String.format("%02X", localBitfield.bitfield[index]) + " index = " + index + " offset: " + offset);
 			localBitfield.bitfield[index] = (byte) (localBitfield.bitfield[index] | temp);
-			System.out.println("change local bitfield piecenum =  " + piecenum + " index = " + index + " offset: " + offset);
+			System.out.println("change local bitfield piecenum =  " + piecenum + " new:"+ String.format("%02X", localBitfield.bitfield[index]) + " index = " + index + " offset: " + offset);
 			System.out.println(" local bitfield value =  " + String.format("%02X", localBitfield.bitfield[index]));
 		}
 		

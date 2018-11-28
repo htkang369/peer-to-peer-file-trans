@@ -23,19 +23,10 @@ public class test {
 		byte[] rawMsg2 = new byte[msgLength];
 		byte[] rawMsg3 = new byte[msgLength];
 		byte[] rawMsg4 = new byte[msgLength];
-		System.out.println("heelo");
-		for(int i =0;i<100000;i++) {
-			rawMsg4 = new byte[msgLength];
-		}
+
 		byte a = (byte) ~(0xff);
-		System.out.println(String.format("%02X", a));
-		System.out.println(String.format("%02X", ~(0xff)));
-		
-		Random random = new Random();
-		for(int i =0;i<100000;i++) {
-			int index = random.nextInt(1);
-			System.out.println(index);
-		}
+		System.out.println(String.format("%02X", 0x01));
+		System.out.println(String.format("%02X", 0x01<<2));
 		
 		
 	}
