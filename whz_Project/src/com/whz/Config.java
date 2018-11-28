@@ -64,8 +64,8 @@ public class Config {
 	}
 	
 	
-	public static void readFileByLines(String fileName) {
-        File file = new File(fileName);
+	public static void readFileByLines(String fileName2) {
+        File file = new File(fileName2);
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(file));

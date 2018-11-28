@@ -57,12 +57,11 @@ public class Peer {
 		interestedList = new ArrayList<>();
 		localBitfield = new BitField();
 		MyUtil.initiateOut();
+		Config.initiatePeerConfig();
+		Config.init_variables();
 		
 		
 		initBitfield();
-		
-		Config.initiatePeerConfig();
-		Config.init_variables();
 		tryToConnect();	
 		addTimerP();
 		addTimerM();
@@ -345,7 +344,7 @@ public class Peer {
 		}
 		
 		public void sendHandShake() {
-			System.out.println("send HandShake Message" + " peerID: "+peerID);
+			System.out.println("send HandShake Message" + " peerID: "+ myID);
 			handshakeMsg = new HandShakeMsg(myID);
 			sendMessage(HandShakeMsg.toDataGram(handshakeMsg));
 		}
@@ -758,13 +757,17 @@ public class Peer {
 		public boolean checkFileComplete() {
 			for(int i =0; i < Config.bitFieldLength - 1; i++) {
 				System.out.println("checkFileComplete  localBitfield.bitfield["+i+"]" + String.format("%02X", localBitfield.bitfield[i])+ " peerID: "+peerID);
-				if(localBitfield.bitfield[i] != 0xFF) {
+				int not = ~localBitfield.bitfield[i];
+				int temp = not & 0xFF;
+				if(temp == 0) {
 					System.out.println("checkFileComplete localBitfield.bitfield["+ i +"] != 0xff ");
 				    fileComplete = false;
 					return false;
 				}
 			}
 			System.out.println("file compelete checkfileComplete" + " peerID: "+peerID);
+			MyUtil.pw.println("file compelete checkfileComplete" + " peerID: "+peerID);
+			MyUtil.pw.flush();
 			fileComplete = true;;
 			return true;
 		}
