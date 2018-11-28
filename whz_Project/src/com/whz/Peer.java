@@ -471,6 +471,8 @@ public class Peer {
 		public synchronized void receiveNotInterested() {
 			System.out.println("receiveNotInterested" + " peerID: "+peerID);
 			interestedList.remove(this);
+			unChokedMap.remove(this);
+			chokedMap.remove(this);
 		}
 		
 		public void sendUnchoke() {
@@ -520,6 +522,7 @@ public class Peer {
 				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!requset a piece "+ pieceNum +" not have from "+peerID);
 				return false;
 			}
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!receive a piece "+ pieceNum +" already have from "+peerID);
 			return true;
 		}
 		
@@ -673,7 +676,7 @@ public class Peer {
 //							byte[] content =  new byte[msgLength - 5];
 //							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
 //							MyUtil.writeToFile(content, msgLength - 5);
-//							checkBitfield(piecenum);
+							checkBitfield(piecenum);
 							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
 						}
 						
