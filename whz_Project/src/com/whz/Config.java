@@ -7,17 +7,17 @@ public class Config {
 	public static int myID = 1001;
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
-	public static int FileSize =  5600462;
+	public static int FileSize =  3825566 ;
 	public static int PieceSize = 20000;
 	public static int pieceNum = (int) Math.ceil(((double)FileSize/(double)PieceSize));
 	public static int bitFieldLength = (int) Math.ceil(((double)pieceNum/(double)8));
 //	public static int bitFieldLength = (int) Math.ceil(pieceNum/8);
-	public static int k = 1;
+	public static int k = 2;
 	public static int optimistic_unchoking_interval = 2000;
 	public static int unchoking_interval = 1000;//second
 	public static String receiveFileName = "receiveFile.txt";
-	//public static String fileName = "bmp.bmp";
-	public static String fileName = "Gone_with_the_wind.txt";
+	public static String fileName = "bmp.bmp";
+	//public static String fileName = "Gone_with_the_wind.txt";
 	
 	public static void initiatePeerConfig() {
 		peerIpAddress = new HashMap<>();

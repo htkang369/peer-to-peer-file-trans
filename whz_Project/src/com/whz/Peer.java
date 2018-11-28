@@ -497,11 +497,21 @@ public class Peer {
 			byte[] payLoad = MyUtil.readFile(pieceNum);
 			PieceMsg pieceMsg = new PieceMsg(Config.PieceSize + 5, MyUtil.intToByteArray(pieceNum) , payLoad);
 			byte[] c = ActualMsg.toDataGram(pieceMsg);
+			checkBitfield(pieceNum);
 			sendMessage(c);
 			MyUtil.writeSendContent(pieceMsg.getPayLoad(),20000, pieceNum, peerID);
 			upLoadThroughput += Config.PieceSize;
 			payLoad = null;
 			c = null;
+		}
+		
+		public void checkBitfield(int pieceNum) {
+			int index = pieceNum / 8;
+			int offset = pieceNum % 8;
+			int temp = 0x01 << (7 - offset);
+			if((localBitfield.bitfield[index] & temp) == 0) {
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!requset a piece "+ pieceNum +"not have from "+peerID);
+			}
 		}
 		
 		public void receivePiece() {
@@ -645,6 +655,7 @@ public class Peer {
 						System.arraycopy(payLoad, 4, content, 0, msgLength - 5);
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
 						System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
+						changeLocalBitField(piecenum);
 						if(rcvMsg.getPayLoad() !=null) {
 //							System.out.write(content, 0, MyUtil.byteArrayToInt(length) - 5);
 //							System.out.println();
@@ -652,10 +663,11 @@ public class Peer {
 //							byte[] content =  new byte[msgLength - 5];
 //							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
 //							MyUtil.writeToFile(content, msgLength - 5);
+							checkBitfield(piecenum);
 							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
 						}
 						
-						changeLocalBitField(piecenum);
+						
 						downloadThroughput += Config.PieceSize;
 						sendHaveToAll(piecenum);
 						findOutInterestedPiece();
