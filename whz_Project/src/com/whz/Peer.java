@@ -337,7 +337,7 @@ public class Peer {
 		 * check whether the handshake header is right and the peer ID is the expected one
 		 * @throws Exception 
 		 */
-		public void receiveHandShake() throws Exception {
+		public synchronized void receiveHandShake() throws Exception {
 			byte[] rawMsg = new byte[32];
 			try {
 				in.read(rawMsg);
@@ -373,7 +373,7 @@ public class Peer {
 			datagram = null;
 		}
 		
-		public void receiveBitfield() throws Exception {
+		public synchronized void receiveBitfield() throws Exception {
 			System.out.println("receive Bitfield Message from:" + peerID);
 			BitfieldMsg bitfieldMsg = (BitfieldMsg) receiveActualMsg();
 			BitField bitfield = new BitField();
@@ -453,16 +453,19 @@ public class Peer {
 			}
 		}
 		
-		public void receiveInterested(ActualMsg rcvMsg) {
+		public synchronized void receiveInterested(ActualMsg rcvMsg) {
 			System.out.println("reply eInterested" + " peerID: "+peerID);
 			if(!isInterested) {
 				System.out.println("this is new Interested peer id = " + peerID);
-				interestedList.add(this);
+				if(interestedList.contains(this)) {
+					System.out.println("interestedList already have interested neighbor" + " peerID: "+peerID);
+				}else {
+					interestedList.add(this);
+				}		
 			}
-			
 		}
 		
-		public void receiveNotInterested() {
+		public synchronized void receiveNotInterested() {
 			System.out.println("receiveNotInterested" + " peerID: "+peerID);
 			interestedList.remove(this);
 		}
@@ -555,7 +558,7 @@ public class Peer {
 		/**
 		 * if A receives a bitfield message form B, finds out whether B has pieces that it doesn't have
 		 */
-		void findOutInterestedPiece() {
+		synchronized void  findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
 			interestedPieceList = new ArrayList<>();
 			for(int i =0; i< Config.bitFieldLength; i++) {
@@ -796,7 +799,7 @@ public class Peer {
 			Calendar calendar = Calendar.getInstance();
 			long timeInMillis = calendar.getTimeInMillis();
 			speed = (downloadThroughput + upLoadThroughput) / ( timeInMillis - startTime);
-			System.out.println("peerID: "+peerID + " update speed =" + speed);
+			System.out.println("peerID: "+peerID + " update speed =" + speed + " downloadThroughput "+downloadThroughput+" upLoadThroughput"+upLoadThroughput+" startTime "+startTime+" now" +timeInMillis);
 		}
 		
 		public void clearSpeed() {
