@@ -30,6 +30,7 @@ import com.whz.msgtype.RequestMsg;
 import com.whz.msgtype.UnchokeMsg;
 import com.whz.util.MyUtil;
 
+
 public class Peer {
 	static int myID = Config.myID;
 	static HashMap<Integer, Handler> neighbor;
@@ -167,6 +168,15 @@ public class Peer {
 				System.out.println("chokedMap already has " + chokePeerID);
 			}
 		}
+		MyUtil.time();	// 这里还需要向preferredList 里边添加 元素。
+		System.out.println("Peer [" + myID + "] has the preferred neighbors [");
+		for (int i=0;i<preferredList.size();i++) {
+			System.out.print(preferredList.get(i).peerID);
+			if (i!=preferredList.size()-1) {
+				System.out.print(",");
+			}
+		}
+		System.out.println("]");
 	}
 	
 	public static synchronized void selectOptimisticallyUnchokedNeigbor() {
@@ -185,6 +195,8 @@ public class Peer {
 			}
 			if(optimisticNeighbor != null) {
 				System.out.println("selectOptimisticallyUnchokedNeigbor " + optimisticNeighbor.peerID);
+				MyUtil.time();
+				System.out.println("Peer ["+ myID +"] has the optimistically unchoked neighbor ["+optimisticNeighbor.peerID+"]");
 			}else {
 				System.out.println("selectOptimisticallyUnchokedNeigbor = null index =" + index + " size = " + size);
 			}
@@ -215,6 +227,8 @@ public class Peer {
 			try {
 				requestSocket = new Socket(Config.peerIpAddress.get(temp), 8000);
 				System.out.println("Connected to " + Config.peerIpAddress.get(temp) + " in port 8000 ,  this peer ID = " + myID);
+				MyUtil.time();  // zhao log
+				System.out.println("Peer ["+ myID+"] makes a connection to Peer [" + Config.peerIpAddress.get(temp) + "]");
 				Handler handler = new Handler(requestSocket, clientNum, true, temp);
 	       		handler.start();
 	       		System.out.println("server "  + Config.peerIpAddress.get(temp) + " is connected!");
@@ -363,6 +377,8 @@ public class Peer {
 			}else {
 				System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
 				peerID = rcvhandshakeMsg.getPeerID();
+				MyUtil.time();
+				System.out.println("Peer ["+ myID + "] is connected from Peer [" + peerID + "]");
 				neighbor.put(peerID, this);//server add neighbor
 			}
 			rawMsg = null;
@@ -460,6 +476,8 @@ public class Peer {
 			System.out.println("reply eInterested" + " peerID: "+peerID);
 			if(!isInterested) {
 				System.out.println("this is new Interested peer id = " + peerID);
+				MyUtil.time();
+				System.out.println("Peer ["+myID+"] received the 'interested' message from ["+peerID+"]");
 				if(interestedList.contains(this)) {
 					System.out.println("interestedList already have interested neighbor" + " peerID: "+peerID);
 				}else {
@@ -470,6 +488,8 @@ public class Peer {
 		
 		public synchronized void receiveNotInterested() {
 			System.out.println("receiveNotInterested" + " peerID: "+peerID);
+			MyUtil.time();
+			System.out.println("Peer ["+myID +"] received the 'not interested' message from ["+peerID+"]");
 			interestedList.remove(this);
 			unChokedMap.remove(this);
 			chokedMap.remove(this);
@@ -479,6 +499,8 @@ public class Peer {
 			unchoke = new UnchokeMsg();
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);
+			MyUtil.time();
+			System.out.println("Peer [" + peerID + "is unchoked by ["+myID+"]");
 			c = null;
 		}
 		
@@ -492,6 +514,8 @@ public class Peer {
 			choke = new ChokeMsg();
 			byte[] c = ActualMsg.toDataGram(choke);
 			sendMessage(c);
+			MyUtil.time();
+			System.out.println("Peer [" + peerID + "is choked by ["+myID+"]");
 			c = null;
 		}
 		
@@ -541,6 +565,8 @@ public class Peer {
 		
 		public void sendHave(int pieceIndex) {
 			System.out.println("sendHave to"  + " peerID: "+peerID);
+			MyUtil.time();
+			System.out.println("Peer ["+peerID+"] received the 'have' message from ["+myID+"] for the piece ["+pieceIndex+"]");
 			haveMsg = new HaveMsg(pieceIndex);
 			byte[] c = ActualMsg.toDataGram(haveMsg);
 			sendMessage(c);
@@ -679,7 +705,9 @@ public class Peer {
 							checkBitfield(piecenum);
 							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
 						}
-						
+						MyUtil.time();
+						System.out.println("Peer ["+myID+"] has downloaded the piece ["+pieceNum+"] from ["+peerID+"].");
+						System.out.println("Now the number of pieces it has is ["+(Config.pieceNum-interestedPieceList.size())+"]");
 						
 						downloadThroughput += Config.PieceSize;
 						sendHaveToAll(piecenum);
@@ -687,6 +715,8 @@ public class Peer {
 						sendNotInterestedOrNotSend();
 						if(interestedPieceList.size() == 0) {
 							fileComplete = true;
+							MyUtil.time();
+							System.out.println("Peer ["+myID+"] has downloaded the complete file.");
 						}
 						pieceNum = null;
 						break;

@@ -1,5 +1,6 @@
 package com.whz.util;
 
+import java.util.Date;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.util.Date;
 
 import com.whz.BitTorrentClient;
 import com.whz.Config;
@@ -41,6 +43,11 @@ public class MyUtil {
 		        (byte) ((a >> 8) & 0xFF),   
 		        (byte) (a & 0xFF)
 		};
+	}
+	
+	public static void time(){
+		Date date = new Date();
+		System.out.print("[" + date.toString() + "]: ");
 	}
 	
 	public synchronized static byte[] readFile(int pieceNum) {
