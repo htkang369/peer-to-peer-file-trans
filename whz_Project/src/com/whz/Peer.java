@@ -521,7 +521,17 @@ public class Peer {
 			int offset = pieceNum % 8;
 			int temp = 0x01 << (7 - offset);
 			if((localBitfield.bitfield[index] & temp) == 0) {
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!requset a piece "+ pieceNum +" not have from "+peerID + "or receive a piece not have");
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!requset a piece "+ pieceNum +" not have from "+peerID );
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean checkBitfieldWhetherHave(int pieceNum) {
+			int index = pieceNum / 8;
+			int offset = pieceNum % 8;
+			int temp = 0x01 << (7 - offset);
+			if((localBitfield.bitfield[index] & temp) == 0) {
 				return false;
 			}
 			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!receive a piece "+ pieceNum +" already have from "+peerID);
@@ -669,7 +679,7 @@ public class Peer {
 						byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
 						System.arraycopy(payLoad, 4, content, 0, msgLength - 5);
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
-						if(!checkBitfield(piecenum)) {
+						if(!checkBitfieldWhetherHave(piecenum)) {
 							System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
 							changeLocalBitField(piecenum);
 							if(rcvMsg.getPayLoad() !=null) {
