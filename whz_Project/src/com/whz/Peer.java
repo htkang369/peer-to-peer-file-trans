@@ -521,7 +521,7 @@ public class Peer {
 			int offset = pieceNum % 8;
 			int temp = 0x01 << (7 - offset);
 			if((localBitfield.bitfield[index] & temp) == 0) {
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!requset a piece "+ pieceNum +" not have from "+peerID);
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!requset a piece "+ pieceNum +" not have from "+peerID + "or receive a piece not have");
 				return false;
 			}
 			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!receive a piece "+ pieceNum +" already have from "+peerID);
@@ -669,19 +669,22 @@ public class Peer {
 						byte[] content = new byte[MyUtil.byteArrayToInt(length) - 5];
 						System.arraycopy(payLoad, 4, content, 0, msgLength - 5);
 						int piecenum = MyUtil.byteArrayToInt(pieceNum);
-						System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
-						changeLocalBitField(piecenum);
-						if(rcvMsg.getPayLoad() !=null) {
-//							System.out.write(content, 0, MyUtil.byteArrayToInt(length) - 5);
-//							System.out.println();
-//							System.out.flush();
-//							byte[] content =  new byte[msgLength - 5];
-//							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
-//							MyUtil.writeToFile(content, msgLength - 5);
-							checkBitfield(piecenum);
-							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
+						if(!checkBitfield(piecenum)) {
+							System.out.println("receive Piece finished! : number = " + piecenum + " peerID: "+peerID);
+							changeLocalBitField(piecenum);
+							if(rcvMsg.getPayLoad() !=null) {
+	//							System.out.write(content, 0, MyUtil.byteArrayToInt(length) - 5);
+	//							System.out.println();
+	//							System.out.flush();s
+	//							byte[] content =  new byte[msgLength - 5];
+	//							System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
+	//							MyUtil.writeToFile(content, msgLength - 5);
+								MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
+								
+							}
+						}else {
+							System.out.println("receive Piece already have! : number = " + piecenum + " peerID: "+peerID);
 						}
-						
 						
 						downloadThroughput += Config.PieceSize;
 						sendHaveToAll(piecenum);
