@@ -458,13 +458,15 @@ public class Peer {
 		
 		public synchronized void receiveInterested(ActualMsg rcvMsg) {
 			System.out.println("reply eInterested" + " peerID: "+peerID);
-			if(!isInterested) {
+			if(!interestedList.contains(peerID)) {
 				System.out.println("this is new Interested peer id = " + peerID);
 				if(interestedList.contains(this)) {
 					System.out.println("interestedList already have interested neighbor" + " peerID: "+peerID);
 				}else {
 					interestedList.add(this);
 				}		
+			}else {
+				System.out.println("already receive interested from this peer " + peerID);
 			}
 		}
 		
