@@ -110,6 +110,18 @@ public class Peer {
 			interestedList.get(i).clearSpeed();
 		}
 	}
+	
+	public static synchronized void removeInterestedList(Handler handler) {
+		interestedList.remove(handler);
+	}
+	
+	public static synchronized void removeUnChokedMap(Handler handler) {
+		unChokedMap.remove(handler);
+	}
+
+	public static synchronized void removeChokedMap(Handler handler) {
+		chokedMap.remove(handler);
+	}
 
 	public static synchronized void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors interestedList.size = " + interestedList.size());
@@ -503,9 +515,9 @@ public class Peer {
 			System.out.println("receiveNotInterested" + " peerID: " + peerID);
 			MyUtil.time();
 			System.out.println("Peer [" + myID + "] received the 'not interested' message from [" + peerID + "]");
-			interestedList.remove(this);
-			unChokedMap.remove(this);
-			chokedMap.remove(this);
+			removeInterestedList(this);
+			removeUnChokedMap(this);
+			removeChokedMap(this);
 		}
 
 		public void sendUnchoke() {
