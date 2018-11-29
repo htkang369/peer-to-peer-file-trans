@@ -757,10 +757,12 @@ public class Peer {
 		public boolean checkFileComplete() {
 			for(int i =0; i < Config.bitFieldLength - 1; i++) {
 				System.out.println("checkFileComplete  localBitfield.bitfield["+i+"]" + String.format("%02X", localBitfield.bitfield[i])+ " peerID: "+peerID);
-				int not = ~localBitfield.bitfield[i];
-				int temp = not & 0xFF;
-				if(temp == 0) {
-					System.out.println("checkFileComplete localBitfield.bitfield["+ i +"] != 0xff ");
+				byte not = (byte) ~localBitfield.bitfield[i];
+				System.out.println("checkFileComplete  not " + String.format("%02X", not)+ " peerID: "+peerID);
+				byte temp = (byte) (not & 0xFF);
+				System.out.println("checkFileComplete  temp " + String.format("%02X", temp)+ " peerID: "+peerID);
+				if(temp != 0) {
+					System.out.println("checkFileComplete  temp " + String.format("%02X", temp)+ "!=0 peerID: "+peerID);
 				    fileComplete = false;
 					return false;
 				}
@@ -809,6 +811,8 @@ public class Peer {
 					System.out.println("reply Piece Message" + " peerID: "+peerID);
 					if(isUnChoked & !fileComplete) {
 						sendRequestMsg();
+					}else {
+						System.out.println("reply piece . But is choke or file Complete");
 					}
 					break;
 				}

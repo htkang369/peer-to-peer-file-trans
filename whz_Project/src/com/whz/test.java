@@ -98,12 +98,15 @@ public class test {
 //			System.out.println(index);
 //		}
 		
-		String filename = "C:\\Users\\pande\\Desktop\\whz\\whz_Project\\src\\com\\whz\\common.cfg";
-		readFileByLines(filename);
-		MyUtil.time();
-		System.out.println("test");
+			byte not = ~ 0x00;
+			System.out.println("checkFileComplete  not " + String.format("%02X", not));
+			byte temp = (byte) (not & 0xFF);
+			System.out.println("checkFileComplete  temp " + String.format("%02X", temp));
+			if(temp != 0) {
+				System.out.println("checkFileComplete  temp " + String.format("%02X", temp)+ "!=0 peerID: ");
+			}
+		}
 		
-	}
 
 	
 }
