@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Config {
-	public static int myID = 1001;
+	public static int myID = 1002;
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
 	public static HashMap<Integer,Integer> peer_port;
@@ -41,14 +41,15 @@ public class Config {
 	}
 	
 	public static void initiatePeerConfig() {
-		
+		peer_has = new HashMap<>();
+		peer_port = new HashMap<>();
 		peerIpAddress = new HashMap<>();	
 		 try {
 	            BufferedReader reader = new BufferedReader(new FileReader(peer_filename));
 	            String line = reader.readLine();
 	            while (line != null) {
 	                String[] content = line.trim().split(" ");
-	                if(myID != Integer.parseInt(content[0])) {
+	                if(myID < Integer.parseInt(content[0])) {
 		                peerIpAddress.put(Integer.parseInt(content[0]), content[1]);	
 		                peer_port.put(Integer.parseInt(content[0]), Integer.parseInt(content[2]));
 		                peer_has.put(Integer.parseInt(content[0]), Integer.parseInt(content[3]));
