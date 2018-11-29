@@ -399,12 +399,9 @@ public class Peer {
 			BitField bitfield = new BitField();
 			bitfield.bitfield = bitfieldMsg.getPayLoad();
 			int msgLength = MyUtil.byteArrayToInt(bitfieldMsg.getMsgLength());
-			if(peerID == 1003) {
-				System.out.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
-			}else {
-				MyUtil.pw.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
-				MyUtil.pw.flush();
-			}
+			System.out.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
+			MyUtil.pw.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
+			MyUtil.pw.flush();
 			for(int i = 0; i< msgLength -1; i++) {
 				if(peerID == 1003) {
 					System.out.print(String.format("%02X", bitfield.bitfield[i]));
@@ -570,7 +567,7 @@ public class Peer {
 			System.out.println("receivePiece from" + " peerID: "+peerID);
 		}
 		
-		public void sendHaveToAll(int pieceIndex) {
+		public synchronized void sendHaveToAll(int pieceIndex) {
 			System.out.println("send have to all" + " peerID: "+peerID);
 			Iterator<Integer> iter = neighbor.keySet().iterator();
 			while(iter.hasNext()) {
