@@ -773,6 +773,8 @@ public class Peer {
 							MyUtil.time();
 							System.out.println("Peer [" + myID + "] has downloaded the complete file.");
 						}
+					}else {
+						sendNotInterestedOrNotSend();
 					}
 					pieceNum = null;
 					break;
