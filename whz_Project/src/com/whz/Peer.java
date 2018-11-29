@@ -403,12 +403,9 @@ public class Peer {
 			MyUtil.pw.println("parse Bitfield Message from:" + peerID + " msgLength = " + msgLength + " bitfield length =" + Config.bitFieldLength);
 			MyUtil.pw.flush();
 			for(int i = 0; i< msgLength -1; i++) {
-				if(peerID == 1003) {
 					System.out.print(String.format("%02X", bitfield.bitfield[i]));
-				}else {
 					MyUtil.pw.print(String.format("%02X", bitfield.bitfield[i]));
 					MyUtil.pw.flush();
-				}
 			}
 			peerBitfield = bitfield;
 			peerBitfields.put(peerID, peerBitfield);
@@ -574,6 +571,7 @@ public class Peer {
 				int key = iter.next();
 				neighbor.get(key).sendHave(pieceIndex);
 			}
+			System.out.println("end send have to all" + " peerID: "+peerID);
 		}
 		
 		public void sendHave(int pieceIndex) {
@@ -605,6 +603,7 @@ public class Peer {
 		 */
 		synchronized void  findOutInterestedPiece() {
 			//compare localBitfield with peerBitfield
+			System.out.println(" findOutInterestedPiece start peer ID " +peerID);
 			isInterested = false;
 			interestedPieceList = new ArrayList<>();
 			for(int i =0; i< Config.bitFieldLength; i++) {
@@ -628,6 +627,7 @@ public class Peer {
 					}
 				}
 			}
+			System.out.println(" findOutInterestedPiece end peer ID " +peerID);
 		}
 		
 		byte[] rawMsg;
@@ -723,7 +723,7 @@ public class Peer {
 							System.out.println("receive Piece already have! : number = " + piecenum + " peerID: "+peerID);
 						}
 						MyUtil.time();
-						System.out.println("Peer ["+myID+"] has downloaded the piece ["+pieceNum+"] from ["+peerID+"].");
+						System.out.println("Peer ["+myID+"] has downloaded the piece ["+piecenum+"] from ["+peerID+"].");
 						System.out.println("Now the number of pieces it has is ["+(Config.pieceNum-interestedPieceList.size())+"]");
 						
 						downloadThroughput += Config.PieceSize;
@@ -751,7 +751,7 @@ public class Peer {
 			}
 		}
 		
-		public boolean checkFileComplete() {
+		public synchronized boolean checkFileComplete() {
 			for(int i =0; i < Config.bitFieldLength - 1; i++) {
 				System.out.println("checkFileComplete  localBitfield.bitfield["+i+"]" + String.format("%02X", localBitfield.bitfield[i])+ " peerID: "+peerID);
 				byte not = (byte) ~localBitfield.bitfield[i];
