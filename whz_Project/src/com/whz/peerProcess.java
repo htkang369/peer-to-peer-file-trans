@@ -30,8 +30,8 @@ import com.whz.msgtype.RequestMsg;
 import com.whz.msgtype.UnchokeMsg;
 import com.whz.util.MyUtil;
 
-public class Peer {
-	static int myID = Config.myID;
+public class peerProcess {
+	public static int myID = Config.myID;
 	static HashMap<Integer, Handler> neighbor;
 	static ArrayList<Handler> interestedList;
 	static BitField localBitfield;
@@ -45,6 +45,7 @@ public class Peer {
 	static boolean fileComplete;
 	static Random random = new Random();
 	static int clientNum = 1;
+	static int couner = 0;
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("The server is running.");
@@ -99,8 +100,8 @@ public class Peer {
 		timerM.schedule(new TimerTask() {
 			public void run() {
 				System.out.println("----set Optimistic timer-----");
-				Peer.selectOptimisticallyUnchokedNeigbor();
-				Peer.sendOpUnchoke();
+				peerProcess.selectOptimisticallyUnchokedNeigbor();
+				peerProcess.sendOpUnchoke();
 			}
 		}, Config.optimistic_unchoking_interval, Config.optimistic_unchoking_interval);
 	}
@@ -109,6 +110,10 @@ public class Peer {
 		for (int i = 0; i < interestedList.size(); i++) {
 			interestedList.get(i).clearSpeed();
 		}
+	}
+	
+	public static synchronized void addInterestedList(Handler handler) {
+		interestedList.add(handler);
 	}
 	
 	public static synchronized void removeInterestedList(Handler handler) {
@@ -122,6 +127,11 @@ public class Peer {
 	public static synchronized void removeChokedMap(Handler handler) {
 		chokedMap.remove(handler);
 	}
+	
+	public static synchronized void neighborPut(int id, Handler handler) {
+		neighbor.put(id, handler);
+	}
+	
 
 	public static synchronized void selectPreferredNeighbors() {
 		System.out.println("select preferredNeighbors interestedList.size = " + interestedList.size());
@@ -185,15 +195,16 @@ public class Peer {
 				System.out.println("chokedMap already has " + chokePeerID);
 			}
 		}
-		MyUtil.time(); // 这里还需要向preferredList 里边添加 元素。
+		MyUtil.time(); // 
 		MyUtil.writeLogToFile("Peer [" + myID + "] has the preferred neighbors [");
-		for (int i = 0; i < preferredList.size(); i++) {
-			System.out.print(preferredList.get(i).peerID);
-			if (i != preferredList.size() - 1) {
+		for (int i = 0; i < size ; i++) {
+			System.out.print(interestedList.get(i).peerID);
+			if (i != size - 1) {
 				System.out.print(",");
 			}
 		}
 		MyUtil.writeLogToFile("]");
+		MyUtil.writeLogToFile("\r\n");
 	}
 
 	public static synchronized void selectOptimisticallyUnchokedNeigbor() {
@@ -215,6 +226,7 @@ public class Peer {
 				MyUtil.time();
 				MyUtil.writeLogToFile("Peer [" + myID + "] has the optimistically unchoked neighbor ["
 						+ optimisticNeighbor.peerID + "]");
+				MyUtil.writeLogToFile("\r\n");
 			} else {
 				System.out.println("selectOptimisticallyUnchokedNeigbor = null index =" + index + " size = " + size);
 			}
@@ -249,6 +261,7 @@ public class Peer {
 				MyUtil.time(); // zhao log
 				MyUtil.writeLogToFile(
 						"Peer [" + myID + "] makes a connection to Peer [" + Config.peerIpAddress.get(temp) + "]");
+				MyUtil.writeLogToFile("\r\n");
 				Handler handler = new Handler(requestSocket, clientNum, true, temp);
 				handler.start();
 				System.out.println("server " + Config.peerIpAddress.get(temp) + " is connected!");
@@ -397,14 +410,15 @@ public class Peer {
 					throw new Exception("error peerID:" + rcvhandshakeMsg.getPeerID() + " right peerID:" + peerID);
 				} else {
 					System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
-					neighbor.put(peerID, this);// client add neighbor
+					neighborPut(peerID, this);// client add neighbor
 				}
 			} else {
 				System.out.println("peerID = " + rcvhandshakeMsg.getPeerID());
 				peerID = rcvhandshakeMsg.getPeerID();
 				MyUtil.time();
 				MyUtil.writeLogToFile("Peer [" + myID + "] is connected from Peer [" + peerID + "]");
-				neighbor.put(peerID, this);// server add neighbor
+				neighborPut(peerID, this);// server add neighbor
+				MyUtil.writeLogToFile("\r\n");
 			}
 			rawMsg = null;
 		}
@@ -500,11 +514,12 @@ public class Peer {
 				System.out.println("this is new Interested peer id = " + peerID);
 				MyUtil.time();
 				MyUtil.writeLogToFile("Peer [" + myID + "] received the 'interested' message from [" + peerID + "]");
+				MyUtil.writeLogToFile("\r\n");
 				if (interestedList.contains(this)) {
 					System.out.println("interestedList already have interested neighbor" + " peerID: " + peerID);
 				} else {
 					System.out.println("interestedList add interested neighbor" + " peerID: " + peerID);
-					interestedList.add(this);
+					addInterestedList(this);
 				}
 			} else {
 				System.out.println("already receive interested from this peer " + peerID);
@@ -515,6 +530,7 @@ public class Peer {
 			System.out.println("receiveNotInterested" + " peerID: " + peerID);
 			MyUtil.time();
 			MyUtil.writeLogToFile("Peer [" + myID + "] received the 'not interested' message from [" + peerID + "]");
+			MyUtil.writeLogToFile("\r\n");
 			removeInterestedList(this);
 			removeUnChokedMap(this);
 			removeChokedMap(this);
@@ -527,6 +543,7 @@ public class Peer {
 			sendMessage(c);
 			MyUtil.time();
 			MyUtil.writeLogToFile("Peer [" + peerID + "is unchoked by [" + myID + "]");
+			MyUtil.writeLogToFile("\r\n");
 			c = null;
 		}
 
@@ -543,6 +560,7 @@ public class Peer {
 			sendMessage(c);
 			MyUtil.time();
 			MyUtil.writeLogToFile("Peer [" + peerID + "is choked by [" + myID + "]");
+			MyUtil.writeLogToFile("\r\n");
 			c = null;
 		}
 
@@ -619,6 +637,7 @@ public class Peer {
 			MyUtil.time();
 			MyUtil.writeLogToFile("Peer [" + peerID + "] received the 'have' message from [" + myID + "] for the piece ["
 					+ pieceIndex + "]");
+			MyUtil.writeLogToFile("\r\n");
 			haveMsg = new HaveMsg(pieceIndex);
 			byte[] c = ActualMsg.toDataGram(haveMsg);
 			sendMessage(c);
@@ -761,15 +780,16 @@ public class Peer {
 							// byte[] content = new byte[msgLength - 5];
 							// System.arraycopy(rcvMsg.getPayLoad(), 4, content, 0, msgLength - 5);
 							// MyUtil.writeToFile(content, msgLength - 5);
+							couner++;
 							MyUtil.writeToFile(content, MyUtil.byteArrayToInt(length) - 5, piecenum);
-
+							MyUtil.time();
+							MyUtil.writeLogToFile(
+									"Peer [" + myID + "] has downloaded the piece [" + piecenum + "] from [" + peerID + "].");
+							MyUtil.writeLogToFile("Now the number of pieces it has is ["
+									+ couner + "]");
+							MyUtil.writeLogToFile("\r\n");
 						}		
-						MyUtil.time();
-						MyUtil.writeLogToFile(
-								"Peer [" + myID + "] has downloaded the piece [" + piecenum + "] from [" + peerID + "].");
-						MyUtil.writeLogToFile("Now the number of pieces it has is ["
-								+ (Config.pieceNum - interestedPieceList.size()) + "]");
-	
+					
 						downloadThroughput += Config.PieceSize;
 						sendHaveToAll(piecenum);
 					} else {
@@ -784,6 +804,7 @@ public class Peer {
 									.println("after receive piece interestedPieceList.size() == 0" + " peerID: " + peerID);
 							MyUtil.time();
 							MyUtil.writeLogToFile("Peer [" + myID + "] has downloaded the complete file.");
+							MyUtil.writeLogToFile("\r\n");
 						}
 					}else {
 						sendNotInterestedOrNotSend();

@@ -17,6 +17,7 @@ import java.io.RandomAccessFile;
 import java.util.Date;
 
 import com.whz.Config;
+import com.whz.peerProcess;
 
 public class MyUtil {
 	//byte array to int 
@@ -105,10 +106,11 @@ public class MyUtil {
 	
 	public static synchronized void writeLogToFile(String log) {
 		try {  
-			RandomAccessFile raf = new RandomAccessFile(Config.fileName, "rw");
+			String logName = "log_peer_" + peerProcess.myID+".log";
+			RandomAccessFile raf = new RandomAccessFile(logName, "rw");
 			long fileLength = raf.length();
 			raf.seek(fileLength);
-			raf.writeBytes(log+"\r\n");  
+			raf.writeBytes(log);  
 			raf.close();   
 		} catch (IOException ioe) {  
 			System.out.println(ioe);  
