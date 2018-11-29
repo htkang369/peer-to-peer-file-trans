@@ -68,7 +68,7 @@ public class peerProcess {
 	}
 
 	static void initBitfield() {
-		if (Config.myID == 1001) {
+		if (Config.has) {
 			MyUtil.pw.println("mID" + Config.myID);
 			MyUtil.pw.flush();
 			localBitfield.bitfield = new byte[Config.bitFieldLength];
@@ -255,7 +255,7 @@ public class peerProcess {
 		while (iter.hasNext()) {
 			int temp = iter.next();
 			try {
-				requestSocket = new Socket(Config.peerIpAddress.get(temp), 8000);
+				requestSocket = new Socket(Config.peerIpAddress.get(temp), Config.peer_port.get(temp));
 				System.out.println(
 						"Connected to " + Config.peerIpAddress.get(temp) + " in port 8000 ,  this peer ID = " + myID);
 				MyUtil.time(); // zhao log
@@ -276,7 +276,7 @@ public class peerProcess {
 	}
 
 	public static void listenTcpConnection() throws IOException {
-		ServerSocket listener = new ServerSocket(Config.sPort);
+		ServerSocket listener = new ServerSocket(Config.myPort);
 		try {
 			while (true) {
 				Handler handler = new Handler(listener.accept(), clientNum, false, 0);
@@ -542,7 +542,7 @@ public class peerProcess {
 			byte[] c = ActualMsg.toDataGram(unchoke);
 			sendMessage(c);
 			MyUtil.time();
-			MyUtil.writeLogToFile("Peer [" + peerID + "is unchoked by [" + myID + "]");
+			MyUtil.writeLogToFile("Peer [" + peerID + "]is unchoked by [" + myID + "]");
 			MyUtil.writeLogToFile("\r\n");
 			c = null;
 		}
@@ -565,7 +565,7 @@ public class peerProcess {
 		}
 
 		public void receiveChoke() {
-			System.out.println("receiveChoke from" + " peerID: " + peerID);
+			System.out.println("receiveChoke from[" + " peerID: " + peerID);
 			isUnChoked = false;
 		}
 

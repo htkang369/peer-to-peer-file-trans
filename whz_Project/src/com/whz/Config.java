@@ -11,10 +11,14 @@ public class Config {
 	public static int myID = 1001;
 	public static final int sPort = 8000;
 	public static HashMap<Integer,String> peerIpAddress;
+	public static HashMap<Integer,Integer> peer_port;
+	public static HashMap<Integer,Integer> peer_has;
 	public static int FileSize;
 	public static int PieceSize;
 	public static int pieceNum;
 	public static int bitFieldLength;
+	public static boolean has;
+	public static int myPort = 6008;
 //	public static int bitFieldLength = (int) Math.ceil(pieceNum/8);
 	public static int k;
 	public static int optimistic_unchoking_interval;
@@ -38,22 +42,31 @@ public class Config {
 	
 	public static void initiatePeerConfig() {
 		
-		peerIpAddress = new HashMap<>();
-		
-//		 try {
-//	            BufferedReader reader = new BufferedReader(new FileReader(peer_filename));
-//	            String line = reader.readLine();
-//	            while (line != null) {
-//	                String[] content = line.trim().split(" ");
-//	                peerIpAddress.put(Integer.parseInt(content[0]), content[1]);	                
-//	                line = reader.readLine();
-//	            }
-//	            reader.close();
-//	        } catch (FileNotFoundException fne) {
-//	            System.out.println("Cannot find this file, please use CfgGenerator first");
-//	        } catch (IOException ie) {
-//	            System.out.println("Cannot read this file, please check the file");
-//	        }
+		peerIpAddress = new HashMap<>();	
+		 try {
+	            BufferedReader reader = new BufferedReader(new FileReader(peer_filename));
+	            String line = reader.readLine();
+	            while (line != null) {
+	                String[] content = line.trim().split(" ");
+	                if(myID != Integer.parseInt(content[0])) {
+		                peerIpAddress.put(Integer.parseInt(content[0]), content[1]);	
+		                peer_port.put(Integer.parseInt(content[0]), Integer.parseInt(content[2]));
+		                peer_has.put(Integer.parseInt(content[0]), Integer.parseInt(content[3]));
+	                }else {
+	                	if(Integer.parseInt(content[3]) == 1) {
+	                		has = true;
+	           
+	                	}
+	                	myPort = Integer.parseInt(content[2]);
+	                }
+	                line = reader.readLine();
+	            }
+	            reader.close();
+	        } catch (FileNotFoundException fne) {
+	            System.out.println("Cannot find this file, please use CfgGenerator first");
+	        } catch (IOException ie) {
+	            System.out.println("Cannot read this file, please check the file");
+	        }
 		
 //		peerIpAddress.put(1001, "10.3.89.216");
 //		peerIpAddress.put(1002, "10.136.102.83");
