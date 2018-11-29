@@ -16,7 +16,6 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.Date;
 
-import com.whz.BitTorrentClient;
 import com.whz.Config;
 
 public class MyUtil {
@@ -47,7 +46,7 @@ public class MyUtil {
 	
 	public static void time(){
 		Date date = new Date();
-		System.out.print("[" + date.toString() + "]: ");
+		writeLogToFile("[" + date.toString() + "]: ");
 	}
 	
 	public synchronized static byte[] readFile(int pieceNum) {
@@ -103,6 +102,21 @@ public class MyUtil {
 	         e.printStackTrace();  
 	     }  
 	}
+	
+	public static synchronized void writeLogToFile(String log) {
+		try {  
+			RandomAccessFile raf = new RandomAccessFile(Config.fileName, "rw");
+			long fileLength = raf.length();
+			raf.seek(fileLength);
+			raf.writeBytes(log+"\r\n");  
+			raf.close();   
+		} catch (IOException ioe) {  
+			System.out.println(ioe);  
+		} catch (Exception e) {  
+			System.out.println(e);  
+		}  
+	}
+	
 	
 	public static synchronized void writeToFile(byte[] data, int count, int piecenum) {
 		try {  
