@@ -631,7 +631,7 @@ public class Peer {
 		}
 		
 		byte[] rawMsg;
-		synchronized ActualMsg receiveActualMsg() throws Exception {
+		ActualMsg receiveActualMsg() throws Exception {
 			byte[] length = new byte[4];
 			in.read(length);
 			
